@@ -19,16 +19,17 @@ const SideBar = () => (
 
     <section className="blurb">
       <h2>About</h2>
-      <p>Hi, I&apos;m Alessio. I hold a Bachelor&apos;s degree in Computer Engineering and a
-        Master&apos;s degree in Artificial Intelligence and Data Engineering, both from the <a href="https://www.unipi.it/">University of Pisa. </a>
-        Currently, I am putting my expertise to work as a Deep Learning Scientist within the AI Research team at <a href="https://translated.com/welcome">Translated. </a>
-        I am developing a skill set that bridges research and engineering, allowing me to create
-        practical AI solutions with a clear impact on real-world applications.
+      <p> Hi, I&apos;m Alessio. 👋 <br />
+        I&apos;m an insatiably curious and determined individual, always eager to
+        embrace new challenges and actively engage with them.    <br />
       </p>
-      <p>I&apos;m an insatiably curious and determined individual, always eager to
-        embrace new challenges and actively engage with them.
-        Within my wide range of interests, Artificial Intelligence holds a particularly significant
-        place, with a dedicated focus on Natural Language Processing and Computer Vision.
+      <h4><a href="https://www.unipi.it/">University</a>:</h4>
+      <p>Computer Engineering 👨‍💻<br />
+        Artificial Intelligence 🤖
+      </p>
+      <h4><a href="https://translated.com/welcome">Work</a>:</h4>
+      <p>
+        Deep Learning Scientist 👨‍🔬
       </p>
       <ul className="actions">
         <li>

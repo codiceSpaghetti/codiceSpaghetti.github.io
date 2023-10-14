@@ -1,9 +1,3 @@
-# Adapting this Website
-
-Many people have contacted me about adapting this website. I have tried to make things as simple as possible. There are still bugs. I am sorry. If you find a bug, please email me (help@mldangelo.com), submit a pull request (I'll buy you a coffee as a thank you), or submit an issue.
-
-You may wish to fork this repository or remove my remote origin and add your own. Go [here](https://help.github.com/articles/changing-a-remote-s-url/) for more information on how to change remotes.
-
 ## Before you start
 
 1. Make sure you have a good text editor. I recommend [Visual Studio Code](https://code.visualstudio.com/).
@@ -13,8 +7,8 @@ You may wish to fork this repository or remove my remote origin and add your own
 
 ### Setup
 
-1. Run the project before making any modifications by following the set up and running instructions in the main [README.md](https://github.com/mldangelo/personal-site#set-up).
-1. Change `homepage` in `package.json` to reflect where you plan to host the site. This is important for static exporting via react-snap. This also changes your path when developing locally. For example, a homepage of `mldangelo.com` places the site at `localhost:3000` and a homepage of `https://mldangelo.github.io/personal-site/` places the site at `localhost:3000/personal-site/`. If you plan to host at on a path such as `https://[your-github-username].github.io/[your-repo-name]`, you should set this now so that your development environment mirrors your production environment.
+1. Run the project before making any modifications by following the set up and running instructions in the main [README.md](https://github.com/codiceSpaghetti/codiceSpaghetti.github.io/blob/main/README.md).
+1. Change `homepage` in `package.json` to reflect where you plan to host the site. This is important for static exporting via react-snap. This also changes your path when developing locally. For example, a homepage of `codiceSpaghetti.github.io` places the site at `localhost:3000` and a homepage of `https://codiceSpaghetti.github.io/personal-site/` places the site at `localhost:3000/personal-site/`. If you plan to host at on a path such as `https://[your-github-username].github.io/[your-repo-name]`, you should set this now so that your development environment mirrors your production environment.
 1. Create a `.env` file. To do this, run:
 
     ```bash
@@ -32,12 +26,12 @@ I recommend keeping the project running as you go (with `npm start`) to help cor
 1. Modify the text on the homepage. This file is located at `src/pages/Index.js`.
 1. Modify the files in `src/data/resume/` next.
 1. Modify all of the other files in the `src/data/` directory.
-1. You've finished modifying >95% of the pages. Search through the rest of the files for references to `Michael` or `Angelo` and change values to your name.
+1. You've finished modifying >95% of the pages. Search through the rest of the files for references to `Alessio` or `Serra` and change values to your name.
 1. Change or remove the favicon in `public/index.html`. [This](https://realfavicongenerator.net/) website may be helpful.
 
 ### Deploy
 
-See deployment instructions [here](https://github.com/mldangelo/personal-site#deploying-to-github-pages). If you plan to use a custom url, modify `public/CNAME` and enter your URL. You can run:
+See deployment instructions [here](https://github.com/codiceSpaghetti/codiceSpaghetti.github.io#deploying-to-github-pages). If you plan to use a custom url, modify `public/CNAME` and enter your URL. You can run:
 
 ```bash
 echo "[your-custom-domain][.com]" > public/CNAME
@@ -59,7 +53,7 @@ Here are answers to questions I've been asked at least twice. I've attempted to 
 
 1. My CSS isn't rendering, or I see a 404 instead of my site:
 
-    Make sure the `homepage` field of `package.json` points to where you plan to host your site index. Also, double check that you created a `CNAME` file (see deployment instructions above). If neither of these work, please open an issue or send me an [email](mailto:help@mldangelo.com).
+    Make sure the `homepage` field of `package.json` points to where you plan to host your site index. Also, double check that you created a `CNAME` file (see deployment instructions above).
 
 2. LF / CRLF issues with eslint.
 
