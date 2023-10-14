@@ -31,7 +31,12 @@ const Job = ({
     {highlights ? (
       <ul className="points">
         {highlights.map((highlight) => (
-          <li key={highlight}>{highlight}</li>
+          <li key={highlight.title}>
+            <b>{highlight.title}:</b> {highlight.description}{' '}
+            {highlight.link && (
+            <a href="https://blog.modernmt.com/modernmt-significantly-expands-language-coverage/" target="_blank" rel="noopener noreferrer">Learn more here</a>
+            )}
+          </li>
         ))}
       </ul>
     ) : null}

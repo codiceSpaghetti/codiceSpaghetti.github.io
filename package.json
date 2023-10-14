@@ -1,11 +1,11 @@
 {
   "name": "personal-site",
   "version": "4.0.0",
-  "homepage": "https://mldangelo.com/",
+  "homepage": "https://codiceSpaghetti.github.io/aboutMe",
   "license": "MIT",
   "repository": {
     "type": "git",
-    "url": "https://github.com/mldangelo/personal-site.git"
+    "url": "https://github.com/codiceSpaghetti/aboutMe.git"
   },
   "engines": {
     "node": ">=16.x"
