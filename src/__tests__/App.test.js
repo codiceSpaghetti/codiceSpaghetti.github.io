@@ -82,7 +82,7 @@ describe('renders the app', () => {
   });
 
   it('can navigate to /contact', async () => {
-    const contactLink = document.querySelector('#header > nav > ul > li:nth-child(5) > a');
+    const contactLink = document.querySelector('#header > nav > ul > li:nth-child(4) > a');
     expect(contactLink).toBeInTheDocument();
     await act(async () => {
       await contactLink.click();
