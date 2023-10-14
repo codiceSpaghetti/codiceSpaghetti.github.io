@@ -1,11 +1,11 @@
 {
   "name": "personal-site",
   "version": "4.0.0",
-  "homepage": "https://codiceSpaghetti.github.io/aboutMe",
+  "homepage": "https://codiceSpaghetti.github.io/about",
   "license": "MIT",
   "repository": {
     "type": "git",
-    "url": "https://github.com/codiceSpaghetti/aboutMe.git"
+    "url": "https://github.com/codiceSpaghetti/codiceSpaghetti.github.io"
   },
   "engines": {
     "node": ">=16.x"
