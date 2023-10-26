@@ -1,36 +1,39 @@
 // TODO Add a couple lines about each project
 const data = [
   {
-    title: 'Federated DBscan',
-    subtitle: 'Distributed clustering with Federated Learning',
-    image: '/images/projects/nearestdollar.jpg',
-    date: '2020-06-1',
-    desc: 'Implemention of the DBScan clustering algorithm with Federated Learning setting. The goal is to enable distributed clustering of data across multiple nodes in a decentralized network, preserving the privacy of the individual data points.',
+    title: 'UniMusic',
+    subtitle: 'A music discovery and management application.',
+    link: 'https://github.com/codiceSpaghetti/UniMusic',
+    image: '/images/projects/UniMusic.jpg',
+    date: '2020-12-1',
+    desc: 'It is an application that focuses on streamlining song discovery and management. It utilizes MongoDB and Neo4j NoSQL databases to efficiently handle high-volume data, ensuring low latency and scalability.',
+  },
+  {
+    title: 'Voice Vibes',
+    subtitle: 'A model that can understand your mood from your voice.',
+    image: '/images/projects/VoiceVibes.jpg',
+    link: 'https://github.com/codiceSpaghetti/VoiceVibes',
+    date: '2022-6-1',
+    desc:
+      'VoiceVibes presents a solution for speech emotion recognition, featuring six innovative AI model architectures designed to accurately identify and categorize emotional expressions conveyed through speech.',
   },
   {
     title: 'Fake News Detection',
-    subtitle: 'Better results on FNC-1 challenge',
-    link: 'https://devpost.com/software/harvest',
-    image: '/images/projects/harvest.jpg',
+    subtitle: 'Finding the truth in a sea of lies',
+    link: 'https://github.com/codiceSpaghetti/FakeNewsDetection',
+    image: '/images/projects/FakeNewsDetection.jpg',
     date: '2021-2-1',
-    desc: 'I explored various Transformer encoder architectures related to BERT, using transfer learning techniques like fine-tuning and feature extraction for contextual word embeddings. My efforts in this project successfully improved the state-of-the-art (SOTA) results in a Fake News Detection challenge.',
+    desc: 'A model that tries to combat the spread of false information by understanding the position that a news article takes on a particular topic. ',
   },
   {
-    title: 'UniMusic',
-    subtitle: 'A music discovery and management application.',
-    link: 'http://www.spacepotato.org',
-    image: '/images/projects/spacepotato.jpg',
-    date: '2020-12-1',
-    desc: 'UniMusic is an application focused on streamlining song discovery and management. It enables users to access official song sources like YouTube and Spotify via provided links. Utilizing MongoDB and Neo4j NoSQL databases, UniMusic efficiently handles high-volume data, ensuring low latency and scalability for an improved user experience.',
+    title: 'Federated DBscan',
+    subtitle: 'Distributed clustering with Federated Learning',
+    image: '/images/projects/FederatedDBscan.png',
+    link: 'https://github.com/codiceSpaghetti/FederatedDBscan',
+    date: '2020-06-1',
+    desc: 'Implementation of the DBScan clustering algorithm in a Federated Learning setting, aimed at preserving the privacy of individual data points',
   },
-  {
-    title: 'Page Rank with Hadoop and Spark',
-    subtitle: 'Implementation of the PageRank algorithm using Hadoop and Spark.',
-    image: '/images/projects/catdetector.jpg',
-    date: '2022-6-1',
-    desc:
-      'Implementation of the MapReduce PageRank algorithm using the Hadoop framework in Java and the Spark framework both in Python and in Java.',
-  },
+
 ];
 
 export default data;
