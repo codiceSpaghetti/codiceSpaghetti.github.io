@@ -9,7 +9,7 @@ const Awards = ({ data }) => (
       <p className="school"><a href={data.publisher_link}>{data.publisher}</a></p>
       <p className="daterange"> {dayjs(data.publication_date).format('MMMM YYYY')}</p>
     </header>
-    <p className="description">{data.description} <a href={data.link}> Learn more here.</a></p>
+    <p className="description">{data.description} <a href={data.link}>  github.com link.</a></p>
   </article>
 );
 
