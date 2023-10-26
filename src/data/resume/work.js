@@ -20,7 +20,7 @@ const work = [
     summary: 'Translated is a is a leading Multi-Language Service Provider, based in Rome, Italy, who manages translation projects for over 55,000 customers, including Airbnb, Google, IBM, Expedia, Uber, EU and Amazon. I work there as a Deep Learning Scientist, where I develop and deploy NLP models for Machine Translation and Language Identification.',
     highlights: [{
       title: 'Language Expansion',
-      description: 'I lead the project, which involved all the phases from the feasibility study to the preparation of everything necessary for production, to expand the number of supported languages by MMT from 56 to 201. After this project our MT engine was the first in the world in terms of language coverage.',
+      description: 'I expanded the number of supported languages by our MT from 56 to 201, making it the first commercial translation engine in the world with such extensive language support',
       link: 'https://blog.modernmt.com/modernmt-significantly-expands-language-coverage/',
     },
     {
@@ -29,8 +29,12 @@ const work = [
       link: 'https://blog.modernmt.com/modernmt-introduces-trust-attention-to-improve-mt-quality/',
     },
     {
-      title: 'Polyglot-200',
-      description: 'I expanded the language support of the Language Identification model from around 52 languages to approximately 195 while maintaining the same level of performance and inference time.',
+      title: 'LLM-based translation model',
+      description: 'I was chosen to be part of a new team specifically dedicated to build the next generation of machine translation with a different paradigm based on Large Language Model',
+    },
+    {
+      title: 'Polyglot',
+      description: 'I expanded the language support of the Language Identification model from 56 to 201 languages, all while maintaining the same level of accuracy and inference time.',
     }],
   },
 ];

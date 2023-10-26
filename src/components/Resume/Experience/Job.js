@@ -34,7 +34,7 @@ const Job = ({
           <li key={highlight.title}>
             <b>{highlight.title}:</b> {highlight.description}{' '}
             {highlight.link && (
-            <a href="https://blog.modernmt.com/modernmt-significantly-expands-language-coverage/" target="_blank" rel="noopener noreferrer">Learn more here</a>
+            <a href={highlight.link} target="_blank" rel="noopener noreferrer">Learn more here</a>
             )}
           </li>
         ))}
