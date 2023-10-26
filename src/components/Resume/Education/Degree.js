@@ -8,15 +8,22 @@ const Degree = ({ data }) => (
       <p className="school"><a href={data.link}>{data.school}</a>, {data.year}</p>
     </header>
     <p className="description">{data.description}</p>
-    {data.thesis && (
-      <p className="thesis"> <b>Thesis: </b>
-        {data.thesis_link ? (
-          <a href={data.thesis_link}>{data.thesis}</a>
-        ) : (
-          data.thesis
-        )}
-      </p>
-    )}
+
+    <ul className="points">
+      <li key="grade">
+        <b>Final grade:</b> {data.grade}{' '}
+      </li>
+      {data.degree === 'M.S. Artificial Intelligence and Data Engineering' && (
+      <li key="thesis">
+        <b>Thesis published in a Tier A conference</b>
+      </li>
+      )}
+      {data.exam_link && (
+      <li key="exam_link">
+        <a href={data.exam_link} target="_blank" rel="noopener noreferrer">Exams and Marks link</a>
+      </li>
+      )}
+    </ul>
   </article>
 );
 
@@ -27,8 +34,8 @@ Degree.propTypes = {
     school: PropTypes.string.isRequired,
     description: PropTypes.string.isRequired,
     year: PropTypes.string.isRequired,
-    thesis: PropTypes.string,
-    thesis_link: PropTypes.string,
+    grade: PropTypes.string.isRequired,
+    exam_link: PropTypes.string,
   }).isRequired,
 };
 
