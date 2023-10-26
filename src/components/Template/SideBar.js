@@ -18,10 +18,8 @@ const SideBar = () => (
     </section>
 
     <section className="blurb">
-      <h2>About</h2>
-      <p> Hi, I&apos;m Alessio. 👋 <br />
-        I&apos;m an insatiably curious and determined individual, always eager to
-        embrace new challenges and actively engage with them.    <br />
+      <p> <b>Curiosity</b> and <b>Motivation</b> fuel my hard work, while
+        <b> Passion</b> makes it look easy
       </p>
       <h4><a href="https://www.unipi.it/">University</a>:</h4>
       <p>Computer Engineering 👨‍💻<br />
