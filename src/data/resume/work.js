@@ -14,10 +14,10 @@
 const work = [
   {
     name: 'Translated',
-    position: 'Deep Learning Scientist',
+    position: 'AI Engineer & Researcher',
     url: 'https://translated.com/welcome',
     startDate: '2023-10-01',
-    summary: 'Translated is a is a leading Multi-Language Service Provider, based in Rome, Italy, who manages translation projects for over 55,000 customers, including Airbnb, Google, IBM, Expedia, Uber, EU and Amazon. I work there as a Deep Learning Scientist, where I develop and deploy NLP models for Machine Translation and Language Identification.',
+    summary: 'Translated is a is a leading Multi-Language Service Provider, based in Rome, Italy, who manages translation projects for over 55,000 customers, including Airbnb, Google, IBM, Expedia, Uber, EU and Amazon. I work there as a AI Engineer & Researcher, where I develop and deploy NLP models for Machine Translation and Language Identification.',
     highlights: [{
       title: 'Language Expansion',
       description: 'I expanded the number of supported languages by our MT from 56 to 201, making it the first commercial translation engine in the world with such extensive language support',

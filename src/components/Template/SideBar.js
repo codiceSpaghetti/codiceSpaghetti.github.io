@@ -23,11 +23,11 @@ const SideBar = () => (
       </p>
       <h4><a href="https://www.unipi.it/">University</a>:</h4>
       <p>Computer Engineering 👨‍💻<br />
-        Artificial Intelligence 🤖
+        Artificial Intelligence and Data Engineering 🤖
       </p>
       <h4><a href="https://translated.com/welcome">Work</a>:</h4>
       <p>
-        Deep Learning Scientist 👨‍🔬
+        AI Engineer & Researcher 👨‍🔬
       </p>
       <ul className="actions">
         <li>
