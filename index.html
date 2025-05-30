@@ -47,6 +47,10 @@
       --border-color: #333333;
       --shadow-color: rgba(0, 0, 0, 0.3);
       --shadow-color-strong: rgba(0, 0, 0, 0.5);
+      --accent-shadow: rgba(39, 167, 118, 0.3);
+      --accent-shadow-light: rgba(39, 167, 118, 0.4);
+      --accent-shadow-strong: rgba(39, 167, 118, 0.6);
+      --accent-shadow-focus: rgba(39, 167, 118, 0.25);
       --header-hover: #2a2a2a;
       --breadcrumb-color: #1a1a1a;
     }
@@ -68,6 +72,10 @@
       --border-color: #dee2e6;
       --shadow-color: rgba(0, 0, 0, 0.1);
       --shadow-color-strong: rgba(0, 0, 0, 0.2);
+      --accent-shadow: rgba(30, 60, 114, 0.3);
+      --accent-shadow-light: rgba(30, 60, 114, 0.4);
+      --accent-shadow-strong: rgba(30, 60, 114, 0.6);
+      --accent-shadow-focus: rgba(30, 60, 114, 0.25);
       --header-hover: #f8f9fa;
       --breadcrumb-color: #e9ecef;
     }
@@ -137,8 +145,15 @@
     }
 
     @keyframes pulse {
-      0%, 100% { transform: translate(-50%, -50%) scale(1); }
-      50% { transform: translate(-50%, -50%) scale(1.1); }
+      0% {
+        box-shadow: 0 4px 20px rgba(39, 167, 118, 0.4);
+      }
+      50% {
+        box-shadow: 0 4px 20px rgba(39, 167, 118, 0.7);
+      }
+      100% {
+        box-shadow: 0 4px 20px rgba(39, 167, 118, 0.4);
+      }
     }
 
     @keyframes fadeInUp {
@@ -167,6 +182,9 @@
       padding: 15px 0;
       border-top: 1px solid var(--border-color);
       margin-top: 20px;
+      pointer-events: auto;
+      z-index: 10;
+      position: relative;
     }
 
     .language-toggle .toggle-label {
@@ -186,25 +204,46 @@
       margin: 0 auto;
       width: fit-content;
       border: 1px solid var(--border-color);
+      flex-wrap: wrap;
+      max-width: 280px;
+      gap: 2px;
+      pointer-events: auto;
+      z-index: 10;
+      position: relative;
     }
 
     .language-option {
-      padding: 8px 16px;
-      border-radius: 20px;
-      font-size: 0.85rem;
+      padding: 6px 12px;
+      border-radius: 18px;
+      font-size: 0.8rem;
       font-weight: 500;
       cursor: pointer;
       transition: all 0.2s ease;
       color: var(--text-secondary);
       border: none;
       background: transparent;
-      min-width: 45px;
+      min-width: 50px;
+      display: flex;
+      align-items: center;
+      gap: 4px;
+      white-space: nowrap;
+      pointer-events: auto;
+      user-select: none;
+      -webkit-user-select: none;
+      -moz-user-select: none;
+      -ms-user-select: none;
+      z-index: 10;
+      position: relative;
+    }
+
+    .language-option .flag {
+      font-size: 0.9rem;
     }
 
     .language-option.active {
       background: var(--accent-primary);
       color: white;
-      box-shadow: 0 2px 8px rgba(39, 167, 118, 0.3);
+      box-shadow: 0 2px 8px var(--accent-shadow);
     }
 
     .language-option:hover:not(.active) {
@@ -262,6 +301,96 @@
       background-color: var(--bg-secondary) !important;
       border-right: 1px solid var(--border-color);
       transition: background-color 0.3s ease, border-color 0.3s ease;
+    }
+
+    /* Mobile header adjustments */
+    @media (max-width: 1199px) {
+      .header {
+        position: fixed;
+        top: 0;
+        left: -100%;
+        width: 300px;
+        height: 100vh;
+        overflow-y: auto;
+        z-index: 9997;
+        transition: all 0.5s;
+        border-right: 1px solid var(--border-color);
+        border-bottom: none;
+      }
+      
+      .header.header-show {
+        left: 0;
+      }
+      
+      .header-toggle {
+        position: fixed;
+        top: 15px;
+        right: 15px;
+        z-index: 9998;
+        border: 0;
+        background: var(--accent-primary);
+        color: white;
+        width: 40px;
+        height: 40px;
+        border-radius: 50%;
+        cursor: pointer;
+        font-size: 16px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        transition: all 0.3s;
+        box-shadow: 0 4px 15px var(--accent-shadow-light);
+      }
+      
+      .header-toggle:hover {
+        background: var(--accent-secondary);
+        transform: scale(1.1);
+        box-shadow: 0 6px 20px var(--accent-shadow-strong);
+      }
+      
+      /* Ensure main content doesn't overlap with mobile header */
+      .main {
+        margin-left: 0;
+      }
+      
+      /* Mobile overlay */
+      .mobile-nav-overly {
+        width: 100%;
+        height: 100%;
+        z-index: 9996;
+        top: 0;
+        left: 0;
+        position: fixed;
+        background: rgba(0, 0, 0, 0.7);
+        overflow: hidden;
+        display: none;
+      }
+      
+      .mobile-nav-overly.mobile-nav-active {
+        display: block;
+      }
+      
+      /* Hide floating contact button on mobile, theme toggle replaces it */
+      .floating-contact {
+        display: none;
+      }
+      
+      /* Adjust theme toggle position for mobile */
+      .theme-toggle {
+        bottom: 90px !important;
+        right: 15px !important;
+        top: auto !important;
+        width: 45px !important;
+        height: 45px !important;
+        font-size: 1rem !important;
+      }
+
+      .scroll-top {
+        bottom: 30px !important;
+        right: 15px !important;
+        width: 45px !important;
+        height: 45px !important;
+      }
     }
 
     .header .profile-img img {
@@ -544,7 +673,6 @@
 
     .portfolio .portfolio-info {
       background: var(--bg-card);
-      padding: 20px;
       position: relative;
     }
 
@@ -552,48 +680,52 @@
       color: var(--text-primary);
       transition: color 0.3s ease;
       margin-bottom: 10px;
+      padding: 15px 15px 5px 15px;
     }
 
     .portfolio .portfolio-info p {
       color: var(--text-secondary);
       transition: color 0.3s ease;
       margin-bottom: 15px;
+      padding: 0 15px 15px 15px;
     }
 
     .portfolio .portfolio-info .preview-link {
-      position: absolute;
-      top: 15px;
-      right: 15px;
-      background: var(--accent-primary);
-      color: white;
-      width: 35px;
-      height: 35px;
-      border-radius: 50%;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 0.9rem;
-      transition: all 0.2s ease;
-      opacity: 0.8;
+      display: none !important;
     }
 
-    .portfolio .portfolio-info .preview-link:hover {
-      background: var(--accent-secondary);
-      transform: scale(1.1);
-      opacity: 1;
+    .portfolio .portfolio-filters {
+      list-style: none;
+      padding: 0;
+      margin: 0 0 35px 0;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 10px;
     }
 
     .portfolio .portfolio-filters li {
-      background: var(--bg-tertiary);
+      cursor: pointer;
+      display: inline-block;
+      padding: 8px 20px;
+      font-size: 14px;
+      font-weight: 500;
+      line-height: 1;
       color: var(--text-secondary);
-      border: 1px solid var(--border-color);
+      background: var(--bg-card);
+      border: 2px solid var(--border-color);
+      border-radius: 25px;
       transition: all 0.3s ease;
+      text-transform: capitalize;
     }
 
     .portfolio .portfolio-filters li:hover, .portfolio .portfolio-filters li.filter-active {
-      background: var(--accent-primary);
+      background: var(--accent-gradient);
       color: white;
       border-color: var(--accent-primary);
+      transform: translateY(-2px);
+      box-shadow: 0 4px 15px var(--accent-shadow);
     }
     
     /* Call to Action Section */
@@ -721,22 +853,37 @@
 
     .contact .php-email-form input:focus, .contact .php-email-form textarea:focus {
       border-color: var(--accent-primary);
-      box-shadow: 0 0 0 0.2rem rgba(39, 167, 118, 0.25);
+      box-shadow: 0 0 0 0.2rem var(--accent-shadow-focus);
     }
 
-    .contact .php-email-form button {
-      background: var(--accent-gradient);
-      border: none;
-      color: white;
+    /* Contact form button - theme aware */
+    .contact .php-email-form button[type=submit] {
+      background: var(--accent-primary) !important;
+      border: 2px solid var(--accent-primary) !important;
+      color: white !important;
       padding: 12px 30px;
       border-radius: 25px;
       font-weight: 600;
       transition: all 0.3s ease;
     }
 
-    .contact .php-email-form button:hover {
+    .contact .php-email-form button[type=submit]:hover {
+      background: var(--accent-secondary) !important;
+      border-color: var(--accent-secondary) !important;
       transform: translateY(-2px);
-      box-shadow: 0 6px 20px rgba(39, 167, 118, 0.3);
+      box-shadow: 0 6px 20px var(--accent-shadow);
+    }
+
+    /* Light mode contact button */
+    [data-theme="light"] .contact .php-email-form button[type=submit] {
+      background: var(--accent-primary) !important;
+      border-color: var(--accent-primary) !important;
+      color: white !important;
+    }
+
+    [data-theme="light"] .contact .php-email-form button[type=submit]:hover {
+      background: var(--accent-secondary) !important;
+      border-color: var(--accent-secondary) !important;
     }
     
     /* Responsive adjustments */
@@ -767,14 +914,6 @@
         font-size: 1.4rem !important;
       }
 
-      .theme-toggle {
-        top: 15px;
-        right: 15px;
-        width: 45px;
-        height: 45px;
-        font-size: 1rem;
-      }
-
       .loading-logo {
         width: 80px;
         height: 80px;
@@ -786,6 +925,28 @@
 
       .loading-text {
         font-size: 1.2rem;
+      }
+
+      /* Mobile button positioning */
+      .theme-toggle {
+        bottom: 90px !important;
+        right: 15px !important;
+        top: auto !important;
+        width: 45px !important;
+        height: 45px !important;
+        font-size: 1rem !important;
+      }
+
+      .scroll-top {
+        bottom: 30px !important;
+        right: 15px !important;
+        width: 45px !important;
+        height: 45px !important;
+      }
+
+      /* Hide floating contact on mobile as requested */
+      .floating-contact {
+        display: none !important;
       }
     }
     
@@ -800,59 +961,82 @@
       border-radius: 50%;
       color: white;
       text-decoration: none;
-      box-shadow: 0 4px 20px rgba(39, 167, 118, 0.4);
+      box-shadow: 0 4px 20px var(--accent-shadow-light);
       transition: all 0.3s ease;
       z-index: 1000;
       animation: pulse 2s infinite;
+      display: block;
     }
     
     .floating-contact:hover {
-      background: linear-gradient(45deg, #28ca8c, #27a776);
+      background: var(--accent-gradient);
       transform: scale(1.1);
-      box-shadow: 0 6px 25px rgba(39, 167, 118, 0.6);
+      box-shadow: 0 6px 25px var(--accent-shadow-strong);
       color: white;
     }
     
     .floating-contact i {
       font-size: 1.2rem;
     }
-    
+
+    /* Hide floating contact on mobile screens */
+    @media (max-width: 768px) {
+      .floating-contact {
+        display: none !important;
+      }
+    }
+
     @keyframes pulse {
       0% {
-        box-shadow: 0 4px 20px rgba(39, 167, 118, 0.4);
+        box-shadow: 0 4px 20px var(--accent-shadow-light);
       }
       50% {
-        box-shadow: 0 4px 20px rgba(39, 167, 118, 0.7);
+        box-shadow: 0 4px 20px var(--accent-shadow-strong);
       }
       100% {
-        box-shadow: 0 4px 20px rgba(39, 167, 118, 0.4);
+        box-shadow: 0 4px 20px var(--accent-shadow-light);
       }
     }
 
     /* Scroll to top button */
     .scroll-top {
-      background: var(--accent-gradient);
+      position: fixed;
+      bottom: 30px;
+      right: 20px;
+      background: var(--accent-primary);
       color: white;
       transition: all 0.3s ease;
+      width: 50px;
+      height: 50px;
+      border-radius: 50%;
+      z-index: 1000;
     }
 
     .scroll-top:hover {
-      background: linear-gradient(45deg, #28ca8c, #27a776);
+      background: var(--accent-secondary);
       color: white;
+      transform: scale(1.1);
+      box-shadow: 0 6px 20px var(--accent-shadow);
     }
-    
-    /* Hide floating button on small screens to avoid overlap */
-    @media (max-width: 768px) {
-      .floating-contact {
-        bottom: 80px;
-        right: 20px;
-        width: 50px;
-        height: 50px;
-      }
-      
-      .floating-contact i {
-        font-size: 1rem;
-      }
+
+    /* Light mode overrides for buttons */
+    [data-theme="light"] .header-toggle {
+      background: var(--accent-primary);
+      box-shadow: 0 4px 15px var(--accent-shadow-light);
+    }
+
+    [data-theme="light"] .header-toggle:hover {
+      background: var(--accent-secondary);
+      box-shadow: 0 6px 20px var(--accent-shadow-strong);
+    }
+
+    [data-theme="light"] .scroll-top {
+      background: var(--accent-primary);
+    }
+
+    [data-theme="light"] .scroll-top:hover {
+      background: var(--accent-secondary);
+      box-shadow: 0 6px 20px var(--accent-shadow);
     }
   </style>
 
@@ -891,9 +1075,9 @@
 
       <div class="social-links text-center">
         <a href="https://github.com/codiceSpaghetti" class="github"><i class="bi bi-github"></i></a>
+        <a href="https://www.linkedin.com/in/serra-alessio/" class="linkedin"><i class="bi bi-linkedin"></i></a>
         <a href="https://x.com/as3erra" class="twitter"><i class="bi bi-twitter-x"></i></a>
         <a href="mailto:alessio.ser29@gmail.com" class="email"><i class="bi bi-envelope"></i></a>
-        <a href="https://www.linkedin.com/in/serra-alessio/" class="linkedin"><i class="bi bi-linkedin"></i></a>
       </div>
 
       <nav id="navmenu" class="navmenu">
@@ -911,8 +1095,7 @@
       <div class="language-toggle">
         <span class="toggle-label" data-translate="language-label">Language</span>
         <div class="language-switch">
-          <button class="language-option active" data-lang="en">EN</button>
-          <button class="language-option" data-lang="it">IT</button>
+          <!-- Language options will be dynamically generated by translator.js -->
         </div>
       </div>
 
@@ -923,7 +1106,7 @@
       <!-- Hero Section -->
       <section id="hero" class="hero section dark-background">
 
-        <img src="assets/img/background.jpg" alt="" data-aos="fade-in" class="">
+        <img src="assets/img/hero-bg.jpg" alt="" data-aos="fade-in" class="">
 
         <div class="container" data-aos="fade-up" data-aos-delay="100">
           <h2>Alessio Serra</h2>
@@ -1130,12 +1313,6 @@
           <div class="row">
 
             <div class="col-lg-6" data-aos="fade-up" data-aos-delay="100">
-              <h3 class="resume-title" data-translate="summary-title">Summary</h3>
-
-              <div class="resume-item pb-0">
-                <p data-translate="summary-description">I am an AI Engineer and Researcher focused on multilingual large language models. Expert in building machine translation systems that serve millions of users worldwide. Co-founder with startup experience in AI-powered geolocation platforms.</p>
-              </div><!-- End Resume Item -->
-
               <h3 class="resume-title" data-translate="experience-title">Professional Experience</h3>
               <div class="resume-item">
                 <h4 data-translate="current-role">AI Engineer &amp; Researcher</h4>
@@ -1179,6 +1356,7 @@
                 <h5>2017 - 2020</h5>
                 <p><em data-translate="university-location">University of Pisa, Pisa, Italy</em></p>
                 <p data-translate="bachelors-description">110/110 (4.0 GPA). Strong foundation in computer engineering including mathematics, physics, algorithms, databases, computer architecture, computer networks, operating systems, and programming in C, C++, Java, Python, Matlab, SQL, JavaScript, and PHP.</p>
+                <br>
               </div><!-- End Resume Item -->
 
             </div>
@@ -1434,13 +1612,26 @@
     <script src="assets/vendor/isotope-layout/isotope.pkgd.min.js"></script>
     <script src="assets/vendor/swiper/swiper-bundle.min.js"></script>
 
+    <!-- Translation System -->
+    <script src="assets/js/i18n/translator.js"></script>
+
     <!-- Main JS File -->
     <script src="assets/js/main.js"></script>
 
-    <!-- Theme Toggle Script -->
+    <!-- Enhanced Application Script -->
     <script>
+      // Global translator instance
+      let translator;
+
+      // Initialize translator when DOM is ready
+      document.addEventListener('DOMContentLoaded', async () => {
+        // Initialize translator
+        translator = new Translator();
+        await translator.init();
+      });
+
       // Loading screen functionality
-      window.addEventListener('load', () => {
+      window.addEventListener('load', async () => {
         const loadingScreen = document.getElementById('loading-screen');
         const body = document.body;
         
@@ -1457,316 +1648,31 @@
       });
 
       // Theme toggle functionality
-      const themeToggle = document.getElementById('theme-toggle');
-      const body = document.body;
-      
-      // Check for saved theme preference or default to dark theme
-      const currentTheme = localStorage.getItem('theme') || 'dark';
-      
-      // Apply the theme on page load
-      if (currentTheme === 'light') {
-        body.setAttribute('data-theme', 'light');
-      }
-      
-      // Theme toggle click handler
-      themeToggle.addEventListener('click', () => {
-        const currentTheme = body.getAttribute('data-theme');
+      document.addEventListener('DOMContentLoaded', () => {
+        const themeToggle = document.getElementById('theme-toggle');
+        const body = document.body;
         
+        // Check for saved theme preference or default to dark theme
+        const currentTheme = localStorage.getItem('theme') || 'dark';
+        
+        // Apply the theme on page load
         if (currentTheme === 'light') {
-          body.removeAttribute('data-theme');
-          localStorage.setItem('theme', 'dark');
-        } else {
           body.setAttribute('data-theme', 'light');
-          localStorage.setItem('theme', 'light');
         }
-      });
-
-      // Language toggle functionality
-      const languageOptions = document.querySelectorAll('.language-option');
-      const currentLanguage = localStorage.getItem('language') || 'en';
-      
-      // Centralized translations object - Easy to manage and extend
-      const translations = {
-        en: {
-          // Navigation
-          'nav-home': 'Home',
-          'nav-about': 'About',
-          'nav-tech': 'Tech Stack',
-          'nav-resume': 'Resume',
-          'nav-portfolio': 'Portfolio',
-          'nav-contact': 'Contact',
-          'language-label': 'Language',
-          
-          // Hero Section
-          'hero-subtitle': 'Making AI speak your language, one model at a time',
-          'hero-typed': ['an AI Researcher', 'an Engineer', 'a Builder'],
-          
-          // About Section
-          'about-title': 'About me in O(1)',
-          'about-description': "I'm an AI researcher and engineer focused on multilingual large language models, making LLMs speak your language.",
-          
-          // Technologies Section
-          'tech-title': 'Technologies & Tools 🛠️',
-          
-          // Current Focus Section
-          'focus-title': 'Current Focus 🎯',
-          'focus-description': 'What I\'m building and researching right now',
-          
-          // Portfolio Section
-          'portfolio-title': 'Portfolio 🚀',
-          'portfolio-description': 'A collection of my AI and machine learning projects, from academic research to production systems serving millions of users worldwide.',
-          
-          // Portfolio Project Descriptions
-          't4sa-desc': 'Cross-modal visual sentiment analysis system using knowledge distillation from text to vision models. Published at ECAI 2023, achieving state-of-the-art results on visual sentiment prediction.',
-          'numpygpt-desc': 'A from-scratch GPT built with NumPy and Python\'s standard library. No autograd, no frameworks: every layer is re-implemented with its own forward and backward pass. Gradients are computed manually, updates are transparent, and every operation is spelled out.',
-          'fake-news-desc': 'Multi-modal AI system for misinformation detection using transformer architectures. Features stance analysis and source credibility scoring.',
-          'unimusic-desc': 'Scalable music discovery platform with hybrid MongoDB/Neo4j architecture. Handles millions of tracks with real-time recommendation algorithms.',
-          'voice-vibes-desc': 'Speech emotion recognition system with six novel AI architectures. Achieved 94% accuracy using ensemble methods and advanced feature engineering.',
-          'federated-dbscan-desc': 'Privacy-preserving distributed clustering with federated learning. Enables collaborative ML without data sharing, achieving 99% privacy preservation.',
-          'pagerank-desc': 'High-performance PageRank algorithm implementation with optimized sparse matrix operations. Handles graphs with millions of nodes efficiently.',
-          
-          // Call to Action
-          'cta-title': 'Let\'s Build the Future of AI Together',
-          'cta-description': 'Whether you\'re looking to collaborate on cutting-edge research, discuss the latest in multilingual LLMs, or explore how AI can transform your business, I\'m always excited to connect with fellow innovators and problem solvers.',
-          'cta-button1': 'Start a Conversation',
-          'cta-button2': 'Send Direct Email',
-          
-          // Contact Section
-          'contact-title': 'Contact',
-          'contact-description': 'Let\'s connect! Whether you want to discuss AI, machine learning, or potential collaborations, I\'m always open to interesting conversations.',
-          
-          // Resume Section
-          'resume-title': 'Resume',
-          'resume-description': 'AI Engineer and Researcher with extensive experience in building and scaling multilingual machine translation systems. Proven track record of serving 200+ million users through innovative LLM solutions.',
-          'summary-title': 'Summary',
-          'summary-description': 'I am an AI Engineer and Researcher focused on multilingual large language models. Expert in building machine translation systems that serve millions of users worldwide. Co-founder with startup experience in AI-powered geolocation platforms.',
-          'education-title': 'Education',
-          'masters-full': 'M.S. Artificial Intelligence & Data Engineering',
-          'university-location': 'University of Pisa, Pisa, Italy',
-          'masters-description': '110/110 summa cum laude (4.0 GPA). Specialized in Data Mining, Machine Learning, Computer Vision, Natural Language Processing, Optimization Theory, and Process Mining. Gained hands-on experience with Distributed Systems, Cloud Computing, and tools like MongoDB, Neo4j, Docker, Kubernetes, TensorFlow, and PyTorch.',
-          'bachelors-full': 'B.S. Computer Engineering',
-          'bachelors-description': '110/110 (4.0 GPA). Strong foundation in computer engineering including mathematics, physics, algorithms, databases, computer architecture, computer networks, operating systems, and programming in C, C++, Java, Python, Matlab, SQL, JavaScript, and PHP.',
-          'experience-title': 'Professional Experience',
-          'current-role': 'AI Engineer & Researcher',
-          'current-company': 'Translated, Rome, Italy',
-          'lara-desc': '<strong>Lara:</strong> Worked on the full R&D pipeline of an LLM optimized for MT: from data collection and model training to alignment and inference optimization. Built from scratch within a startup-style team of four operating within the company. Now the flagship B2B product, it translates all content worldwide for Airbnb and most of Uber, Shopify, Nike, and more, reaching over 200M users globally. A B2C version has also recently launched.',
-          'lara-grande-desc': '<strong>Lara Grande:</strong> Key role in scaling LLM to match the quality of the top 1% of professional translators. Used over 1,000 GPUs on CINECA\'s HPC cluster for large-scale distributed training.',
-          'language-expansion-desc': '<strong>Language Expansion:</strong> Identified and led a successful research project to expand machine translation production coverage from 56 to 201 languages, a 4× increase, making it the first commercial MT engine to support such a range. Proposed the direction, designed the implementation plan, and led it to completion within eight months.',
-          'instruction-mt-desc': '<strong>Instruction-following MT:</strong> Led research aligning LLM to follow detailed style guides using SFT and DPO.',
-          'trust-attention-desc': '<strong>Trust Attention:</strong> Proposed and validated a novel technique prioritizing high-value training data, achieving the most significant MT quality improvements in five years.',
-          'polyglot-desc': '<strong>Polyglot:</strong> Developed a Language Identification model supporting 201 languages.',
-          'startup-role': 'Co-Founder & AI Engineer',
-          'italy': 'Italy',
-          'startup-desc1': 'Co-founded AI startup as part of three-person founding team building image geolocalization platform',
-          'startup-desc2': 'Developed the core model for image geolocalization using vision transformers and retrieval-based techniques',
-          'startup-desc3': 'Gained valuable experience in fast-paced startup environment and product development',
-          'startup-desc4': 'Learned crucial lessons about team dynamics, uncertainty management, and rapid iteration',
-          'try-here': 'Try it here',
-          
-          // Contact Section
-          'location-label': 'Location',
-          'location': 'Rome, Italy',
-          'form-name': 'Your Name',
-          'form-email': 'Your Email',
-          'form-subject': 'Subject',
-          'form-message': 'Message',
-          'form-loading': 'Loading',
-          'form-success': 'Your message has been sent. Thank you!',
-          'form-send': 'Send Message',
-          
-          // About Section Details
-          'about-role': 'AI Engineer & Researcher',
-          'about-intro': 'At Translated, I helped build Lara from scratch, a machine translation LLM that powers content for Airbnb, Uber, Shopify, and others, reaching over 200 million users.',
-          'birth-place-label': 'Birth Place:',
-          'birth-place': 'Naples, Italy',
-          'city-label': 'City:',
-          'city': 'Rome, Italy',
-          'masters-label': 'M.S. Degree:',
-          'masters-degree': 'AI & Data Engineering',
-          'bachelors-label': 'B.S. Degree:',
-          'bachelors-degree': 'Computer Engineering',
-          'university-label': 'University:',
-          'university': 'University of Pisa',
-          'languages-label': 'Languages:',
-          'languages': 'Italian, English',
-          'focus-label': 'Focus:',
-          'focus': 'Multilingual LLMs',
-          'about-conclusion': 'I\'ve scaled training to 1,000+ GPUs and expanded MT coverage to 201 languages. Working nights and weekends, I co-founded an AI startup building an image geolocalization platform. I\'m a voracious learner who constantly pushes to improve how I think, train, and build. I can\'t imagine a life without some form of training, whether it\'s GPUs, gym plates, or marathon prep.',
-          
-          // Current Focus Details
-          'focus-scaling-title': 'Scaling MT to 201 Languages',
-          'focus-scaling-desc': 'Expanding machine translation coverage while maintaining quality. Working with massive multilingual datasets and optimizing for low-resource languages using advanced transfer learning techniques.',
-          'focus-production-title': 'Multilingual AI in Production',
-          'focus-production-desc': 'Building robust translation systems that handle real-world complexity at scale. Tackling challenges like code-switching, domain adaptation, and maintaining quality across 200+ million daily users.',
-          'tag-realtime': 'Real-time Serving',
-          'tag-quality': 'Quality Assurance'
-        },
         
-        it: {
-          // Navigation
-          'nav-home': 'Home',
-          'nav-about': 'Chi Sono',
-          'nav-tech': 'Tecnologie',
-          'nav-resume': 'CV',
-          'nav-portfolio': 'Portfolio',
-          'nav-contact': 'Contatti',
-          'language-label': 'Lingua',
+        // Theme toggle click handler
+        themeToggle.addEventListener('click', () => {
+          const currentTheme = body.getAttribute('data-theme');
           
-          // Hero Section
-          'hero-subtitle': 'Rendendo l\'AI capace di parlare la tua lingua, un modello alla volta',
-          'hero-typed': ['un Ricercatore AI', 'un Ingegnere', 'un Creatore'],
-          
-          // About Section
-          'about-title': 'Chi sono in O(1)',
-          'about-description': 'Sono un ricercatore e ingegnere AI specializzato in modelli linguistici multilingue, rendendo gli LLM capaci di parlare la tua lingua.',
-          'about-role': 'Ingegnere AI e Ricercatore',
-          'about-intro': 'In Translated, ho contribuito a far nascere Lara, un LLM per la traduzione automatica che localizza i contenuti per Airbnb, Uber, Shopify e altri, raggiungendo oltre 200 milioni di utenti.',
-          'birth-place-label': 'Luogo di Nascita:',
-          'birth-place': 'Napoli, Italia',
-          'email-label': 'Email:',
-          'city-label': 'Città:',
-          'city': 'Roma, Italia',
-          'masters-label': 'Laurea Magistrale:',
-          'masters-degree': 'AI & Data Engineering',
-          'bachelors-label': 'Laurea Triennale:',
-          'bachelors-degree': 'Ingegneria Informatica',
-          'university-label': 'Università:',
-          'university': 'Università di Pisa',
-          'languages-label': 'Lingue:',
-          'languages': 'Italiano, Inglese',
-          'focus-label': 'Focus:',
-          'focus': 'LLM Multilingue',
-          'about-conclusion': 'Mi sono formato in training distribuiti su larga scala, utilizzando fino a 1.000+ GPU ed ho espanso la copertura linguistica del motore di traduzione a 201 lingue. Lavorando di sera e nei weekend, ho co-fondato una startup AI che costruisce una piattaforma di geolocalizzazione di immagini. Sono uno studente vorace che spinge costantemente per migliorare come penso, addestro e costruisco. Non riesco a immaginare una vita senza qualche forma di allenamento, che si tratti di GPU, pesi in palestra o preparazione per maratone.',
-          
-          // Technologies Section
-          'tech-title': 'Tecnologie e Strumenti 🛠️',
-          
-          // Current Focus Section
-          'focus-title': 'Focus Attuale 🎯',
-          'focus-description': 'Su cosa sto lavorando e ricercando in questo momento',
-          'focus-scaling-title': 'Scalare MT a 201 Lingue',
-          'focus-scaling-desc': 'Espandere la copertura della traduzione automatica mantenendo la qualità. Lavorando con enormi dataset multilingue e ottimizzando per lingue a basse risorse usando tecniche avanzate di transfer learning.',
-          'focus-production-title': 'AI Multilingue in Produzione',
-          'focus-production-desc': 'Costruire sistemi di traduzione robusti che gestiscono la complessità del mondo reale su larga scala. Affrontare sfide come code-switching, adattamento del dominio e mantenimento della qualità per oltre 200 milioni di utenti giornalieri.',
-          'tag-realtime': 'Serving Real-time',
-          'tag-quality': 'Controllo Qualità',
-          
-          // Resume Section
-          'resume-title': 'Curriculum',
-          'resume-description': 'Ingegnere AI e Ricercatore con vasta esperienza nella costruzione e scalabilità di sistemi di traduzione automatica multilingue. Comprovato track record nel servire 200+ milioni di utenti attraverso soluzioni LLM innovative.',
-          'summary-title': 'Sommario',
-          'summary-description': 'Sono un Ingegnere AI e Ricercatore specializzato in modelli linguistici multilingue. Esperto nella costruzione di sistemi di traduzione automatica che servono milioni di utenti in tutto il mondo. Co-fondatore con esperienza in startup nel settore delle piattaforme di geolocalizzazione AI.',
-          'education-title': 'Formazione',
-          'masters-full': 'Laurea Magistrale in Intelligenza Artificiale e Data Engineering',
-          'university-location': 'Università di Pisa, Pisa, Italia',
-          'masters-description': '110/110 e lode (4.0 GPA). Specializzato in Data Mining, Machine Learning, Computer Vision, Natural Language Processing, Teoria dell\'Ottimizzazione e Process Mining. Esperienza pratica con Sistemi Distribuiti, Cloud Computing e strumenti come MongoDB, Neo4j, Docker, Kubernetes, TensorFlow e PyTorch.',
-          'bachelors-full': 'Laurea Triennale in Ingegneria Informatica',
-          'bachelors-description': '110/110 (4.0 GPA). Solida base in ingegneria informatica inclusi matematica, fisica, algoritmi, database, architettura dei computer, reti informatiche, sistemi operativi e programmazione in C, C++, Java, Python, Matlab, SQL, JavaScript e PHP.',
-          'experience-title': 'Esperienza Professionale',
-          'current-role': 'Ingegnere AI e Ricercatore',
-          'current-company': 'Translated, Roma, Italia',
-          'lara-desc': '<strong>Lara:</strong> Ho lavorato sull\'intera pipeline R&D di un LLM ottimizzato per MT: dalla raccolta dati e addestramento del modello all\'allineamento e ottimizzazione dell\'inferenza. Costruito da zero all\'interno di un team stile startup di quattro persone operante nell\'azienda. Ora è il prodotto B2B di punta, traduce tutti i contenuti a livello mondiale per Airbnb e la maggior parte di Uber, Shopify, Nike e altri, raggiungendo oltre 200M di utenti globalmente. È stata lanciata di recente anche una versione B2C.',
-          'lara-grande-desc': '<strong>Lara Grande:</strong> Ruolo chiave nel scalare LLM per eguagliare la qualità dell\'1% migliore dei traduttori professionali. Utilizzato oltre 1.000 GPU sul cluster HPC di CINECA per addestramento distribuito su larga scala.',
-          'language-expansion-desc': '<strong>Espansione Linguaggi:</strong> Identificato e guidato un progetto di ricerca di successo per espandere la copertura della traduzione automatica in produzione da 56 a 201 lingue, un aumento di 4×, rendendolo il primo motore MT commerciale a supportare tale gamma. Proposto la direzione, progettato il piano di implementazione e guidato al completamento entro otto mesi.',
-          'instruction-mt-desc': '<strong>MT seguendo Istruzioni:</strong> Guidato ricerca nell\'allineare LLM per seguire guide di stile dettagliate usando SFT e DPO.',
-          'trust-attention-desc': '<strong>Trust Attention:</strong> Proposto e validato una tecnica innovativa che priorizza dati di addestramento ad alto valore, ottenendo i miglioramenti di qualità MT più significativi in cinque anni.',
-          'polyglot-desc': '<strong>Polyglot:</strong> Sviluppato un modello di Identificazione Linguistica che supporta 201 lingue.',
-          'startup-role': 'Co-Fondatore e Ingegnere AI',
-          'italy': 'Italia',
-          'startup-desc1': 'Co-fondato startup AI come parte del team fondatore di tre persone costruendo piattaforma di geolocalizzazione di immagini',
-          'startup-desc2': 'Sviluppato il modello core per la geolocalizzazione di immagini usando vision transformer e tecniche basate su retrieval',
-          'startup-desc3': 'Acquisito esperienza preziosa in ambiente startup veloce e sviluppo prodotti',
-          'startup-desc4': 'Appreso lezioni cruciali su dinamiche di team, gestione dell\'incertezza e iterazione rapida',
-          'try-here': 'Provalo qui',
-          
-          // Portfolio Section
-          'portfolio-title': 'Portfolio 🚀',
-          'portfolio-description': 'Una raccolta dei miei progetti AI e machine learning, dalla ricerca accademica ai sistemi di produzione che servono milioni di utenti in tutto il mondo.',
-          
-          // Portfolio Project Descriptions
-          't4sa-desc': 'Sistema di analisi del sentiment visuale cross-modale che utilizza distillazione di conoscenza da modelli di testo a visione. Pubblicato a ECAI 2023, raggiungendo risultati state-of-the-art nella predizione del sentiment visuale.',
-          'numpygpt-desc': 'Un GPT costruito da zero con NumPy e la libreria standard di Python. Nessun autograd, nessun framework: ogni layer è re-implementato con il proprio forward e backward pass. I gradienti sono calcolati manualmente, gli aggiornamenti sono trasparenti, e ogni operazione è specificata.',
-          'fake-news-desc': 'Sistema AI multi-modale per la rilevazione di disinformazione utilizzando architetture transformer. Include analisi di stance e scoring di credibilità delle fonti.',
-          'unimusic-desc': 'Piattaforma scalabile per la scoperta musicale con architettura ibrida MongoDB/Neo4j. Gestisce milioni di tracce con algoritmi di raccomandazione in tempo reale.',
-          'voice-vibes-desc': 'Sistema di riconoscimento delle emozioni vocali con sei architetture AI innovative. Ha raggiunto il 94% di accuratezza utilizzando metodi ensemble e feature engineering avanzata.',
-          'federated-dbscan-desc': 'Clustering distribuito privacy-preserving con federated learning. Abilita ML collaborativo senza condivisione di dati, raggiungendo il 99% di preservazione della privacy.',
-          'pagerank-desc': 'Implementazione ad alte prestazioni dell\'algoritmo PageRank con operazioni ottimizzate su matrici sparse. Gestisce grafi con milioni di nodi in modo efficiente.',
-          
-          // Call to Action
-          'cta-title': 'Costruiamo Insieme il Futuro dell\'AI',
-          'cta-description': 'Che tu stia cercando di collaborare su ricerca all\'avanguardia, discutere degli ultimi sviluppi negli LLM multilingue, o esplorare come l\'AI può trasformare il tuo business, sono sempre entusiasta di connettermi con innovatori e problem solver.',
-          'cta-button1': 'Inizia una Conversazione',
-          'cta-button2': 'Invia Email Diretta',
-          
-          // Contact Section
-          'contact-title': 'Contatti',
-          'contact-description': 'Mettiamoci in contatto! Che tu voglia discutere di AI, machine learning, o potenziali collaborazioni, sono sempre aperto a conversazioni interessanti.',
-          'location-label': 'Posizione',
-          'location': 'Roma, Italia',
-          'form-name': 'Il Tuo Nome',
-          'form-email': 'La Tua Email',
-          'form-subject': 'Oggetto',
-          'form-message': 'Messaggio',
-          'form-loading': 'Caricamento',
-          'form-success': 'Il tuo messaggio è stato inviato. Grazie!',
-          'form-send': 'Invia Messaggio'
-        }
-      };
-      
-      // Apply saved language on page load
-      switchLanguage(currentLanguage);
-      updateLanguageButtons(currentLanguage);
-      
-      // Language toggle click handlers
-      languageOptions.forEach(option => {
-        option.addEventListener('click', () => {
-          const selectedLang = option.getAttribute('data-lang');
-          switchLanguage(selectedLang);
-          updateLanguageButtons(selectedLang);
-          localStorage.setItem('language', selectedLang);
-        });
-      });
-      
-      function switchLanguage(lang) {
-        const translation = translations[lang];
-        if (!translation) return;
-        
-        // Update all elements with data-translate attribute
-        document.querySelectorAll('[data-translate]').forEach(element => {
-          const key = element.getAttribute('data-translate');
-          if (translation[key]) {
-            // Use innerHTML for content that contains HTML tags, textContent for plain text
-            if (translation[key].includes('<') || translation[key].includes('>')) {
-              element.innerHTML = translation[key];
-            } else {
-              element.textContent = translation[key];
-            }
-          }
-        });
-        
-        // Update typed.js content for hero section
-        const typedElement = document.querySelector('.typed');
-        if (typedElement && window.typed) {
-          window.typed.destroy();
-          window.typed = new Typed('.typed', {
-            strings: translation['hero-typed'],
-            typeSpeed: 100,
-            backSpeed: 50,
-            backDelay: 2000,
-            loop: true
-          });
-        }
-      }
-      
-      function updateLanguageButtons(selectedLang) {
-        languageOptions.forEach(option => {
-          if (option.getAttribute('data-lang') === selectedLang) {
-            option.classList.add('active');
+          if (currentTheme === 'light') {
+            body.removeAttribute('data-theme');
+            localStorage.setItem('theme', 'dark');
           } else {
-            option.classList.remove('active');
+            body.setAttribute('data-theme', 'light');
+            localStorage.setItem('theme', 'light');
           }
         });
-      }
+      });
     </script>
 
   </div>
