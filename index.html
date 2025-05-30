@@ -29,62 +29,406 @@
 
   <!-- Custom Styles -->
   <style>
-    /* Hero Section Enhancements */
-    .hero-subtitle {
-      font-size: 1.2rem !important;
-      color: rgba(255, 255, 255, 0.8) !important;
-      margin-top: 1rem !important;
-      font-weight: 300 !important;
-      font-style: italic;
+    /* Global Theme Variables */
+    :root {
+      /* Dark Theme (Default) - Improved Contrast */
+      --bg-primary: #0f0f0f;
+      --bg-secondary: #1a1a1a;
+      --bg-tertiary: #2a2a2a;
+      --bg-card: #212121;
+      --bg-card-hover: #2d2d2d;
+      --text-primary: #ffffff;
+      --text-secondary: #d0d8df;
+      --text-muted: #8a8a8a;
+      --accent-primary: #27a776;
+      --accent-secondary: #28ca8c;
+      --accent-gradient: linear-gradient(45deg, #27a776, #28ca8c);
+      --accent-gradient-blue: linear-gradient(45deg, #27a776, #28ca8c);
+      --border-color: #333333;
+      --shadow-color: rgba(0, 0, 0, 0.3);
+      --shadow-color-strong: rgba(0, 0, 0, 0.5);
+      --header-hover: #2a2a2a;
+      --breadcrumb-color: #1a1a1a;
     }
-    
+
+    /* Light Theme - White and Blue */
+    [data-theme="light"] {
+      --bg-primary: #ffffff;
+      --bg-secondary: #f8f9fa;
+      --bg-tertiary: #e9ecef;
+      --bg-card: #ffffff;
+      --bg-card-hover: #f8f9fa;
+      --text-primary: #2c4964;
+      --text-secondary: #5a6c7d;
+      --text-muted: #7a8a99;
+      --accent-primary: #1e3c72;
+      --accent-secondary: #2a5298;
+      --accent-gradient: linear-gradient(45deg, #1e3c72, #2a5298);
+      --accent-gradient-blue: linear-gradient(45deg, #1e3c72, #2a5298);
+      --border-color: #dee2e6;
+      --shadow-color: rgba(0, 0, 0, 0.1);
+      --shadow-color-strong: rgba(0, 0, 0, 0.2);
+      --header-hover: #f8f9fa;
+      --breadcrumb-color: #e9ecef;
+    }
+
+    /* Loading Screen */
+    .loading-screen {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(135deg, #0f0f0f 0%, #1a1a1a 100%);
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      z-index: 9999;
+      transition: opacity 0.5s ease-out, visibility 0.5s ease-out;
+    }
+
+    .loading-screen.fade-out {
+      opacity: 0;
+      visibility: hidden;
+    }
+
+    .loading-logo {
+      width: 120px;
+      height: 120px;
+      border: 4px solid #2a2a2a;
+      border-top: 4px solid #27a776;
+      border-radius: 50%;
+      animation: spin 0.8s linear infinite;
+      margin-bottom: 30px;
+      position: relative;
+    }
+
+    .loading-logo::before {
+      content: "🤖";
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      font-size: 2.5rem;
+      animation: pulse 1.5s ease-in-out infinite;
+    }
+
+    .loading-text {
+      color: #27a776;
+      font-family: "Raleway", sans-serif;
+      font-size: 1.5rem;
+      font-weight: 600;
+      margin-bottom: 20px;
+      animation: fadeInUp 0.8s ease-out;
+    }
+
+    .loading-subtext {
+      color: #d0d8df;
+      font-family: "Raleway", sans-serif;
+      font-size: 1rem;
+      font-weight: 300;
+      animation: fadeInUp 0.8s ease-out 0.2s both;
+    }
+
+    @keyframes spin {
+      0% { transform: rotate(0deg); }
+      100% { transform: rotate(360deg); }
+    }
+
+    @keyframes pulse {
+      0%, 100% { transform: translate(-50%, -50%) scale(1); }
+      50% { transform: translate(-50%, -50%) scale(1.1); }
+    }
+
+    @keyframes fadeInUp {
+      from {
+        opacity: 0;
+        transform: translateY(30px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    /* Hide main content during loading */
+    body.loading .main-content {
+      opacity: 0;
+    }
+
+    body .main-content {
+      opacity: 1;
+      transition: opacity 0.3s ease-in;
+    }
+
+    /* Language Toggle */
+    .language-toggle {
+      padding: 15px 0;
+      border-top: 1px solid var(--border-color);
+      margin-top: 20px;
+    }
+
+    .language-toggle .toggle-label {
+      color: var(--text-secondary);
+      font-size: 0.9rem;
+      font-weight: 500;
+      margin-bottom: 10px;
+      display: block;
+      text-align: center;
+    }
+
+    .language-switch {
+      display: flex;
+      background: var(--bg-tertiary);
+      border-radius: 25px;
+      padding: 3px;
+      margin: 0 auto;
+      width: fit-content;
+      border: 1px solid var(--border-color);
+    }
+
+    .language-option {
+      padding: 8px 16px;
+      border-radius: 20px;
+      font-size: 0.85rem;
+      font-weight: 500;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      color: var(--text-secondary);
+      border: none;
+      background: transparent;
+      min-width: 45px;
+    }
+
+    .language-option.active {
+      background: var(--accent-primary);
+      color: white;
+      box-shadow: 0 2px 8px rgba(39, 167, 118, 0.3);
+    }
+
+    .language-option:hover:not(.active) {
+      background: var(--bg-card-hover);
+      color: var(--text-primary);
+    }
+
+    /* Theme Toggle Button */
+    .theme-toggle {
+      position: fixed;
+      top: 20px;
+      right: 20px;
+      width: 50px;
+      height: 50px;
+      background: var(--accent-gradient);
+      border: none;
+      border-radius: 50%;
+      color: white;
+      font-size: 1.2rem;
+      cursor: pointer;
+      box-shadow: 0 4px 15px var(--shadow-color-strong);
+      transition: all 0.2s ease;
+      z-index: 1001;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .theme-toggle:hover {
+      transform: scale(1.1);
+      box-shadow: 0 6px 20px var(--shadow-color-strong);
+    }
+
+    .theme-toggle .light-icon {
+      display: none;
+    }
+
+    [data-theme="light"] .theme-toggle .dark-icon {
+      display: none;
+    }
+
+    [data-theme="light"] .theme-toggle .light-icon {
+      display: block;
+    }
+
+    /* Global body styling */
+    body {
+      background-color: var(--bg-primary);
+      color: var(--text-primary);
+      transition: background-color 0.3s ease, color 0.3s ease;
+    }
+
+    /* Header and navigation theme */
+    .header {
+      background-color: var(--bg-secondary) !important;
+      border-right: 1px solid var(--border-color);
+      transition: background-color 0.3s ease, border-color 0.3s ease;
+    }
+
+    .header .profile-img img {
+      border: 3px solid var(--accent-primary);
+    }
+
+    .header .sitename {
+      color: var(--text-primary) !important;
+    }
+
+    .header .social-links a {
+      background-color: var(--bg-tertiary);
+      color: var(--text-secondary);
+      border: 1px solid var(--border-color);
+      transition: all 0.3s ease;
+    }
+
+    .header .social-links a:hover {
+      background-color: var(--accent-primary);
+      color: white;
+      border-color: var(--accent-primary);
+    }
+
+    .header .navmenu a {
+      color: var(--text-secondary) !important;
+      transition: color 0.3s ease;
+    }
+
+    .header .navmenu a:hover, .header .navmenu .active {
+      color: var(--accent-primary) !important;
+    }
+
+    /* Main sections theme */
+    .section {
+      background-color: var(--bg-primary);
+      transition: background-color 0.3s ease;
+    }
+
+    .section.light-background {
+      background-color: var(--bg-secondary) !important;
+    }
+
+    .section-title h2 {
+      color: var(--text-primary);
+      transition: color 0.3s ease;
+    }
+
+    .section-title p {
+      color: var(--text-secondary);
+      transition: color 0.3s ease;
+    }
+
+    /* Hero Section Enhancements - Fixed Visibility with Raleway Font */
+    .hero {
+      background-color: var(--bg-primary) !important;
+      position: relative;
+    }
+
+    .hero img {
+      opacity: 0.4;
+    }
+
+    .hero .container {
+      position: relative;
+      z-index: 2;
+    }
+
+    .hero h2 {
+      color: #ffffff !important;
+      font-family: "Raleway", sans-serif !important;
+      font-weight: 800 !important;
+      text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.8);
+      font-size: 3.5rem !important;
+    }
+
+    .hero p {
+      color: #ffffff !important;
+      font-family: "Raleway", sans-serif !important;
+      font-weight: 600 !important;
+      text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.8);
+      font-size: 1.8rem !important;
+    }
+
+    .hero-subtitle {
+      font-size: 1.3rem !important;
+      color: #ffffff !important;
+      font-family: "Raleway", sans-serif !important;
+      margin-top: 1rem !important;
+      font-weight: 400 !important;
+      font-style: italic;
+      text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.8);
+    }
+
+    /* About section */
+    .about .content h2 {
+      color: var(--text-primary);
+      transition: color 0.3s ease;
+    }
+
+    .about .content p {
+      color: var(--text-secondary);
+      transition: color 0.3s ease;
+    }
+
+    .about .content ul li {
+      color: var(--text-secondary);
+      transition: color 0.3s ease;
+    }
+
+    .about .content ul li strong {
+      color: var(--text-primary);
+      transition: color 0.3s ease;
+    }
+
     /* Technologies Section */
     .tech-item {
       padding: 2rem 1rem;
       border-radius: 10px;
-      background: #fff;
-      box-shadow: 0 4px 16px rgba(0,0,0,0.1);
+      background: var(--bg-card);
+      box-shadow: 0 4px 16px var(--shadow-color-strong);
       transition: all 0.3s ease;
       height: 100%;
+      border: 1px solid var(--border-color);
     }
     
     .tech-item:hover {
       transform: translateY(-5px);
-      box-shadow: 0 8px 25px rgba(0,0,0,0.15);
+      box-shadow: 0 8px 25px var(--shadow-color-strong);
+      background: var(--bg-card-hover);
     }
     
     .tech-item h5 {
       margin: 1rem 0 0.5rem 0;
       font-weight: 600;
-      color: #2c4964;
+      color: var(--text-primary);
+      transition: color 0.3s ease;
     }
     
     .tech-item p {
       margin: 0;
-      color: #666;
+      color: var(--text-secondary);
       font-size: 0.9rem;
+      transition: color 0.3s ease;
     }
     
     /* Current Focus Section */
     .focus-item {
-      background: #fff;
+      background: var(--bg-card);
       padding: 2rem;
       border-radius: 15px;
-      box-shadow: 0 5px 20px rgba(0,0,0,0.08);
-      border-left: 4px solid #FF6B35;
+      box-shadow: 0 5px 20px var(--shadow-color-strong);
+      border-left: 4px solid var(--accent-primary);
       transition: all 0.3s ease;
       height: 100%;
+      border: 1px solid var(--border-color);
     }
     
     .focus-item:hover {
       transform: translateY(-3px);
-      box-shadow: 0 10px 30px rgba(0,0,0,0.12);
+      box-shadow: 0 10px 30px var(--shadow-color-strong);
+      background: var(--bg-card-hover);
     }
     
     .focus-icon {
       width: 60px;
       height: 60px;
-      background: linear-gradient(45deg, #FF6B35, #FF8E53);
+      background: var(--accent-gradient);
       border-radius: 50%;
       display: flex;
       align-items: center;
@@ -98,16 +442,18 @@
     }
     
     .focus-content h4 {
-      color: #2c4964;
+      color: var(--text-primary);
       font-weight: 600;
       margin-bottom: 1rem;
       font-size: 1.3rem;
+      transition: color 0.3s ease;
     }
     
     .focus-content p {
-      color: #666;
+      color: var(--text-secondary);
       line-height: 1.6;
       margin-bottom: 1.5rem;
+      transition: color 0.3s ease;
     }
     
     .focus-tags {
@@ -117,18 +463,142 @@
     }
     
     .tag {
-      background: #f8f9fa;
-      color: #2c4964;
+      background: var(--bg-tertiary);
+      color: var(--text-primary);
       padding: 0.25rem 0.75rem;
       border-radius: 20px;
       font-size: 0.8rem;
       font-weight: 500;
-      border: 1px solid #e9ecef;
+      border: 1px solid var(--border-color);
+      transition: all 0.3s ease;
+    }
+
+    /* Resume Section */
+    .resume {
+      background-color: var(--bg-secondary);
+      transition: background-color 0.3s ease;
+    }
+
+    .resume .resume-title {
+      color: var(--text-primary);
+      transition: color 0.3s ease;
+    }
+
+    .resume .resume-item {
+      background-color: var(--bg-card);
+      border-left: 2px solid var(--accent-primary);
+      border-radius: 8px;
+      padding: 20px;
+      margin-bottom: 20px;
+      box-shadow: 0 2px 10px var(--shadow-color-strong);
+      transition: all 0.3s ease;
+    }
+
+    .resume .resume-item h4 {
+      color: var(--text-primary);
+      transition: color 0.3s ease;
+    }
+
+    .resume .resume-item h5 {
+      color: var(--accent-primary);
+    }
+
+    .resume .resume-item p, .resume .resume-item li {
+      color: var(--text-secondary);
+      transition: color 0.3s ease;
+    }
+
+    .resume .resume-item em {
+      color: var(--text-muted);
+      transition: color 0.3s ease;
+    }
+
+    .resume .resume-item a {
+      color: var(--accent-primary);
+      text-decoration: none;
+      font-weight: 600;
+    }
+
+    .resume .resume-item a:hover {
+      text-decoration: underline;
+    }
+
+    /* Portfolio Section */
+    .portfolio .portfolio-content {
+      background: var(--bg-card);
+      border-radius: 10px;
+      overflow: hidden;
+      box-shadow: 0 4px 16px var(--shadow-color-strong);
+      transition: all 0.3s ease;
+      border: 1px solid var(--border-color);
+      display: block;
+      text-decoration: none !important;
+    }
+
+    .portfolio .portfolio-content:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 8px 25px var(--shadow-color-strong);
+      text-decoration: none !important;
+      color: inherit !important;
+    }
+
+    .portfolio .portfolio-info {
+      background: var(--bg-card);
+      padding: 20px;
+      position: relative;
+    }
+
+    .portfolio .portfolio-info h4 {
+      color: var(--text-primary);
+      transition: color 0.3s ease;
+      margin-bottom: 10px;
+    }
+
+    .portfolio .portfolio-info p {
+      color: var(--text-secondary);
+      transition: color 0.3s ease;
+      margin-bottom: 15px;
+    }
+
+    .portfolio .portfolio-info .preview-link {
+      position: absolute;
+      top: 15px;
+      right: 15px;
+      background: var(--accent-primary);
+      color: white;
+      width: 35px;
+      height: 35px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 0.9rem;
+      transition: all 0.2s ease;
+      opacity: 0.8;
+    }
+
+    .portfolio .portfolio-info .preview-link:hover {
+      background: var(--accent-secondary);
+      transform: scale(1.1);
+      opacity: 1;
+    }
+
+    .portfolio .portfolio-filters li {
+      background: var(--bg-tertiary);
+      color: var(--text-secondary);
+      border: 1px solid var(--border-color);
+      transition: all 0.3s ease;
+    }
+
+    .portfolio .portfolio-filters li:hover, .portfolio .portfolio-filters li.filter-active {
+      background: var(--accent-primary);
+      color: white;
+      border-color: var(--accent-primary);
     }
     
     /* Call to Action Section */
     .call-to-action {
-      background: linear-gradient(45deg, #1e3c72 0%, #2a5298 100%);
+      background: var(--accent-gradient-blue);
       padding: 80px 0;
       color: white;
     }
@@ -137,6 +607,7 @@
       font-size: 2.5rem;
       margin-bottom: 1.5rem;
       font-weight: 700;
+      color: white !important;
     }
     
     .call-to-action p {
@@ -144,6 +615,7 @@
       margin-bottom: 2rem;
       opacity: 0.9;
       line-height: 1.6;
+      color: white !important;
     }
     
     .cta-buttons {
@@ -163,27 +635,108 @@
     }
     
     .btn-cta {
-      background: #fff;
-      color: #1e3c72;
+      background: #ffffff !important;
+      color: var(--accent-primary) !important;
+      border: 2px solid #ffffff;
     }
     
     .btn-cta:hover {
-      background: #f8f9fa;
-      color: #1e3c72;
+      background: #f8f9fa !important;
+      color: var(--accent-primary) !important;
       transform: translateY(-2px);
       box-shadow: 0 6px 20px rgba(0,0,0,0.2);
+      text-decoration: none;
     }
     
     .btn-cta-outline {
-      background: transparent;
-      color: #fff;
-      border: 2px solid #fff;
+      background: transparent !important;
+      color: #ffffff !important;
+      border: 2px solid #ffffff;
     }
     
     .btn-cta-outline:hover {
-      background: #fff;
-      color: #1e3c72;
+      background: #ffffff !important;
+      color: var(--accent-primary) !important;
       transform: translateY(-2px);
+      text-decoration: none;
+    }
+
+    /* Contact Section */
+    .contact {
+      background-color: var(--bg-primary);
+      transition: background-color 0.3s ease;
+    }
+
+    .contact .info-wrap {
+      background: var(--bg-card);
+      padding: 30px;
+      border-radius: 10px;
+      border: 1px solid var(--border-color);
+      box-shadow: 0 4px 16px var(--shadow-color-strong);
+      transition: all 0.3s ease;
+    }
+
+    .contact .info-item {
+      background: transparent;
+    }
+
+    .contact .info-item h3 {
+      color: var(--text-primary);
+      transition: color 0.3s ease;
+    }
+
+    .contact .info-item p, .contact .info-item a {
+      color: var(--text-secondary);
+      transition: color 0.3s ease;
+    }
+
+    .contact .info-item a:hover {
+      color: var(--accent-primary);
+    }
+
+    .contact .info-item i {
+      color: var(--accent-primary);
+    }
+
+    .contact .php-email-form {
+      background: var(--bg-card);
+      padding: 30px;
+      border-radius: 10px;
+      border: 1px solid var(--border-color);
+      box-shadow: 0 4px 16px var(--shadow-color-strong);
+      transition: all 0.3s ease;
+    }
+
+    .contact .php-email-form label {
+      color: var(--text-primary);
+      transition: color 0.3s ease;
+    }
+
+    .contact .php-email-form input, .contact .php-email-form textarea {
+      background: var(--bg-tertiary);
+      border: 1px solid var(--border-color);
+      color: var(--text-primary);
+      transition: all 0.3s ease;
+    }
+
+    .contact .php-email-form input:focus, .contact .php-email-form textarea:focus {
+      border-color: var(--accent-primary);
+      box-shadow: 0 0 0 0.2rem rgba(39, 167, 118, 0.25);
+    }
+
+    .contact .php-email-form button {
+      background: var(--accent-gradient);
+      border: none;
+      color: white;
+      padding: 12px 30px;
+      border-radius: 25px;
+      font-weight: 600;
+      transition: all 0.3s ease;
+    }
+
+    .contact .php-email-form button:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 6px 20px rgba(39, 167, 118, 0.3);
     }
     
     /* Responsive adjustments */
@@ -205,6 +758,35 @@
         width: 250px;
         text-align: center;
       }
+
+      .hero h2 {
+        font-size: 2.5rem !important;
+      }
+
+      .hero p {
+        font-size: 1.4rem !important;
+      }
+
+      .theme-toggle {
+        top: 15px;
+        right: 15px;
+        width: 45px;
+        height: 45px;
+        font-size: 1rem;
+      }
+
+      .loading-logo {
+        width: 80px;
+        height: 80px;
+      }
+
+      .loading-logo::before {
+        font-size: 2rem;
+      }
+
+      .loading-text {
+        font-size: 1.2rem;
+      }
     }
     
     /* Floating Contact Button */
@@ -214,20 +796,20 @@
       right: 30px;
       width: 60px;
       height: 60px;
-      background: linear-gradient(45deg, #FF6B35, #FF8E53);
+      background: var(--accent-gradient);
       border-radius: 50%;
       color: white;
       text-decoration: none;
-      box-shadow: 0 4px 20px rgba(255, 107, 53, 0.4);
+      box-shadow: 0 4px 20px rgba(39, 167, 118, 0.4);
       transition: all 0.3s ease;
       z-index: 1000;
       animation: pulse 2s infinite;
     }
     
     .floating-contact:hover {
-      background: linear-gradient(45deg, #FF8E53, #FFB584);
+      background: linear-gradient(45deg, #28ca8c, #27a776);
       transform: scale(1.1);
-      box-shadow: 0 6px 25px rgba(255, 107, 53, 0.6);
+      box-shadow: 0 6px 25px rgba(39, 167, 118, 0.6);
       color: white;
     }
     
@@ -237,14 +819,26 @@
     
     @keyframes pulse {
       0% {
-        box-shadow: 0 4px 20px rgba(255, 107, 53, 0.4);
+        box-shadow: 0 4px 20px rgba(39, 167, 118, 0.4);
       }
       50% {
-        box-shadow: 0 4px 20px rgba(255, 107, 53, 0.7);
+        box-shadow: 0 4px 20px rgba(39, 167, 118, 0.7);
       }
       100% {
-        box-shadow: 0 4px 20px rgba(255, 107, 53, 0.4);
+        box-shadow: 0 4px 20px rgba(39, 167, 118, 0.4);
       }
+    }
+
+    /* Scroll to top button */
+    .scroll-top {
+      background: var(--accent-gradient);
+      color: white;
+      transition: all 0.3s ease;
+    }
+
+    .scroll-top:hover {
+      background: linear-gradient(45deg, #28ca8c, #27a776);
+      color: white;
     }
     
     /* Hide floating button on small screens to avoid overlap */
@@ -271,578 +865,911 @@
   ======================================================== -->
 </head>
 
-<body class="index-page">
+<body class="index-page loading">
 
-  <header id="header" class="header dark-background d-flex flex-column">
-    <i class="header-toggle d-xl-none bi bi-list"></i>
+  <!-- Loading Screen -->
+  <div class="loading-screen" id="loading-screen">
+    <div class="loading-logo"></div>
+    <div class="loading-text">Alessio Serra</div>
+    <div class="loading-subtext">AI Engineer & Researcher</div>
+  </div>
 
-    <div class="profile-img">
-      <img src="assets/img/alessio.jpeg" alt="" class="img-fluid rounded-circle">
-    </div>
+  <!-- Main Content -->
+  <div class="main-content">
+    <header id="header" class="header dark-background d-flex flex-column">
+      <i class="header-toggle d-xl-none bi bi-list"></i>
 
-    <a href="index.html" class="logo d-flex align-items-center justify-content-center">
-      <!-- Uncomment the line below if you also wish to use an image logo -->
-      <!-- <img src="assets/img/logo.png" alt=""> -->
-      <h1 class="sitename">Alessio Serra</h1>
+      <div class="profile-img">
+        <img src="assets/img/alessio.jpeg" alt="" class="img-fluid rounded-circle">
+      </div>
+
+      <a href="index.html" class="logo d-flex align-items-center justify-content-center">
+        <!-- Uncomment the line below if you also wish to use an image logo -->
+        <!-- <img src="assets/img/logo.png" alt=""> -->
+        <h1 class="sitename">Alessio Serra</h1>
+      </a>
+
+      <div class="social-links text-center">
+        <a href="https://github.com/codiceSpaghetti" class="github"><i class="bi bi-github"></i></a>
+        <a href="https://x.com/as3erra" class="twitter"><i class="bi bi-twitter-x"></i></a>
+        <a href="mailto:alessio.ser29@gmail.com" class="email"><i class="bi bi-envelope"></i></a>
+        <a href="https://www.linkedin.com/in/serra-alessio/" class="linkedin"><i class="bi bi-linkedin"></i></a>
+      </div>
+
+      <nav id="navmenu" class="navmenu">
+        <ul>
+          <li><a href="#hero" class="active"><i class="bi bi-house navicon"></i><span data-translate="nav-home">Home</span></a></li>
+          <li><a href="#about"><i class="bi bi-person navicon"></i><span data-translate="nav-about">About</span></a></li>
+          <li><a href="#technologies"><i class="bi bi-gear navicon"></i><span data-translate="nav-tech">Tech Stack</span></a></li>
+          <li><a href="#resume"><i class="bi bi-file-earmark-text navicon"></i><span data-translate="nav-resume">Resume</span></a></li>
+          <li><a href="#portfolio"><i class="bi bi-images navicon"></i><span data-translate="nav-portfolio">Portfolio</span></a></li>
+          <li><a href="#contact"><i class="bi bi-envelope navicon"></i><span data-translate="nav-contact">Contact</span></a></li>
+        </ul>
+      </nav>
+
+      <!-- Language Toggle -->
+      <div class="language-toggle">
+        <span class="toggle-label" data-translate="language-label">Language</span>
+        <div class="language-switch">
+          <button class="language-option active" data-lang="en">EN</button>
+          <button class="language-option" data-lang="it">IT</button>
+        </div>
+      </div>
+
+    </header>
+
+    <main class="main">
+
+      <!-- Hero Section -->
+      <section id="hero" class="hero section dark-background">
+
+        <img src="assets/img/background.jpg" alt="" data-aos="fade-in" class="">
+
+        <div class="container" data-aos="fade-up" data-aos-delay="100">
+          <h2>Alessio Serra</h2>
+          <p>I'm <span class="typed" data-typed-items="an AI Researcher, an Engineer, a Builder">an AI Researcher</span><span class="typed-cursor typed-cursor--blink" aria-hidden="true"></span><span class="typed-cursor typed-cursor--blink" aria-hidden="true"></span></p>
+          <p class="hero-subtitle" data-translate="hero-subtitle">Making AI speak your language, one model at a time</p>
+        </div>
+
+      </section><!-- /Hero Section -->
+
+      <!-- About Section -->
+      <section id="about" class="about section">
+
+        <!-- Section Title -->
+        <div class="container section-title" data-aos="fade-up">
+          <h2 data-translate="about-title">About me in O(1)</h2>
+          <p data-translate="about-description">I'm an AI researcher and engineer focused on multilingual large language models, making LLMs speak your language.</p>
+        </div><!-- End Section Title -->
+
+        <div class="container" data-aos="fade-up" data-aos-delay="100">
+
+          <div class="row gy-4 justify-content-center">
+            <div class="col-lg-4">
+              <img src="assets/img/alessio.jpeg" class="img-fluid" alt="">
+            </div>
+            <div class="col-lg-8 content">
+              <h2 data-translate="about-role">AI Engineer &amp; Researcher</h2>
+              <p class="fst-italic py-3" data-translate="about-intro">
+                At Translated, I helped build Lara from scratch, a machine translation LLM that powers content for Airbnb, Uber, Shopify, and others, reaching over 200 million users.
+              </p>
+              <div class="row">
+                <div class="col-lg-6">
+                  <ul>
+                    <li><i class="bi bi-chevron-right"></i> <strong data-translate="birth-place-label">Birth Place:</strong> <span data-translate="birth-place">Naples, Italy</span></li>
+                    <li><i class="bi bi-chevron-right"></i> <strong data-translate="email-label">Email:</strong> <span>alessio.ser29@gmail.com</span></li>
+                    <li><i class="bi bi-chevron-right"></i> <strong data-translate="city-label">City:</strong> <span data-translate="city">Rome, Italy</span></li>
+                  </ul>
+                </div>
+                <div class="col-lg-6">
+                  <ul>
+                    <li><i class="bi bi-chevron-right"></i> <strong data-translate="masters-label">M.S. Degree:</strong> <span data-translate="masters-degree">AI & Data Engineering</span></li>
+                    <li><i class="bi bi-chevron-right"></i> <strong data-translate="bachelors-label">B.S. Degree:</strong> <span data-translate="bachelors-degree">Computer Engineering</span></li>
+                    <li><i class="bi bi-chevron-right"></i> <strong data-translate="university-label">University:</strong> <span data-translate="university">University of Pisa</span></li>
+                    <li><i class="bi bi-chevron-right"></i> <strong data-translate="languages-label">Languages:</strong> <span data-translate="languages">Italian, English</span></li>
+                    <li><i class="bi bi-chevron-right"></i> <strong data-translate="focus-label">Focus:</strong> <span data-translate="focus">Multilingual LLMs</span></li>
+                  </ul>
+                </div>
+              </div>
+              <p class="py-3" data-translate="about-conclusion">
+                I've scaled training to 1,000+ GPUs and expanded MT coverage to 201 languages. Working nights and weekends, I co-founded an AI startup building an image geolocalization platform. I'm a voracious learner who constantly pushes to improve how I think, train, and build. I can't imagine a life without some form of training, whether it's GPUs, gym plates, or marathon prep.
+              </p>
+            </div>
+          </div>
+
+        </div>
+
+      </section><!-- /About Section -->
+
+      <!-- Technologies Section -->
+      <section id="technologies" class="technologies section light-background">
+        
+        <!-- Section Title -->
+        <div class="container section-title" data-aos="fade-up">
+          <h2 data-translate="tech-title">Technologies & Tools 🛠️</h2>
+        </div><!-- End Section Title -->
+
+        <div class="container" data-aos="fade-up" data-aos-delay="100">
+          
+          <div class="row gy-4">
+            
+            <div class="col-lg-3 col-md-4 col-6 text-center" data-aos="fade-up" data-aos-delay="100">
+              <div class="tech-item">
+                <i class="bi bi-robot" style="font-size: 3rem; color: #FF6B35;"></i>
+                <h5>PyTorch</h5>
+                <p>Deep Learning</p>
+              </div>
+            </div>
+            
+            <div class="col-lg-3 col-md-4 col-6 text-center" data-aos="fade-up" data-aos-delay="150">
+              <div class="tech-item">
+                <i class="bi bi-code-slash" style="font-size: 3rem; color: #3776ab;"></i>
+                <h5>Python</h5>
+                <p>Primary Language</p>
+              </div>
+            </div>
+            
+            <div class="col-lg-3 col-md-4 col-6 text-center" data-aos="fade-up" data-aos-delay="200">
+              <div class="tech-item">
+                <i class="bi bi-hdd-stack" style="font-size: 3rem; color: #FF9500;"></i>
+                <h5>Slurm</h5>
+                <p>HPC Job Scheduling</p>
+              </div>
+            </div>
+            
+            <div class="col-lg-3 col-md-4 col-6 text-center" data-aos="fade-up" data-aos-delay="250">
+              <div class="tech-item">
+                <i class="bi bi-lightning" style="font-size: 3rem; color: #326ce5;"></i>
+                <h5>vLLM</h5>
+                <p>High-Performance LLM Serving</p>
+              </div>
+            </div>
+            
+            <div class="col-lg-3 col-md-4 col-6 text-center" data-aos="fade-up" data-aos-delay="300">
+              <div class="tech-item">
+                <i class="bi bi-translate" style="font-size: 3rem; color: #4285f4;"></i>
+                <h5>Transformers</h5>
+                <p>LLMs & NLP</p>
+              </div>
+            </div>
+            
+            <div class="col-lg-3 col-md-4 col-6 text-center" data-aos="fade-up" data-aos-delay="350">
+              <div class="tech-item">
+                <i class="bi bi-database" style="font-size: 3rem; color: #13aa52;"></i>
+                <h5>MongoDB</h5>
+                <p>Data Storage</p>
+              </div>
+            </div>
+            
+            <div class="col-lg-3 col-md-4 col-6 text-center" data-aos="fade-up" data-aos-delay="400">
+              <div class="tech-item">
+                <i class="bi bi-box" style="font-size: 3rem; color: #0db7ed;"></i>
+                <h5>Docker</h5>
+                <p>Containerization</p>
+              </div>
+            </div>
+            
+            <div class="col-lg-3 col-md-4 col-6 text-center" data-aos="fade-up" data-aos-delay="450">
+              <div class="tech-item">
+                <i class="bi bi-git" style="font-size: 3rem; color: #f14e32;"></i>
+                <h5>Git</h5>
+                <p>Version Control</p>
+              </div>
+            </div>
+            
+          </div>
+          
+        </div>
+        
+      </section><!-- /Technologies Section -->
+
+      <!-- Current Focus Section -->
+      <section id="current-focus" class="current-focus section">
+        
+        <!-- Section Title -->
+        <div class="container section-title" data-aos="fade-up">
+          <h2 data-translate="focus-title">Current Focus 🎯</h2>
+          <p data-translate="focus-description">What I'm building and researching right now</p>
+        </div><!-- End Section Title -->
+
+        <div class="container" data-aos="fade-up" data-aos-delay="100">
+          
+          <div class="row gy-4">
+            
+            <div class="col-lg-6" data-aos="fade-up" data-aos-delay="100">
+              <div class="focus-item">
+                <div class="focus-icon">
+                  <i class="bi bi-lightning-charge"></i>
+                </div>
+                <div class="focus-content">
+                  <h4 data-translate="focus-scaling-title">Scaling MT to 201 Languages</h4>
+                  <p data-translate="focus-scaling-desc">Expanding machine translation coverage while maintaining quality. Working with massive multilingual datasets and optimizing for low-resource languages using advanced transfer learning techniques.</p>
+                  <div class="focus-tags">
+                    <span class="tag">PyTorch</span>
+                    <span class="tag">Transformers</span>
+                    <span class="tag">FSDP</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+            
+            <div class="col-lg-6" data-aos="fade-up" data-aos-delay="200">
+              <div class="focus-item">
+                <div class="focus-icon">
+                  <i class="bi bi-globe"></i>
+                </div>
+                <div class="focus-content">
+                  <h4 data-translate="focus-production-title">Multilingual AI in Production</h4>
+                  <p data-translate="focus-production-desc">Building robust translation systems that handle real-world complexity at scale. Tackling challenges like code-switching, domain adaptation, and maintaining quality across 200+ million daily users.</p>
+                  <div class="focus-tags">
+                    <span class="tag" data-translate="tag-realtime">Real-time Serving</span>
+                    <span class="tag" data-translate="tag-quality">Quality Assurance</span>
+                    <span class="tag">MLflow</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+            
+          </div>
+          
+        </div>
+        
+      </section><!-- /Current Focus Section -->
+
+      <!-- Resume Section -->
+      <section id="resume" class="resume section">
+
+        <!-- Section Title -->
+        <div class="container section-title" data-aos="fade-up">
+          <h2 data-translate="resume-title">Resume</h2>
+          <p data-translate="resume-description">AI Engineer and Researcher with extensive experience in building and scaling multilingual machine translation systems. Proven track record of serving 200+ million users through innovative LLM solutions.</p>
+        </div><!-- End Section Title -->
+
+        <div class="container">
+
+          <div class="row">
+
+            <div class="col-lg-6" data-aos="fade-up" data-aos-delay="100">
+              <h3 class="resume-title" data-translate="summary-title">Summary</h3>
+
+              <div class="resume-item pb-0">
+                <p data-translate="summary-description">I am an AI Engineer and Researcher focused on multilingual large language models. Expert in building machine translation systems that serve millions of users worldwide. Co-founder with startup experience in AI-powered geolocation platforms.</p>
+              </div><!-- End Resume Item -->
+
+              <h3 class="resume-title" data-translate="experience-title">Professional Experience</h3>
+              <div class="resume-item">
+                <h4 data-translate="current-role">AI Engineer &amp; Researcher</h4>
+                <h5>2023 - Present</h5>
+                <p><em data-translate="current-company">Translated, Rome, Italy</em></p>
+                <ul>
+                  <li><span data-translate="lara-desc"><strong>Lara:</strong> Worked on the full R&D pipeline of an LLM optimized for MT: from data collection and model training to alignment and inference optimization. Built from scratch within a startup-style team of four operating within the company. Now the flagship B2B product, it translates all content worldwide for Airbnb and most of Uber, Shopify, Nike, and more, reaching over 200M users globally. A B2C version has also recently launched.</span> <a href="https://laratranslate.com/translate" target="_blank" data-translate="try-here">Try it here</a>.</li>
+                  <li data-translate="lara-grande-desc"><strong>Lara Grande:</strong> Key role in scaling LLM to match the quality of the top 1% of professional translators. Used over 1,000 GPUs on CINECA's HPC cluster for large-scale distributed training.</li>
+                  <li data-translate="language-expansion-desc"><strong>Language Expansion:</strong> Identified and led a successful research project to expand machine translation production coverage from 56 to 201 languages, a 4× increase, making it the first commercial MT engine to support such a range. Proposed the direction, designed the implementation plan, and led it to completion within eight months.</li>
+                  <li data-translate="instruction-mt-desc"><strong>Instruction-following MT:</strong> Led research aligning LLM to follow detailed style guides using SFT and DPO.</li>
+                  <li data-translate="trust-attention-desc"><strong>Trust Attention:</strong> Proposed and validated a novel technique prioritizing high-value training data, achieving the most significant MT quality improvements in five years.</li>
+                  <li data-translate="polyglot-desc"><strong>Polyglot:</strong> Developed a Language Identification model supporting 201 languages.</li>
+                </ul>
+              </div><!-- End Resume Item -->
+
+              <div class="resume-item">
+                <h4 data-translate="startup-role">Co-Founder &amp; AI Engineer</h4>
+                <h5>2022 - 2023</h5>
+                <p><em><a href="https://picarta.ai/" target="_blank">Picarta AI</a>, <span data-translate="italy">Italy</span></em></p>
+                <ul>
+                  <li data-translate="startup-desc1">Co-founded AI startup as part of three-person founding team building image geolocalization platform</li>
+                  <li data-translate="startup-desc2">Developed the core model for image geolocalization using vision transformers and retrieval-based techniques</li>
+                  <li data-translate="startup-desc3">Gained valuable experience in fast-paced startup environment and product development</li>
+                  <li data-translate="startup-desc4">Learned crucial lessons about team dynamics, uncertainty management, and rapid iteration</li>
+                </ul>
+              </div><!-- End Resume Item -->
+
+            </div>
+
+            <div class="col-lg-6" data-aos="fade-up" data-aos-delay="200">
+              <h3 class="resume-title" data-translate="education-title">Education</h3>
+              <div class="resume-item">
+                <h4 data-translate="masters-full">M.S. Artificial Intelligence &amp; Data Engineering</h4>
+                <h5>2020 - 2022</h5>
+                <p><em data-translate="university-location">University of Pisa, Pisa, Italy</em></p>
+                <p data-translate="masters-description">110/110 summa cum laude (4.0 GPA). Specialized in Data Mining, Machine Learning, Computer Vision, Natural Language Processing, Optimization Theory, and Process Mining. Gained hands-on experience with Distributed Systems, Cloud Computing, and tools like MongoDB, Neo4j, Docker, Kubernetes, TensorFlow, and PyTorch.</p>
+              </div><!-- End Resume Item -->
+
+              <div class="resume-item">
+                <h4 data-translate="bachelors-full">B.S. Computer Engineering</h4>
+                <h5>2017 - 2020</h5>
+                <p><em data-translate="university-location">University of Pisa, Pisa, Italy</em></p>
+                <p data-translate="bachelors-description">110/110 (4.0 GPA). Strong foundation in computer engineering including mathematics, physics, algorithms, databases, computer architecture, computer networks, operating systems, and programming in C, C++, Java, Python, Matlab, SQL, JavaScript, and PHP.</p>
+              </div><!-- End Resume Item -->
+
+            </div>
+
+          </div>
+
+        </div>
+
+      </section><!-- /Resume Section -->
+
+      <!-- Portfolio Section -->
+      <section id="portfolio" class="portfolio section light-background">
+
+        <!-- Section Title -->
+        <div class="container section-title" data-aos="fade-up">
+          <h2 data-translate="portfolio-title">Portfolio 🚀</h2>
+          <p data-translate="portfolio-description">A collection of my AI and machine learning projects, from academic research to production systems serving millions of users worldwide.</p>
+        </div><!-- End Section Title -->
+
+        <div class="container">
+
+          <div class="isotope-layout" data-default-filter="*" data-layout="masonry" data-sort="original-order">
+
+            <ul class="portfolio-filters isotope-filters" data-aos="fade-up" data-aos-delay="100">
+              <li data-filter="*" class="filter-active">All</li>
+              <li data-filter=".filter-ml">Machine Learning</li>
+              <li data-filter=".filter-nlp">NLP</li>
+              <li data-filter=".filter-cv">Computer Vision</li>
+              <li data-filter=".filter-data">Data Engineering</li>
+            </ul><!-- End Portfolio Filters -->
+
+            <div class="row gy-4 isotope-container" data-aos="fade-up" data-aos-delay="200">
+
+              <div class="col-lg-4 col-md-6 portfolio-item isotope-item filter-cv">
+                <a href="https://fabiocarrara.github.io/cross-modal-visual-sentiment-analysis/" class="portfolio-content h-100" style="text-decoration: none; color: inherit;">
+                  <img src="assets/img/T4SA-2.0.png" class="img-fluid" alt="">
+                  <div class="portfolio-info">
+                    <h4>T4SA-2.0 🎯</h4>
+                    <p data-translate="t4sa-desc">Cross-modal visual sentiment analysis system using knowledge distillation from text to vision models. Published at ECAI 2023, achieving state-of-the-art results on visual sentiment prediction.</p>
+                    <a href="assets/img/T4SA-2.0.png" title="T4SA-2.0" data-gallery="portfolio-gallery-cv" class="glightbox preview-link" onclick="event.stopPropagation();"><i class="bi bi-zoom-in"></i></a>
+                  </div>
+                </a>
+              </div><!-- End Portfolio Item -->
+
+              <div class="col-lg-4 col-md-6 portfolio-item isotope-item filter-nlp">
+                <a href="https://github.com/codiceSpaghetti/numpyGPT" class="portfolio-content h-100" style="text-decoration: none; color: inherit;">
+                  <img src="assets/img/portfolio/numpyGPT.png" class="img-fluid" alt="">
+                  <div class="portfolio-info">
+                    <h4>NumpyGPT 🧠</h4>
+                    <p data-translate="numpygpt-desc">A from-scratch GPT built with NumPy and Python's standard library. No autograd, no frameworks: every layer is re-implemented with its own forward and backward pass. Gradients are computed manually, updates are transparent, and every operation is spelled out.</p>
+                    <a href="assets/img/portfolio/numpyGPT.png" title="NumpyGPT" data-gallery="portfolio-gallery-nlp" class="glightbox preview-link" onclick="event.stopPropagation();"><i class="bi bi-zoom-in"></i></a>
+                  </div>
+                </a>
+              </div><!-- End Portfolio Item -->
+
+              <div class="col-lg-4 col-md-6 portfolio-item isotope-item filter-nlp">
+                <a href="https://github.com/codiceSpaghetti/FakeNewsDetection" class="portfolio-content h-100" style="text-decoration: none; color: inherit;">
+                  <img src="assets/img/portfolio/FakeNewsDetection.jpg" class="img-fluid" alt="">
+                  <div class="portfolio-info">
+                    <h4>Fake News Detection 🔍</h4>
+                    <p data-translate="fake-news-desc">Multi-modal AI system for misinformation detection using transformer architectures. Features stance analysis and source credibility scoring.</p>
+                    <a href="assets/img/portfolio/FakeNewsDetection.jpg" title="Fake News Detection" data-gallery="portfolio-gallery-nlp" class="glightbox preview-link" onclick="event.stopPropagation();"><i class="bi bi-zoom-in"></i></a>
+                  </div>
+                </a>
+              </div><!-- End Portfolio Item -->
+
+              <div class="col-lg-4 col-md-6 portfolio-item isotope-item filter-data">
+                <a href="https://github.com/codiceSpaghetti/UniMusic" class="portfolio-content h-100" style="text-decoration: none; color: inherit;">
+                  <img src="assets/img/portfolio/UniMusic.jpg" class="img-fluid" alt="">
+                  <div class="portfolio-info">
+                    <h4>UniMusic 🎵</h4>
+                    <p data-translate="unimusic-desc">Scalable music discovery platform with hybrid MongoDB/Neo4j architecture. Handles millions of tracks with real-time recommendation algorithms.</p>
+                    <a href="assets/img/portfolio/UniMusic.jpg" title="UniMusic" data-gallery="portfolio-gallery-data" class="glightbox preview-link" onclick="event.stopPropagation();"><i class="bi bi-zoom-in"></i></a>
+                  </div>
+                </a>
+              </div><!-- End Portfolio Item -->
+
+              <div class="col-lg-4 col-md-6 portfolio-item isotope-item filter-nlp">
+                <a href="https://github.com/codiceSpaghetti/VoiceVibes" class="portfolio-content h-100" style="text-decoration: none; color: inherit;">
+                  <img src="assets/img/portfolio/VoiceVibes.jpg" class="img-fluid" alt="">
+                  <div class="portfolio-info">
+                    <h4>Voice Vibes 🎤</h4>
+                    <p data-translate="voice-vibes-desc">Speech emotion recognition system with six novel AI architectures. Achieved 94% accuracy using ensemble methods and advanced feature engineering.</p>
+                    <a href="assets/img/portfolio/VoiceVibes.jpg" title="Voice Vibes" data-gallery="portfolio-gallery-nlp" class="glightbox preview-link" onclick="event.stopPropagation();"><i class="bi bi-zoom-in"></i></a>
+                  </div>
+                </a>
+              </div><!-- End Portfolio Item -->
+
+              <div class="col-lg-4 col-md-6 portfolio-item isotope-item filter-ml">
+                <a href="https://github.com/codiceSpaghetti/FederatedDBscan" class="portfolio-content h-100" style="text-decoration: none; color: inherit;">
+                  <img src="assets/img/portfolio/FederatedDBscan.png" class="img-fluid" alt="">
+                  <div class="portfolio-info">
+                    <h4>Federated DBscan 🔒</h4>
+                    <p data-translate="federated-dbscan-desc">Privacy-preserving distributed clustering with federated learning. Enables collaborative ML without data sharing, achieving 99% privacy preservation.</p>
+                    <a href="assets/img/portfolio/FederatedDBscan.png" title="Federated DBscan" data-gallery="portfolio-gallery-ml" class="glightbox preview-link" onclick="event.stopPropagation();"><i class="bi bi-zoom-in"></i></a>
+                  </div>
+                </a>
+              </div><!-- End Portfolio Item -->
+
+              <div class="col-lg-4 col-md-6 portfolio-item isotope-item filter-ml">
+                <a href="https://github.com/codiceSpaghetti/PageRank" class="portfolio-content h-100" style="text-decoration: none; color: inherit;">
+                  <img src="assets/img/pageRank.jpg" class="img-fluid" alt="">
+                  <div class="portfolio-info">
+                    <h4>PageRank Implementation 🔗</h4>
+                    <p data-translate="pagerank-desc">High-performance PageRank algorithm implementation with optimized sparse matrix operations. Handles graphs with millions of nodes efficiently.</p>
+                    <a href="assets/img/pageRank.jpg" title="PageRank Implementation" data-gallery="portfolio-gallery-ml" class="glightbox preview-link" onclick="event.stopPropagation();"><i class="bi bi-zoom-in"></i></a>
+                  </div>
+                </a>
+              </div><!-- End Portfolio Item -->
+
+            </div><!-- End Portfolio Container -->
+
+          </div>
+
+        </div>
+
+      </section><!-- /Portfolio Section -->
+
+      <!-- Call to Action Section -->
+      <section id="call-to-action" class="call-to-action section dark-background">
+        
+        <div class="container" data-aos="fade-up">
+          
+          <div class="row gy-4 justify-content-center text-center">
+            <div class="col-lg-8">
+              <h2 data-translate="cta-title">Let's Build the Future of AI Together</h2>
+              <p data-translate="cta-description">Whether you're looking to collaborate on cutting-edge research, discuss the latest in multilingual LLMs, or explore how AI can transform your business, I'm always excited to connect with fellow innovators and problem solvers.</p>
+              <div class="cta-buttons">
+                <a href="#contact" class="btn-cta" data-translate="cta-button1">Start a Conversation</a>
+                <a href="mailto:alessio.ser29@gmail.com" class="btn-cta-outline" data-translate="cta-button2">Send Direct Email</a>
+              </div>
+            </div>
+          </div>
+          
+        </div>
+        
+      </section><!-- /Call to Action Section -->
+
+      <!-- Contact Section -->
+      <section id="contact" class="contact section">
+
+        <!-- Section Title -->
+        <div class="container section-title" data-aos="fade-up">
+          <h2 data-translate="contact-title">Contact</h2>
+          <p data-translate="contact-description">Let's connect! Whether you want to discuss AI, machine learning, or potential collaborations, I'm always open to interesting conversations.</p>
+        </div><!-- End Section Title -->
+
+        <div class="container" data-aos="fade-up" data-aos-delay="100">
+
+          <div class="row gy-4">
+
+            <div class="col-lg-5">
+
+              <div class="info-wrap">
+                <div class="info-item d-flex" data-aos="fade-up" data-aos-delay="200">
+                  <i class="bi bi-geo-alt flex-shrink-0"></i>
+                  <div>
+                    <h3 data-translate="location-label">Location</h3>
+                    <p data-translate="location">Rome, Italy</p>
+                  </div>
+                </div><!-- End Info Item -->
+
+                <div class="info-item d-flex" data-aos="fade-up" data-aos-delay="300">
+                  <i class="bi bi-envelope flex-shrink-0"></i>
+                  <div>
+                    <h3 data-translate="email-label">Email</h3>
+                    <p><a href="mailto:alessio.ser29@gmail.com">alessio.ser29@gmail.com</a></p>
+                  </div>
+                </div><!-- End Info Item -->
+
+                <div class="info-item d-flex" data-aos="fade-up" data-aos-delay="400">
+                  <i class="bi bi-linkedin flex-shrink-0"></i>
+                  <div>
+                    <h3>LinkedIn</h3>
+                    <p><a href="https://www.linkedin.com/in/serra-alessio/" target="_blank">linkedin.com/in/serra-alessio</a></p>
+                  </div>
+                </div><!-- End Info Item -->
+
+                <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d95133.49266890877!2d12.4823!3d41.8933!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x132f6196f9928ebb%3A0xb90f770693656e38!2sRome%2C%20Metropolitan%20City%20of%20Rome%20Capital%2C%20Italy!5e0!3m2!1sen!2sus!4v1676961268712!5m2!1sen!2sus" frameborder="0" style="border:0; width: 100%; height: 270px;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+              </div>
+            </div>
+
+            <div class="col-lg-7">
+              <form action="forms/contact.php" method="post" class="php-email-form" data-aos="fade-up" data-aos-delay="200">
+                <div class="row gy-4">
+
+                  <div class="col-md-6">
+                    <label for="name-field" class="pb-2" data-translate="form-name">Your Name</label>
+                    <input type="text" name="name" id="name-field" class="form-control" required="">
+                  </div>
+
+                  <div class="col-md-6">
+                    <label for="email-field" class="pb-2" data-translate="form-email">Your Email</label>
+                    <input type="email" class="form-control" name="email" id="email-field" required="">
+                  </div>
+
+                  <div class="col-md-12">
+                    <label for="subject-field" class="pb-2" data-translate="form-subject">Subject</label>
+                    <input type="text" class="form-control" name="subject" id="subject-field" required="">
+                  </div>
+
+                  <div class="col-md-12">
+                    <label for="message-field" class="pb-2" data-translate="form-message">Message</label>
+                    <textarea class="form-control" name="message" rows="10" id="message-field" required=""></textarea>
+                  </div>
+
+                  <div class="col-md-12 text-center">
+                    <div class="loading" data-translate="form-loading">Loading</div>
+                    <div class="error-message"></div>
+                    <div class="sent-message" data-translate="form-success">Your message has been sent. Thank you!</div>
+
+                    <button type="submit" data-translate="form-send">Send Message</button>
+                  </div>
+
+                </div>
+              </form>
+            </div><!-- End Contact Form -->
+
+          </div>
+
+        </div>
+
+      </section><!-- /Contact Section -->
+
+    </main>
+
+    <!-- Theme Toggle Button -->
+    <button class="theme-toggle" id="theme-toggle" aria-label="Toggle theme">
+      <i class="bi bi-moon-stars dark-icon"></i>
+      <i class="bi bi-sun light-icon"></i>
+    </button>
+
+    <!-- Scroll Top -->
+    <a href="#" id="scroll-top" class="scroll-top d-flex align-items-center justify-content-center"><i class="bi bi-arrow-up-short"></i></a>
+
+    <!-- Floating Contact Button -->
+    <a href="#contact" id="floating-contact" class="floating-contact d-flex align-items-center justify-content-center" title="Get in Touch">
+      <i class="bi bi-chat-dots"></i>
     </a>
 
-    <div class="social-links text-center">
-      <a href="https://github.com/codiceSpaghetti" class="github"><i class="bi bi-github"></i></a>
-      <a href="https://x.com/as3erra" class="twitter"><i class="bi bi-twitter-x"></i></a>
-      <a href="mailto:alessio.ser29@gmail.com" class="email"><i class="bi bi-envelope"></i></a>
-      <a href="https://www.linkedin.com/in/serra-alessio/" class="linkedin"><i class="bi bi-linkedin"></i></a>
-    </div>
+    <!-- Preloader -->
+    <div id="preloader"></div>
 
-    <nav id="navmenu" class="navmenu">
-      <ul>
-        <li><a href="#hero" class="active"><i class="bi bi-house navicon"></i>Home</a></li>
-        <li><a href="#about"><i class="bi bi-person navicon"></i> About</a></li>
-        <li><a href="#technologies"><i class="bi bi-gear navicon"></i> Tech Stack</a></li>
-        <li><a href="#resume"><i class="bi bi-file-earmark-text navicon"></i> Resume</a></li>
-        <li><a href="#portfolio"><i class="bi bi-images navicon"></i> Portfolio</a></li>
-        <li><a href="#contact"><i class="bi bi-envelope navicon"></i> Contact</a></li>
-      </ul>
-    </nav>
+    <!-- Vendor JS Files -->
+    <script src="assets/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+    <script src="assets/vendor/php-email-form/validate.js"></script>
+    <script src="assets/vendor/aos/aos.js"></script>
+    <script src="assets/vendor/typed.js/typed.umd.js"></script>
+    <script src="assets/vendor/purecounter/purecounter_vanilla.js"></script>
+    <script src="assets/vendor/waypoints/noframework.waypoints.js"></script>
+    <script src="assets/vendor/glightbox/js/glightbox.min.js"></script>
+    <script src="assets/vendor/imagesloaded/imagesloaded.pkgd.min.js"></script>
+    <script src="assets/vendor/isotope-layout/isotope.pkgd.min.js"></script>
+    <script src="assets/vendor/swiper/swiper-bundle.min.js"></script>
 
-  </header>
+    <!-- Main JS File -->
+    <script src="assets/js/main.js"></script>
 
-  <main class="main">
-
-    <!-- Hero Section -->
-    <section id="hero" class="hero section dark-background">
-
-      <img src="assets/img/background.jpg" alt="" data-aos="fade-in" class="">
-
-      <div class="container" data-aos="fade-up" data-aos-delay="100">
-        <h2>Alessio Serra</h2>
-        <p>I'm <span class="typed" data-typed-items="an AI Researcher, an Engineer, a Builder">an AI Researcher</span><span class="typed-cursor typed-cursor--blink" aria-hidden="true"></span><span class="typed-cursor typed-cursor--blink" aria-hidden="true"></span></p>
-        <p class="hero-subtitle">Making AI speak your language, one model at a time</p>
-      </div>
-
-    </section><!-- /Hero Section -->
-
-    <!-- About Section -->
-    <section id="about" class="about section">
-
-      <!-- Section Title -->
-      <div class="container section-title" data-aos="fade-up">
-        <h2>About me in O(1)</h2>
-        <p>I'm an AI researcher and engineer focused on multilingual large language models, making LLMs speak your language.</p>
-      </div><!-- End Section Title -->
-
-      <div class="container" data-aos="fade-up" data-aos-delay="100">
-
-        <div class="row gy-4 justify-content-center">
-          <div class="col-lg-4">
-            <img src="assets/img/alessio.jpeg" class="img-fluid" alt="">
-          </div>
-          <div class="col-lg-8 content">
-            <h2>AI Engineer &amp; Researcher</h2>
-            <p class="fst-italic py-3">
-              At Translated, I helped build Lara from scratch, a machine translation LLM that powers content for Airbnb, Uber, Shopify, and others, reaching over 200 million users.
-            </p>
-            <div class="row">
-              <div class="col-lg-6">
-                <ul>
-                  <li><i class="bi bi-chevron-right"></i> <strong>Birth Place:</strong> <span>Naples, Italy</span></li>
-                  <li><i class="bi bi-chevron-right"></i> <strong>Email:</strong> <span>alessio.ser29@gmail.com</span></li>
-                  <li><i class="bi bi-chevron-right"></i> <strong>City:</strong> <span>Rome, Italy</span></li>
-                </ul>
-              </div>
-              <div class="col-lg-6">
-                <ul>
-                  <li><i class="bi bi-chevron-right"></i> <strong>M.S. Degree:</strong> <span>AI & Data Engineering</span></li>
-                  <li><i class="bi bi-chevron-right"></i> <strong>B.S. Degree:</strong> <span>Computer Engineering</span></li>
-                  <li><i class="bi bi-chevron-right"></i> <strong>University:</strong> <span>University of Pisa</span></li>
-                  <li><i class="bi bi-chevron-right"></i> <strong>Languages:</strong> <span>Italian, English</span></li>
-                  <li><i class="bi bi-chevron-right"></i> <strong>Focus:</strong> <span>Multilingual LLMs</span></li>
-                </ul>
-              </div>
-            </div>
-            <p class="py-3">
-              I've scaled training to 1,000+ GPUs and expanded MT coverage to 201 languages. Working nights and weekends, I co-founded an AI startup building an image geolocalization platform. I'm a voracious learner who constantly pushes to improve how I think, train, and build. I can't imagine a life without some form of training, whether it's GPUs, gym plates, or marathon prep.
-            </p>
-          </div>
-        </div>
-
-      </div>
-
-    </section><!-- /About Section -->
-
-    <!-- Technologies Section -->
-    <section id="technologies" class="technologies section light-background">
-      
-      <!-- Section Title -->
-      <div class="container section-title" data-aos="fade-up">
-        <h2>Technologies & Tools 🛠️</h2>
-      </div><!-- End Section Title -->
-
-      <div class="container" data-aos="fade-up" data-aos-delay="100">
+    <!-- Theme Toggle Script -->
+    <script>
+      // Loading screen functionality
+      window.addEventListener('load', () => {
+        const loadingScreen = document.getElementById('loading-screen');
+        const body = document.body;
         
-        <div class="row gy-4">
+        // Hide loading screen after a minimum of 1300ms for better visual effect
+        setTimeout(() => {
+          loadingScreen.classList.add('fade-out');
+          body.classList.remove('loading');
           
-          <div class="col-lg-3 col-md-4 col-6 text-center" data-aos="fade-up" data-aos-delay="100">
-            <div class="tech-item">
-              <i class="bi bi-robot" style="font-size: 3rem; color: #FF6B35;"></i>
-              <h5>PyTorch</h5>
-              <p>Deep Learning</p>
-            </div>
-          </div>
-          
-          <div class="col-lg-3 col-md-4 col-6 text-center" data-aos="fade-up" data-aos-delay="150">
-            <div class="tech-item">
-              <i class="bi bi-code-slash" style="font-size: 3rem; color: #3776ab;"></i>
-              <h5>Python</h5>
-              <p>Primary Language</p>
-            </div>
-          </div>
-          
-          <div class="col-lg-3 col-md-4 col-6 text-center" data-aos="fade-up" data-aos-delay="200">
-            <div class="tech-item">
-              <i class="bi bi-hdd-stack" style="font-size: 3rem; color: #FF9500;"></i>
-              <h5>Slurm</h5>
-              <p>HPC Job Scheduling</p>
-            </div>
-          </div>
-          
-          <div class="col-lg-3 col-md-4 col-6 text-center" data-aos="fade-up" data-aos-delay="250">
-            <div class="tech-item">
-              <i class="bi bi-lightning" style="font-size: 3rem; color: #326ce5;"></i>
-              <h5>vLLM</h5>
-              <p>High-Performance LLM Serving</p>
-            </div>
-          </div>
-          
-          <div class="col-lg-3 col-md-4 col-6 text-center" data-aos="fade-up" data-aos-delay="300">
-            <div class="tech-item">
-              <i class="bi bi-translate" style="font-size: 3rem; color: #4285f4;"></i>
-              <h5>Transformers</h5>
-              <p>LLMs & NLP</p>
-            </div>
-          </div>
-          
-          <div class="col-lg-3 col-md-4 col-6 text-center" data-aos="fade-up" data-aos-delay="350">
-            <div class="tech-item">
-              <i class="bi bi-database" style="font-size: 3rem; color: #13aa52;"></i>
-              <h5>MongoDB</h5>
-              <p>Data Storage</p>
-            </div>
-          </div>
-          
-          <div class="col-lg-3 col-md-4 col-6 text-center" data-aos="fade-up" data-aos-delay="400">
-            <div class="tech-item">
-              <i class="bi bi-box" style="font-size: 3rem; color: #0db7ed;"></i>
-              <h5>Docker</h5>
-              <p>Containerization</p>
-            </div>
-          </div>
-          
-          <div class="col-lg-3 col-md-4 col-6 text-center" data-aos="fade-up" data-aos-delay="450">
-            <div class="tech-item">
-              <i class="bi bi-git" style="font-size: 3rem; color: #f14e32;"></i>
-              <h5>Git</h5>
-              <p>Version Control</p>
-            </div>
-          </div>
-          
-        </div>
-        
-      </div>
+          // Remove loading screen from DOM after animation
+          setTimeout(() => {
+            loadingScreen.remove();
+          }, 500);
+        }, 1300);
+      });
+
+      // Theme toggle functionality
+      const themeToggle = document.getElementById('theme-toggle');
+      const body = document.body;
       
-    </section><!-- /Technologies Section -->
-
-    <!-- Current Focus Section -->
-    <section id="current-focus" class="current-focus section">
+      // Check for saved theme preference or default to dark theme
+      const currentTheme = localStorage.getItem('theme') || 'dark';
       
-      <!-- Section Title -->
-      <div class="container section-title" data-aos="fade-up">
-        <h2>Current Focus 🎯</h2>
-        <p>What I'm building and researching right now</p>
-      </div><!-- End Section Title -->
-
-      <div class="container" data-aos="fade-up" data-aos-delay="100">
+      // Apply the theme on page load
+      if (currentTheme === 'light') {
+        body.setAttribute('data-theme', 'light');
+      }
+      
+      // Theme toggle click handler
+      themeToggle.addEventListener('click', () => {
+        const currentTheme = body.getAttribute('data-theme');
         
-        <div class="row gy-4">
+        if (currentTheme === 'light') {
+          body.removeAttribute('data-theme');
+          localStorage.setItem('theme', 'dark');
+        } else {
+          body.setAttribute('data-theme', 'light');
+          localStorage.setItem('theme', 'light');
+        }
+      });
+
+      // Language toggle functionality
+      const languageOptions = document.querySelectorAll('.language-option');
+      const currentLanguage = localStorage.getItem('language') || 'en';
+      
+      // Centralized translations object - Easy to manage and extend
+      const translations = {
+        en: {
+          // Navigation
+          'nav-home': 'Home',
+          'nav-about': 'About',
+          'nav-tech': 'Tech Stack',
+          'nav-resume': 'Resume',
+          'nav-portfolio': 'Portfolio',
+          'nav-contact': 'Contact',
+          'language-label': 'Language',
           
-          <div class="col-lg-6" data-aos="fade-up" data-aos-delay="100">
-            <div class="focus-item">
-              <div class="focus-icon">
-                <i class="bi bi-lightning-charge"></i>
-              </div>
-              <div class="focus-content">
-                <h4>Scaling MT to 201 Languages</h4>
-                <p>Expanding machine translation coverage while maintaining quality. Working with massive multilingual datasets and optimizing for low-resource languages using advanced transfer learning techniques.</p>
-                <div class="focus-tags">
-                  <span class="tag">PyTorch</span>
-                  <span class="tag">Transformers</span>
-                  <span class="tag">FSDP</span>
-                </div>
-              </div>
-            </div>
-          </div>
+          // Hero Section
+          'hero-subtitle': 'Making AI speak your language, one model at a time',
+          'hero-typed': ['an AI Researcher', 'an Engineer', 'a Builder'],
           
-          <div class="col-lg-6" data-aos="fade-up" data-aos-delay="200">
-            <div class="focus-item">
-              <div class="focus-icon">
-                <i class="bi bi-globe"></i>
-              </div>
-              <div class="focus-content">
-                <h4>Multilingual AI in Production</h4>
-                <p>Building robust translation systems that handle real-world complexity at scale. Tackling challenges like code-switching, domain adaptation, and maintaining quality across 200+ million daily users.</p>
-                <div class="focus-tags">
-                  <span class="tag">Real-time Serving</span>
-                  <span class="tag">Quality Assurance</span>
-                  <span class="tag">MLflow</span>
-                </div>
-              </div>
-            </div>
-          </div>
+          // About Section
+          'about-title': 'About me in O(1)',
+          'about-description': "I'm an AI researcher and engineer focused on multilingual large language models, making LLMs speak your language.",
           
-        </div>
+          // Technologies Section
+          'tech-title': 'Technologies & Tools 🛠️',
+          
+          // Current Focus Section
+          'focus-title': 'Current Focus 🎯',
+          'focus-description': 'What I\'m building and researching right now',
+          
+          // Portfolio Section
+          'portfolio-title': 'Portfolio 🚀',
+          'portfolio-description': 'A collection of my AI and machine learning projects, from academic research to production systems serving millions of users worldwide.',
+          
+          // Portfolio Project Descriptions
+          't4sa-desc': 'Cross-modal visual sentiment analysis system using knowledge distillation from text to vision models. Published at ECAI 2023, achieving state-of-the-art results on visual sentiment prediction.',
+          'numpygpt-desc': 'A from-scratch GPT built with NumPy and Python\'s standard library. No autograd, no frameworks: every layer is re-implemented with its own forward and backward pass. Gradients are computed manually, updates are transparent, and every operation is spelled out.',
+          'fake-news-desc': 'Multi-modal AI system for misinformation detection using transformer architectures. Features stance analysis and source credibility scoring.',
+          'unimusic-desc': 'Scalable music discovery platform with hybrid MongoDB/Neo4j architecture. Handles millions of tracks with real-time recommendation algorithms.',
+          'voice-vibes-desc': 'Speech emotion recognition system with six novel AI architectures. Achieved 94% accuracy using ensemble methods and advanced feature engineering.',
+          'federated-dbscan-desc': 'Privacy-preserving distributed clustering with federated learning. Enables collaborative ML without data sharing, achieving 99% privacy preservation.',
+          'pagerank-desc': 'High-performance PageRank algorithm implementation with optimized sparse matrix operations. Handles graphs with millions of nodes efficiently.',
+          
+          // Call to Action
+          'cta-title': 'Let\'s Build the Future of AI Together',
+          'cta-description': 'Whether you\'re looking to collaborate on cutting-edge research, discuss the latest in multilingual LLMs, or explore how AI can transform your business, I\'m always excited to connect with fellow innovators and problem solvers.',
+          'cta-button1': 'Start a Conversation',
+          'cta-button2': 'Send Direct Email',
+          
+          // Contact Section
+          'contact-title': 'Contact',
+          'contact-description': 'Let\'s connect! Whether you want to discuss AI, machine learning, or potential collaborations, I\'m always open to interesting conversations.',
+          
+          // Resume Section
+          'resume-title': 'Resume',
+          'resume-description': 'AI Engineer and Researcher with extensive experience in building and scaling multilingual machine translation systems. Proven track record of serving 200+ million users through innovative LLM solutions.',
+          'summary-title': 'Summary',
+          'summary-description': 'I am an AI Engineer and Researcher focused on multilingual large language models. Expert in building machine translation systems that serve millions of users worldwide. Co-founder with startup experience in AI-powered geolocation platforms.',
+          'education-title': 'Education',
+          'masters-full': 'M.S. Artificial Intelligence & Data Engineering',
+          'university-location': 'University of Pisa, Pisa, Italy',
+          'masters-description': '110/110 summa cum laude (4.0 GPA). Specialized in Data Mining, Machine Learning, Computer Vision, Natural Language Processing, Optimization Theory, and Process Mining. Gained hands-on experience with Distributed Systems, Cloud Computing, and tools like MongoDB, Neo4j, Docker, Kubernetes, TensorFlow, and PyTorch.',
+          'bachelors-full': 'B.S. Computer Engineering',
+          'bachelors-description': '110/110 (4.0 GPA). Strong foundation in computer engineering including mathematics, physics, algorithms, databases, computer architecture, computer networks, operating systems, and programming in C, C++, Java, Python, Matlab, SQL, JavaScript, and PHP.',
+          'experience-title': 'Professional Experience',
+          'current-role': 'AI Engineer & Researcher',
+          'current-company': 'Translated, Rome, Italy',
+          'lara-desc': '<strong>Lara:</strong> Worked on the full R&D pipeline of an LLM optimized for MT: from data collection and model training to alignment and inference optimization. Built from scratch within a startup-style team of four operating within the company. Now the flagship B2B product, it translates all content worldwide for Airbnb and most of Uber, Shopify, Nike, and more, reaching over 200M users globally. A B2C version has also recently launched.',
+          'lara-grande-desc': '<strong>Lara Grande:</strong> Key role in scaling LLM to match the quality of the top 1% of professional translators. Used over 1,000 GPUs on CINECA\'s HPC cluster for large-scale distributed training.',
+          'language-expansion-desc': '<strong>Language Expansion:</strong> Identified and led a successful research project to expand machine translation production coverage from 56 to 201 languages, a 4× increase, making it the first commercial MT engine to support such a range. Proposed the direction, designed the implementation plan, and led it to completion within eight months.',
+          'instruction-mt-desc': '<strong>Instruction-following MT:</strong> Led research aligning LLM to follow detailed style guides using SFT and DPO.',
+          'trust-attention-desc': '<strong>Trust Attention:</strong> Proposed and validated a novel technique prioritizing high-value training data, achieving the most significant MT quality improvements in five years.',
+          'polyglot-desc': '<strong>Polyglot:</strong> Developed a Language Identification model supporting 201 languages.',
+          'startup-role': 'Co-Founder & AI Engineer',
+          'italy': 'Italy',
+          'startup-desc1': 'Co-founded AI startup as part of three-person founding team building image geolocalization platform',
+          'startup-desc2': 'Developed the core model for image geolocalization using vision transformers and retrieval-based techniques',
+          'startup-desc3': 'Gained valuable experience in fast-paced startup environment and product development',
+          'startup-desc4': 'Learned crucial lessons about team dynamics, uncertainty management, and rapid iteration',
+          'try-here': 'Try it here',
+          
+          // Contact Section
+          'location-label': 'Location',
+          'location': 'Rome, Italy',
+          'form-name': 'Your Name',
+          'form-email': 'Your Email',
+          'form-subject': 'Subject',
+          'form-message': 'Message',
+          'form-loading': 'Loading',
+          'form-success': 'Your message has been sent. Thank you!',
+          'form-send': 'Send Message',
+          
+          // About Section Details
+          'about-role': 'AI Engineer & Researcher',
+          'about-intro': 'At Translated, I helped build Lara from scratch, a machine translation LLM that powers content for Airbnb, Uber, Shopify, and others, reaching over 200 million users.',
+          'birth-place-label': 'Birth Place:',
+          'birth-place': 'Naples, Italy',
+          'city-label': 'City:',
+          'city': 'Rome, Italy',
+          'masters-label': 'M.S. Degree:',
+          'masters-degree': 'AI & Data Engineering',
+          'bachelors-label': 'B.S. Degree:',
+          'bachelors-degree': 'Computer Engineering',
+          'university-label': 'University:',
+          'university': 'University of Pisa',
+          'languages-label': 'Languages:',
+          'languages': 'Italian, English',
+          'focus-label': 'Focus:',
+          'focus': 'Multilingual LLMs',
+          'about-conclusion': 'I\'ve scaled training to 1,000+ GPUs and expanded MT coverage to 201 languages. Working nights and weekends, I co-founded an AI startup building an image geolocalization platform. I\'m a voracious learner who constantly pushes to improve how I think, train, and build. I can\'t imagine a life without some form of training, whether it\'s GPUs, gym plates, or marathon prep.',
+          
+          // Current Focus Details
+          'focus-scaling-title': 'Scaling MT to 201 Languages',
+          'focus-scaling-desc': 'Expanding machine translation coverage while maintaining quality. Working with massive multilingual datasets and optimizing for low-resource languages using advanced transfer learning techniques.',
+          'focus-production-title': 'Multilingual AI in Production',
+          'focus-production-desc': 'Building robust translation systems that handle real-world complexity at scale. Tackling challenges like code-switching, domain adaptation, and maintaining quality across 200+ million daily users.',
+          'tag-realtime': 'Real-time Serving',
+          'tag-quality': 'Quality Assurance'
+        },
         
-      </div>
+        it: {
+          // Navigation
+          'nav-home': 'Home',
+          'nav-about': 'Chi Sono',
+          'nav-tech': 'Tecnologie',
+          'nav-resume': 'CV',
+          'nav-portfolio': 'Portfolio',
+          'nav-contact': 'Contatti',
+          'language-label': 'Lingua',
+          
+          // Hero Section
+          'hero-subtitle': 'Rendendo l\'AI capace di parlare la tua lingua, un modello alla volta',
+          'hero-typed': ['un Ricercatore AI', 'un Ingegnere', 'un Creatore'],
+          
+          // About Section
+          'about-title': 'Chi sono in O(1)',
+          'about-description': 'Sono un ricercatore e ingegnere AI specializzato in modelli linguistici multilingue, rendendo gli LLM capaci di parlare la tua lingua.',
+          'about-role': 'Ingegnere AI e Ricercatore',
+          'about-intro': 'In Translated, ho contribuito a far nascere Lara, un LLM per la traduzione automatica che localizza i contenuti per Airbnb, Uber, Shopify e altri, raggiungendo oltre 200 milioni di utenti.',
+          'birth-place-label': 'Luogo di Nascita:',
+          'birth-place': 'Napoli, Italia',
+          'email-label': 'Email:',
+          'city-label': 'Città:',
+          'city': 'Roma, Italia',
+          'masters-label': 'Laurea Magistrale:',
+          'masters-degree': 'AI & Data Engineering',
+          'bachelors-label': 'Laurea Triennale:',
+          'bachelors-degree': 'Ingegneria Informatica',
+          'university-label': 'Università:',
+          'university': 'Università di Pisa',
+          'languages-label': 'Lingue:',
+          'languages': 'Italiano, Inglese',
+          'focus-label': 'Focus:',
+          'focus': 'LLM Multilingue',
+          'about-conclusion': 'Mi sono formato in training distribuiti su larga scala, utilizzando fino a 1.000+ GPU ed ho espanso la copertura linguistica del motore di traduzione a 201 lingue. Lavorando di sera e nei weekend, ho co-fondato una startup AI che costruisce una piattaforma di geolocalizzazione di immagini. Sono uno studente vorace che spinge costantemente per migliorare come penso, addestro e costruisco. Non riesco a immaginare una vita senza qualche forma di allenamento, che si tratti di GPU, pesi in palestra o preparazione per maratone.',
+          
+          // Technologies Section
+          'tech-title': 'Tecnologie e Strumenti 🛠️',
+          
+          // Current Focus Section
+          'focus-title': 'Focus Attuale 🎯',
+          'focus-description': 'Su cosa sto lavorando e ricercando in questo momento',
+          'focus-scaling-title': 'Scalare MT a 201 Lingue',
+          'focus-scaling-desc': 'Espandere la copertura della traduzione automatica mantenendo la qualità. Lavorando con enormi dataset multilingue e ottimizzando per lingue a basse risorse usando tecniche avanzate di transfer learning.',
+          'focus-production-title': 'AI Multilingue in Produzione',
+          'focus-production-desc': 'Costruire sistemi di traduzione robusti che gestiscono la complessità del mondo reale su larga scala. Affrontare sfide come code-switching, adattamento del dominio e mantenimento della qualità per oltre 200 milioni di utenti giornalieri.',
+          'tag-realtime': 'Serving Real-time',
+          'tag-quality': 'Controllo Qualità',
+          
+          // Resume Section
+          'resume-title': 'Curriculum',
+          'resume-description': 'Ingegnere AI e Ricercatore con vasta esperienza nella costruzione e scalabilità di sistemi di traduzione automatica multilingue. Comprovato track record nel servire 200+ milioni di utenti attraverso soluzioni LLM innovative.',
+          'summary-title': 'Sommario',
+          'summary-description': 'Sono un Ingegnere AI e Ricercatore specializzato in modelli linguistici multilingue. Esperto nella costruzione di sistemi di traduzione automatica che servono milioni di utenti in tutto il mondo. Co-fondatore con esperienza in startup nel settore delle piattaforme di geolocalizzazione AI.',
+          'education-title': 'Formazione',
+          'masters-full': 'Laurea Magistrale in Intelligenza Artificiale e Data Engineering',
+          'university-location': 'Università di Pisa, Pisa, Italia',
+          'masters-description': '110/110 e lode (4.0 GPA). Specializzato in Data Mining, Machine Learning, Computer Vision, Natural Language Processing, Teoria dell\'Ottimizzazione e Process Mining. Esperienza pratica con Sistemi Distribuiti, Cloud Computing e strumenti come MongoDB, Neo4j, Docker, Kubernetes, TensorFlow e PyTorch.',
+          'bachelors-full': 'Laurea Triennale in Ingegneria Informatica',
+          'bachelors-description': '110/110 (4.0 GPA). Solida base in ingegneria informatica inclusi matematica, fisica, algoritmi, database, architettura dei computer, reti informatiche, sistemi operativi e programmazione in C, C++, Java, Python, Matlab, SQL, JavaScript e PHP.',
+          'experience-title': 'Esperienza Professionale',
+          'current-role': 'Ingegnere AI e Ricercatore',
+          'current-company': 'Translated, Roma, Italia',
+          'lara-desc': '<strong>Lara:</strong> Ho lavorato sull\'intera pipeline R&D di un LLM ottimizzato per MT: dalla raccolta dati e addestramento del modello all\'allineamento e ottimizzazione dell\'inferenza. Costruito da zero all\'interno di un team stile startup di quattro persone operante nell\'azienda. Ora è il prodotto B2B di punta, traduce tutti i contenuti a livello mondiale per Airbnb e la maggior parte di Uber, Shopify, Nike e altri, raggiungendo oltre 200M di utenti globalmente. È stata lanciata di recente anche una versione B2C.',
+          'lara-grande-desc': '<strong>Lara Grande:</strong> Ruolo chiave nel scalare LLM per eguagliare la qualità dell\'1% migliore dei traduttori professionali. Utilizzato oltre 1.000 GPU sul cluster HPC di CINECA per addestramento distribuito su larga scala.',
+          'language-expansion-desc': '<strong>Espansione Linguaggi:</strong> Identificato e guidato un progetto di ricerca di successo per espandere la copertura della traduzione automatica in produzione da 56 a 201 lingue, un aumento di 4×, rendendolo il primo motore MT commerciale a supportare tale gamma. Proposto la direzione, progettato il piano di implementazione e guidato al completamento entro otto mesi.',
+          'instruction-mt-desc': '<strong>MT seguendo Istruzioni:</strong> Guidato ricerca nell\'allineare LLM per seguire guide di stile dettagliate usando SFT e DPO.',
+          'trust-attention-desc': '<strong>Trust Attention:</strong> Proposto e validato una tecnica innovativa che priorizza dati di addestramento ad alto valore, ottenendo i miglioramenti di qualità MT più significativi in cinque anni.',
+          'polyglot-desc': '<strong>Polyglot:</strong> Sviluppato un modello di Identificazione Linguistica che supporta 201 lingue.',
+          'startup-role': 'Co-Fondatore e Ingegnere AI',
+          'italy': 'Italia',
+          'startup-desc1': 'Co-fondato startup AI come parte del team fondatore di tre persone costruendo piattaforma di geolocalizzazione di immagini',
+          'startup-desc2': 'Sviluppato il modello core per la geolocalizzazione di immagini usando vision transformer e tecniche basate su retrieval',
+          'startup-desc3': 'Acquisito esperienza preziosa in ambiente startup veloce e sviluppo prodotti',
+          'startup-desc4': 'Appreso lezioni cruciali su dinamiche di team, gestione dell\'incertezza e iterazione rapida',
+          'try-here': 'Provalo qui',
+          
+          // Portfolio Section
+          'portfolio-title': 'Portfolio 🚀',
+          'portfolio-description': 'Una raccolta dei miei progetti AI e machine learning, dalla ricerca accademica ai sistemi di produzione che servono milioni di utenti in tutto il mondo.',
+          
+          // Portfolio Project Descriptions
+          't4sa-desc': 'Sistema di analisi del sentiment visuale cross-modale che utilizza distillazione di conoscenza da modelli di testo a visione. Pubblicato a ECAI 2023, raggiungendo risultati state-of-the-art nella predizione del sentiment visuale.',
+          'numpygpt-desc': 'Un GPT costruito da zero con NumPy e la libreria standard di Python. Nessun autograd, nessun framework: ogni layer è re-implementato con il proprio forward e backward pass. I gradienti sono calcolati manualmente, gli aggiornamenti sono trasparenti, e ogni operazione è specificata.',
+          'fake-news-desc': 'Sistema AI multi-modale per la rilevazione di disinformazione utilizzando architetture transformer. Include analisi di stance e scoring di credibilità delle fonti.',
+          'unimusic-desc': 'Piattaforma scalabile per la scoperta musicale con architettura ibrida MongoDB/Neo4j. Gestisce milioni di tracce con algoritmi di raccomandazione in tempo reale.',
+          'voice-vibes-desc': 'Sistema di riconoscimento delle emozioni vocali con sei architetture AI innovative. Ha raggiunto il 94% di accuratezza utilizzando metodi ensemble e feature engineering avanzata.',
+          'federated-dbscan-desc': 'Clustering distribuito privacy-preserving con federated learning. Abilita ML collaborativo senza condivisione di dati, raggiungendo il 99% di preservazione della privacy.',
+          'pagerank-desc': 'Implementazione ad alte prestazioni dell\'algoritmo PageRank con operazioni ottimizzate su matrici sparse. Gestisce grafi con milioni di nodi in modo efficiente.',
+          
+          // Call to Action
+          'cta-title': 'Costruiamo Insieme il Futuro dell\'AI',
+          'cta-description': 'Che tu stia cercando di collaborare su ricerca all\'avanguardia, discutere degli ultimi sviluppi negli LLM multilingue, o esplorare come l\'AI può trasformare il tuo business, sono sempre entusiasta di connettermi con innovatori e problem solver.',
+          'cta-button1': 'Inizia una Conversazione',
+          'cta-button2': 'Invia Email Diretta',
+          
+          // Contact Section
+          'contact-title': 'Contatti',
+          'contact-description': 'Mettiamoci in contatto! Che tu voglia discutere di AI, machine learning, o potenziali collaborazioni, sono sempre aperto a conversazioni interessanti.',
+          'location-label': 'Posizione',
+          'location': 'Roma, Italia',
+          'form-name': 'Il Tuo Nome',
+          'form-email': 'La Tua Email',
+          'form-subject': 'Oggetto',
+          'form-message': 'Messaggio',
+          'form-loading': 'Caricamento',
+          'form-success': 'Il tuo messaggio è stato inviato. Grazie!',
+          'form-send': 'Invia Messaggio'
+        }
+      };
       
-    </section><!-- /Current Focus Section -->
-
-    <!-- Resume Section -->
-    <section id="resume" class="resume section">
-
-      <!-- Section Title -->
-      <div class="container section-title" data-aos="fade-up">
-        <h2>Resume</h2>
-        <p>AI Engineer and Researcher with extensive experience in building and scaling multilingual machine translation systems. Proven track record of serving 200+ million users through innovative LLM solutions.</p>
-      </div><!-- End Section Title -->
-
-      <div class="container">
-
-        <div class="row">
-
-          <div class="col-lg-6" data-aos="fade-up" data-aos-delay="100">
-            <h3 class="resume-title">Summary</h3>
-
-            <div class="resume-item pb-0">
-              <h4>Alessio Serra</h4>
-              <p><em>AI Engineer and Researcher focused on multilingual large language models. Expert in building machine translation systems that serve millions of users worldwide. Co-founder with startup experience in AI-powered geolocation platforms.</em></p>
-            </div><!-- End Resume Item -->
-
-            <h3 class="resume-title">Education</h3>
-            <div class="resume-item">
-              <h4>M.S. Artificial Intelligence &amp; Data Engineering</h4>
-              <h5>2020 - 2022</h5>
-              <p><em>University of Pisa, Pisa, Italy</em></p>
-              <p>110/110 summa cum laude (4.0 GPA). Specialized in Data Mining, Machine Learning, Computer Vision, Natural Language Processing, Optimization Theory, and Process Mining. Gained hands-on experience with Distributed Systems, Cloud Computing, and tools like MongoDB, Neo4j, Docker, Kubernetes, TensorFlow, and PyTorch.</p>
-            </div><!-- End Resume Item -->
-
-            <div class="resume-item">
-              <h4>B.S. Computer Engineering</h4>
-              <h5>2017 - 2020</h5>
-              <p><em>University of Pisa, Pisa, Italy</em></p>
-              <p>110/110 (4.0 GPA). Strong foundation in computer engineering including mathematics, physics, algorithms, databases, computer architecture, computer networks, operating systems, and programming in C, C++, Java, Python, Matlab, SQL, JavaScript, and PHP.</p>
-            </div><!-- End Resume Item -->
-
-          </div>
-
-          <div class="col-lg-6" data-aos="fade-up" data-aos-delay="200">
-            <h3 class="resume-title">Professional Experience</h3>
-            <div class="resume-item">
-              <h4>AI Engineer &amp; Researcher</h4>
-              <h5>2023 - Present</h5>
-              <p><em>Translated, Rome, Italy</em></p>
-              <ul>
-                <li><strong>Lara:</strong> Worked on the full R&D pipeline of an LLM optimized for MT: from data collection and model training to alignment and inference optimization. Built from scratch within a startup-style team of four operating within the company. Now the flagship B2B product, it translates all content worldwide for Airbnb and most of Uber, Shopify, Nike, and more, reaching over 200M users globally. A B2C version has also recently launched.</li>
-                <li><strong>Lara Grande:</strong> Key role in scaling LLM to match the quality of the top 1% of professional translators. Used over 1,000 GPUs on CINECA's HPC cluster for large-scale distributed training.</li>
-                <li><strong>Language Expansion:</strong> Identified and led a successful research project to expand machine translation production coverage from 56 to 201 languages, a 4× increase, making it the first commercial MT engine to support such a range. Proposed the direction, designed the implementation plan, and led it to completion within eight months.</li>
-                <li><strong>Instruction-following MT:</strong> Led research aligning LLM to follow detailed style guides using SFT and DPO.</li>
-                <li><strong>Trust Attention:</strong> Proposed and validated a novel technique prioritizing high-value training data, achieving the most significant MT quality improvements in five years.</li>
-                <li><strong>Polyglot:</strong> Developed a Language Identification model supporting 201 languages.</li>
-              </ul>
-            </div><!-- End Resume Item -->
-
-            <div class="resume-item">
-              <h4>Co-Founder &amp; AI Engineer</h4>
-              <h5>2022 - 2023</h5>
-              <p><em>AI Startup (Stealth Mode), Italy</em></p>
-              <ul>
-                <li>Co-founded AI startup as part of three-person founding team building image geolocalization platform</li>
-                <li>Developed the core model for image geolocalization using vision transformers and retrieval-based techniques</li>
-                <li>Gained valuable experience in fast-paced startup environment and product development</li>
-                <li>Learned crucial lessons about team dynamics, uncertainty management, and rapid iteration</li>
-              </ul>
-            </div><!-- End Resume Item -->
-
-          </div>
-
-        </div>
-
-      </div>
-
-    </section><!-- /Resume Section -->
-
-    <!-- Portfolio Section -->
-    <section id="portfolio" class="portfolio section light-background">
-
-      <!-- Section Title -->
-      <div class="container section-title" data-aos="fade-up">
-        <h2>Portfolio 🚀</h2>
-        <p>A collection of my AI and machine learning projects, from academic research to production systems serving millions of users worldwide.</p>
-      </div><!-- End Section Title -->
-
-      <div class="container">
-
-        <div class="isotope-layout" data-default-filter="*" data-layout="masonry" data-sort="original-order">
-
-          <ul class="portfolio-filters isotope-filters" data-aos="fade-up" data-aos-delay="100">
-            <li data-filter="*" class="filter-active">All</li>
-            <li data-filter=".filter-ml">Machine Learning</li>
-            <li data-filter=".filter-nlp">NLP</li>
-            <li data-filter=".filter-cv">Computer Vision</li>
-            <li data-filter=".filter-data">Data Engineering</li>
-          </ul><!-- End Portfolio Filters -->
-
-          <div class="row gy-4 isotope-container" data-aos="fade-up" data-aos-delay="200">
-
-            <div class="col-lg-4 col-md-6 portfolio-item isotope-item filter-cv">
-              <div class="portfolio-content h-100">
-                <img src="assets/img/T4SA-2.0.png" class="img-fluid" alt="">
-                <div class="portfolio-info">
-                  <h4>T4SA-2.0 🎯</h4>
-                  <p>Cross-modal visual sentiment analysis system using knowledge distillation from text to vision models. Published at ECAI 2023, achieving state-of-the-art results on visual sentiment prediction.</p>
-                  <a href="assets/img/T4SA-2.0.png" title="T4SA-2.0" data-gallery="portfolio-gallery-cv" class="glightbox preview-link"><i class="bi bi-zoom-in"></i></a>
-                  <a href="https://fabiocarrara.github.io/cross-modal-visual-sentiment-analysis/" title="Research Details" class="details-link"><i class="bi bi-link-45deg"></i></a>
-                </div>
-              </div>
-            </div><!-- End Portfolio Item -->
-
-            <div class="col-lg-4 col-md-6 portfolio-item isotope-item filter-nlp">
-              <div class="portfolio-content h-100">
-                <img src="assets/img/portfolio/numpyGPT.png" class="img-fluid" alt="">
-                <div class="portfolio-info">
-                  <h4>NumpyGPT 🧠</h4>
-                  <p>A from-scratch GPT built with NumPy and Python's standard library. No autograd, no frameworks: every layer is re-implemented with its own forward and backward pass. Gradients are computed manually, updates are transparent, and every operation is spelled out.</p>
-                  <a href="assets/img/portfolio/numpyGPT.png" title="NumpyGPT" data-gallery="portfolio-gallery-nlp" class="glightbox preview-link"><i class="bi bi-zoom-in"></i></a>
-                  <a href="https://github.com/codiceSpaghetti/numpyGPT" title="More Details" class="details-link"><i class="bi bi-link-45deg"></i></a>
-                </div>
-              </div>
-            </div><!-- End Portfolio Item -->
-
-            <div class="col-lg-4 col-md-6 portfolio-item isotope-item filter-nlp">
-              <div class="portfolio-content h-100">
-                <img src="assets/img/portfolio/FakeNewsDetection.jpg" class="img-fluid" alt="">
-                <div class="portfolio-info">
-                  <h4>Fake News Detection 🔍</h4>
-                  <p>Multi-modal AI system for misinformation detection using transformer architectures. Features stance analysis and source credibility scoring.</p>
-                  <a href="assets/img/portfolio/FakeNewsDetection.jpg" title="Fake News Detection" data-gallery="portfolio-gallery-nlp" class="glightbox preview-link"><i class="bi bi-zoom-in"></i></a>
-                  <a href="https://github.com/codiceSpaghetti/FakeNewsDetection" title="More Details" class="details-link"><i class="bi bi-link-45deg"></i></a>
-                </div>
-              </div>
-            </div><!-- End Portfolio Item -->
-
-            <div class="col-lg-4 col-md-6 portfolio-item isotope-item filter-data">
-              <div class="portfolio-content h-100">
-                <img src="assets/img/portfolio/UniMusic.jpg" class="img-fluid" alt="">
-                <div class="portfolio-info">
-                  <h4>UniMusic 🎵</h4>
-                  <p>Scalable music discovery platform with hybrid MongoDB/Neo4j architecture. Handles millions of tracks with real-time recommendation algorithms.</p>
-                  <a href="assets/img/portfolio/UniMusic.jpg" title="UniMusic" data-gallery="portfolio-gallery-data" class="glightbox preview-link"><i class="bi bi-zoom-in"></i></a>
-                  <a href="https://github.com/codiceSpaghetti/UniMusic" title="More Details" class="details-link"><i class="bi bi-link-45deg"></i></a>
-                </div>
-              </div>
-            </div><!-- End Portfolio Item -->
-
-            <div class="col-lg-4 col-md-6 portfolio-item isotope-item filter-nlp">
-              <div class="portfolio-content h-100">
-                <img src="assets/img/portfolio/VoiceVibes.jpg" class="img-fluid" alt="">
-                <div class="portfolio-info">
-                  <h4>Voice Vibes 🎤</h4>
-                  <p>Speech emotion recognition system with six novel AI architectures. Achieved 94% accuracy using ensemble methods and advanced feature engineering.</p>
-                  <a href="assets/img/portfolio/VoiceVibes.jpg" title="Voice Vibes" data-gallery="portfolio-gallery-nlp" class="glightbox preview-link"><i class="bi bi-zoom-in"></i></a>
-                  <a href="https://github.com/codiceSpaghetti/VoiceVibes" title="More Details" class="details-link"><i class="bi bi-link-45deg"></i></a>
-                </div>
-              </div>
-            </div><!-- End Portfolio Item -->
-
-            <div class="col-lg-4 col-md-6 portfolio-item isotope-item filter-ml">
-              <div class="portfolio-content h-100">
-                <img src="assets/img/portfolio/FederatedDBscan.png" class="img-fluid" alt="">
-                <div class="portfolio-info">
-                  <h4>Federated DBscan 🔒</h4>
-                  <p>Privacy-preserving distributed clustering with federated learning. Enables collaborative ML without data sharing, achieving 99% privacy preservation.</p>
-                  <a href="assets/img/portfolio/FederatedDBscan.png" title="Federated DBscan" data-gallery="portfolio-gallery-ml" class="glightbox preview-link"><i class="bi bi-zoom-in"></i></a>
-                  <a href="https://github.com/codiceSpaghetti/FederatedDBscan" title="More Details" class="details-link"><i class="bi bi-link-45deg"></i></a>
-                </div>
-              </div>
-            </div><!-- End Portfolio Item -->
-
-            <div class="col-lg-4 col-md-6 portfolio-item isotope-item filter-ml">
-              <div class="portfolio-content h-100">
-                <img src="assets/img/pageRank.jpg" class="img-fluid" alt="">
-                <div class="portfolio-info">
-                  <h4>PageRank Implementation 🔗</h4>
-                  <p>High-performance PageRank algorithm implementation with optimized sparse matrix operations. Handles graphs with millions of nodes efficiently.</p>
-                  <a href="assets/img/pageRank.jpg" title="PageRank Implementation" data-gallery="portfolio-gallery-ml" class="glightbox preview-link"><i class="bi bi-zoom-in"></i></a>
-                  <a href="https://github.com/codiceSpaghetti/PageRank" title="More Details" class="details-link"><i class="bi bi-link-45deg"></i></a>
-                </div>
-              </div>
-            </div><!-- End Portfolio Item -->
-
-          </div><!-- End Portfolio Container -->
-
-        </div>
-
-      </div>
-
-    </section><!-- /Portfolio Section -->
-
-    <!-- Call to Action Section -->
-    <section id="call-to-action" class="call-to-action section dark-background">
+      // Apply saved language on page load
+      switchLanguage(currentLanguage);
+      updateLanguageButtons(currentLanguage);
       
-      <div class="container" data-aos="fade-up">
+      // Language toggle click handlers
+      languageOptions.forEach(option => {
+        option.addEventListener('click', () => {
+          const selectedLang = option.getAttribute('data-lang');
+          switchLanguage(selectedLang);
+          updateLanguageButtons(selectedLang);
+          localStorage.setItem('language', selectedLang);
+        });
+      });
+      
+      function switchLanguage(lang) {
+        const translation = translations[lang];
+        if (!translation) return;
         
-        <div class="row gy-4 justify-content-center text-center">
-          <div class="col-lg-8">
-            <h2>Let's Build the Future of AI Together</h2>
-            <p>Whether you're looking to collaborate on cutting-edge research, discuss the latest in multilingual LLMs, or explore how AI can transform your business, I'm always excited to connect with fellow innovators and problem solvers.</p>
-            <div class="cta-buttons">
-              <a href="#contact" class="btn-cta">Start a Conversation</a>
-              <a href="mailto:alessio.ser29@gmail.com" class="btn-cta-outline">Send Direct Email</a>
-            </div>
-          </div>
-        </div>
+        // Update all elements with data-translate attribute
+        document.querySelectorAll('[data-translate]').forEach(element => {
+          const key = element.getAttribute('data-translate');
+          if (translation[key]) {
+            // Use innerHTML for content that contains HTML tags, textContent for plain text
+            if (translation[key].includes('<') || translation[key].includes('>')) {
+              element.innerHTML = translation[key];
+            } else {
+              element.textContent = translation[key];
+            }
+          }
+        });
         
-      </div>
+        // Update typed.js content for hero section
+        const typedElement = document.querySelector('.typed');
+        if (typedElement && window.typed) {
+          window.typed.destroy();
+          window.typed = new Typed('.typed', {
+            strings: translation['hero-typed'],
+            typeSpeed: 100,
+            backSpeed: 50,
+            backDelay: 2000,
+            loop: true
+          });
+        }
+      }
       
-    </section><!-- /Call to Action Section -->
+      function updateLanguageButtons(selectedLang) {
+        languageOptions.forEach(option => {
+          if (option.getAttribute('data-lang') === selectedLang) {
+            option.classList.add('active');
+          } else {
+            option.classList.remove('active');
+          }
+        });
+      }
+    </script>
 
-    <!-- Contact Section -->
-    <section id="contact" class="contact section">
-
-      <!-- Section Title -->
-      <div class="container section-title" data-aos="fade-up">
-        <h2>Contact</h2>
-        <p>Let's connect! Whether you want to discuss AI, machine learning, or potential collaborations, I'm always open to interesting conversations.</p>
-      </div><!-- End Section Title -->
-
-      <div class="container" data-aos="fade-up" data-aos-delay="100">
-
-        <div class="row gy-4">
-
-          <div class="col-lg-5">
-
-            <div class="info-wrap">
-              <div class="info-item d-flex" data-aos="fade-up" data-aos-delay="200">
-                <i class="bi bi-geo-alt flex-shrink-0"></i>
-                <div>
-                  <h3>Location</h3>
-                  <p>Rome, Italy</p>
-                </div>
-              </div><!-- End Info Item -->
-
-              <div class="info-item d-flex" data-aos="fade-up" data-aos-delay="300">
-                <i class="bi bi-envelope flex-shrink-0"></i>
-                <div>
-                  <h3>Email</h3>
-                  <p><a href="mailto:alessio.ser29@gmail.com">alessio.ser29@gmail.com</a></p>
-                </div>
-              </div><!-- End Info Item -->
-
-              <div class="info-item d-flex" data-aos="fade-up" data-aos-delay="400">
-                <i class="bi bi-linkedin flex-shrink-0"></i>
-                <div>
-                  <h3>LinkedIn</h3>
-                  <p><a href="https://www.linkedin.com/in/serra-alessio/" target="_blank">linkedin.com/in/serra-alessio</a></p>
-                </div>
-              </div><!-- End Info Item -->
-
-              <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d95133.49266890877!2d12.4823!3d41.8933!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x132f6196f9928ebb%3A0xb90f770693656e38!2sRome%2C%20Metropolitan%20City%20of%20Rome%20Capital%2C%20Italy!5e0!3m2!1sen!2sus!4v1676961268712!5m2!1sen!2sus" frameborder="0" style="border:0; width: 100%; height: 270px;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
-            </div>
-          </div>
-
-          <div class="col-lg-7">
-            <form action="forms/contact.php" method="post" class="php-email-form" data-aos="fade-up" data-aos-delay="200">
-              <div class="row gy-4">
-
-                <div class="col-md-6">
-                  <label for="name-field" class="pb-2">Your Name</label>
-                  <input type="text" name="name" id="name-field" class="form-control" required="">
-                </div>
-
-                <div class="col-md-6">
-                  <label for="email-field" class="pb-2">Your Email</label>
-                  <input type="email" class="form-control" name="email" id="email-field" required="">
-                </div>
-
-                <div class="col-md-12">
-                  <label for="subject-field" class="pb-2">Subject</label>
-                  <input type="text" class="form-control" name="subject" id="subject-field" required="">
-                </div>
-
-                <div class="col-md-12">
-                  <label for="message-field" class="pb-2">Message</label>
-                  <textarea class="form-control" name="message" rows="10" id="message-field" required=""></textarea>
-                </div>
-
-                <div class="col-md-12 text-center">
-                  <div class="loading">Loading</div>
-                  <div class="error-message"></div>
-                  <div class="sent-message">Your message has been sent. Thank you!</div>
-
-                  <button type="submit">Send Message</button>
-                </div>
-
-              </div>
-            </form>
-          </div><!-- End Contact Form -->
-
-        </div>
-
-      </div>
-
-    </section><!-- /Contact Section -->
-
-  </main>
-
-  <footer id="footer" class="footer position-relative light-background">
-
-    <div class="container">
-      <div class="copyright text-center ">
-        <p>© <span>Copyright</span> <strong class="px-1 sitename">iPortfolio</strong> <span>All Rights Reserved</span></p>
-      </div>
-      <div class="credits">
-        <!-- All the links in the footer should remain intact. -->
-        <!-- You can delete the links only if you've purchased the pro version. -->
-        <!-- Licensing information: https://bootstrapmade.com/license/ -->
-        <!-- Purchase the pro version with working PHP/AJAX contact form: [buy-url] -->
-        Designed by <a href="https://bootstrapmade.com/">BootstrapMade</a>
-      </div>
-    </div>
-
-  </footer>
-
-  <!-- Scroll Top -->
-  <a href="#" id="scroll-top" class="scroll-top d-flex align-items-center justify-content-center"><i class="bi bi-arrow-up-short"></i></a>
-
-  <!-- Floating Contact Button -->
-  <a href="#contact" id="floating-contact" class="floating-contact d-flex align-items-center justify-content-center" title="Get in Touch">
-    <i class="bi bi-chat-dots"></i>
-  </a>
-
-  <!-- Preloader -->
-  <div id="preloader"></div>
-
-  <!-- Vendor JS Files -->
-  <script src="assets/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
-  <script src="assets/vendor/php-email-form/validate.js"></script>
-  <script src="assets/vendor/aos/aos.js"></script>
-  <script src="assets/vendor/typed.js/typed.umd.js"></script>
-  <script src="assets/vendor/purecounter/purecounter_vanilla.js"></script>
-  <script src="assets/vendor/waypoints/noframework.waypoints.js"></script>
-  <script src="assets/vendor/glightbox/js/glightbox.min.js"></script>
-  <script src="assets/vendor/imagesloaded/imagesloaded.pkgd.min.js"></script>
-  <script src="assets/vendor/isotope-layout/isotope.pkgd.min.js"></script>
-  <script src="assets/vendor/swiper/swiper-bundle.min.js"></script>
-
-  <!-- Main JS File -->
-  <script src="assets/js/main.js"></script>
+  </div>
 
 </body>
 
