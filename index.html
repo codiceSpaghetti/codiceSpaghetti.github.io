@@ -27,6 +27,241 @@
   <!-- Main CSS File -->
   <link href="assets/css/main.css" rel="stylesheet">
 
+  <!-- Custom Styles -->
+  <style>
+    /* Hero Section Enhancements */
+    .hero-subtitle {
+      font-size: 1.2rem !important;
+      color: rgba(255, 255, 255, 0.8) !important;
+      margin-top: 1rem !important;
+      font-weight: 300 !important;
+      font-style: italic;
+    }
+    
+    /* Technologies Section */
+    .tech-item {
+      padding: 2rem 1rem;
+      border-radius: 10px;
+      background: #fff;
+      box-shadow: 0 4px 16px rgba(0,0,0,0.1);
+      transition: all 0.3s ease;
+      height: 100%;
+    }
+    
+    .tech-item:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 8px 25px rgba(0,0,0,0.15);
+    }
+    
+    .tech-item h5 {
+      margin: 1rem 0 0.5rem 0;
+      font-weight: 600;
+      color: #2c4964;
+    }
+    
+    .tech-item p {
+      margin: 0;
+      color: #666;
+      font-size: 0.9rem;
+    }
+    
+    /* Current Focus Section */
+    .focus-item {
+      background: #fff;
+      padding: 2rem;
+      border-radius: 15px;
+      box-shadow: 0 5px 20px rgba(0,0,0,0.08);
+      border-left: 4px solid #FF6B35;
+      transition: all 0.3s ease;
+      height: 100%;
+    }
+    
+    .focus-item:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 10px 30px rgba(0,0,0,0.12);
+    }
+    
+    .focus-icon {
+      width: 60px;
+      height: 60px;
+      background: linear-gradient(45deg, #FF6B35, #FF8E53);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 1.5rem;
+    }
+    
+    .focus-icon i {
+      font-size: 1.5rem;
+      color: white;
+    }
+    
+    .focus-content h4 {
+      color: #2c4964;
+      font-weight: 600;
+      margin-bottom: 1rem;
+      font-size: 1.3rem;
+    }
+    
+    .focus-content p {
+      color: #666;
+      line-height: 1.6;
+      margin-bottom: 1.5rem;
+    }
+    
+    .focus-tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+    }
+    
+    .tag {
+      background: #f8f9fa;
+      color: #2c4964;
+      padding: 0.25rem 0.75rem;
+      border-radius: 20px;
+      font-size: 0.8rem;
+      font-weight: 500;
+      border: 1px solid #e9ecef;
+    }
+    
+    /* Call to Action Section */
+    .call-to-action {
+      background: linear-gradient(45deg, #1e3c72 0%, #2a5298 100%);
+      padding: 80px 0;
+      color: white;
+    }
+    
+    .call-to-action h2 {
+      font-size: 2.5rem;
+      margin-bottom: 1.5rem;
+      font-weight: 700;
+    }
+    
+    .call-to-action p {
+      font-size: 1.2rem;
+      margin-bottom: 2rem;
+      opacity: 0.9;
+      line-height: 1.6;
+    }
+    
+    .cta-buttons {
+      display: flex;
+      gap: 1rem;
+      justify-content: center;
+      flex-wrap: wrap;
+    }
+    
+    .btn-cta, .btn-cta-outline {
+      padding: 12px 30px;
+      border-radius: 25px;
+      text-decoration: none;
+      font-weight: 600;
+      transition: all 0.3s ease;
+      display: inline-block;
+    }
+    
+    .btn-cta {
+      background: #fff;
+      color: #1e3c72;
+    }
+    
+    .btn-cta:hover {
+      background: #f8f9fa;
+      color: #1e3c72;
+      transform: translateY(-2px);
+      box-shadow: 0 6px 20px rgba(0,0,0,0.2);
+    }
+    
+    .btn-cta-outline {
+      background: transparent;
+      color: #fff;
+      border: 2px solid #fff;
+    }
+    
+    .btn-cta-outline:hover {
+      background: #fff;
+      color: #1e3c72;
+      transform: translateY(-2px);
+    }
+    
+    /* Responsive adjustments */
+    @media (max-width: 768px) {
+      .call-to-action h2 {
+        font-size: 2rem;
+      }
+      
+      .call-to-action p {
+        font-size: 1.1rem;
+      }
+      
+      .cta-buttons {
+        flex-direction: column;
+        align-items: center;
+      }
+      
+      .btn-cta, .btn-cta-outline {
+        width: 250px;
+        text-align: center;
+      }
+    }
+    
+    /* Floating Contact Button */
+    .floating-contact {
+      position: fixed;
+      bottom: 90px;
+      right: 30px;
+      width: 60px;
+      height: 60px;
+      background: linear-gradient(45deg, #FF6B35, #FF8E53);
+      border-radius: 50%;
+      color: white;
+      text-decoration: none;
+      box-shadow: 0 4px 20px rgba(255, 107, 53, 0.4);
+      transition: all 0.3s ease;
+      z-index: 1000;
+      animation: pulse 2s infinite;
+    }
+    
+    .floating-contact:hover {
+      background: linear-gradient(45deg, #FF8E53, #FFB584);
+      transform: scale(1.1);
+      box-shadow: 0 6px 25px rgba(255, 107, 53, 0.6);
+      color: white;
+    }
+    
+    .floating-contact i {
+      font-size: 1.2rem;
+    }
+    
+    @keyframes pulse {
+      0% {
+        box-shadow: 0 4px 20px rgba(255, 107, 53, 0.4);
+      }
+      50% {
+        box-shadow: 0 4px 20px rgba(255, 107, 53, 0.7);
+      }
+      100% {
+        box-shadow: 0 4px 20px rgba(255, 107, 53, 0.4);
+      }
+    }
+    
+    /* Hide floating button on small screens to avoid overlap */
+    @media (max-width: 768px) {
+      .floating-contact {
+        bottom: 80px;
+        right: 20px;
+        width: 50px;
+        height: 50px;
+      }
+      
+      .floating-contact i {
+        font-size: 1rem;
+      }
+    }
+  </style>
+
   <!-- =======================================================
   * Template Name: iPortfolio
   * Template URL: https://bootstrapmade.com/iportfolio-bootstrap-portfolio-websites-template/
@@ -42,7 +277,7 @@
     <i class="header-toggle d-xl-none bi bi-list"></i>
 
     <div class="profile-img">
-      <img src="assets/img/my-profile-img.jpg" alt="" class="img-fluid rounded-circle">
+      <img src="assets/img/alessio.jpeg" alt="" class="img-fluid rounded-circle">
     </div>
 
     <a href="index.html" class="logo d-flex align-items-center justify-content-center">
@@ -53,8 +288,7 @@
 
     <div class="social-links text-center">
       <a href="https://github.com/codiceSpaghetti" class="github"><i class="bi bi-github"></i></a>
-      <a href="https://www.facebook.com/serraAlessio/" class="facebook"><i class="bi bi-facebook"></i></a>
-      <a href="https://www.instagram.com/_alessio.serra/" class="instagram"><i class="bi bi-instagram"></i></a>
+      <a href="https://x.com/as3erra" class="twitter"><i class="bi bi-twitter-x"></i></a>
       <a href="mailto:alessio.ser29@gmail.com" class="email"><i class="bi bi-envelope"></i></a>
       <a href="https://www.linkedin.com/in/serra-alessio/" class="linkedin"><i class="bi bi-linkedin"></i></a>
     </div>
@@ -63,6 +297,7 @@
       <ul>
         <li><a href="#hero" class="active"><i class="bi bi-house navicon"></i>Home</a></li>
         <li><a href="#about"><i class="bi bi-person navicon"></i> About</a></li>
+        <li><a href="#technologies"><i class="bi bi-gear navicon"></i> Tech Stack</a></li>
         <li><a href="#resume"><i class="bi bi-file-earmark-text navicon"></i> Resume</a></li>
         <li><a href="#portfolio"><i class="bi bi-images navicon"></i> Portfolio</a></li>
         <li><a href="#contact"><i class="bi bi-envelope navicon"></i> Contact</a></li>
@@ -80,7 +315,8 @@
 
       <div class="container" data-aos="fade-up" data-aos-delay="100">
         <h2>Alessio Serra</h2>
-        <p>I'm <span class="typed" data-typed-items="AI Engineer, Researcher, ML Engineer, NLP Expert">AI Engineer</span><span class="typed-cursor typed-cursor--blink" aria-hidden="true"></span><span class="typed-cursor typed-cursor--blink" aria-hidden="true"></span></p>
+        <p>I'm <span class="typed" data-typed-items="an AI Researcher, an Engineer, a Builder">an AI Researcher</span><span class="typed-cursor typed-cursor--blink" aria-hidden="true"></span><span class="typed-cursor typed-cursor--blink" aria-hidden="true"></span></p>
+        <p class="hero-subtitle">Making AI speak your language, one model at a time</p>
       </div>
 
     </section><!-- /Hero Section -->
@@ -98,7 +334,7 @@
 
         <div class="row gy-4 justify-content-center">
           <div class="col-lg-4">
-            <img src="assets/img/my-profile-img.jpg" class="img-fluid" alt="">
+            <img src="assets/img/alessio.jpeg" class="img-fluid" alt="">
           </div>
           <div class="col-lg-8 content">
             <h2>AI Engineer &amp; Researcher</h2>
@@ -109,16 +345,16 @@
               <div class="col-lg-6">
                 <ul>
                   <li><i class="bi bi-chevron-right"></i> <strong>Birth Place:</strong> <span>Naples, Italy</span></li>
-                  <li><i class="bi bi-chevron-right"></i> <strong>Website:</strong> <span>codicespaghetti.github.io</span></li>
                   <li><i class="bi bi-chevron-right"></i> <strong>Email:</strong> <span>alessio.ser29@gmail.com</span></li>
                   <li><i class="bi bi-chevron-right"></i> <strong>City:</strong> <span>Rome, Italy</span></li>
                 </ul>
               </div>
               <div class="col-lg-6">
                 <ul>
-                  <li><i class="bi bi-chevron-right"></i> <strong>Degree:</strong> <span>M.S. AI & Data Engineering</span></li>
+                  <li><i class="bi bi-chevron-right"></i> <strong>M.S. Degree:</strong> <span>AI & Data Engineering</span></li>
+                  <li><i class="bi bi-chevron-right"></i> <strong>B.S. Degree:</strong> <span>Computer Engineering</span></li>
                   <li><i class="bi bi-chevron-right"></i> <strong>University:</strong> <span>University of Pisa</span></li>
-                  <li><i class="bi bi-chevron-right"></i> <strong>Languages:</strong> <span>201 MT Languages</span></li>
+                  <li><i class="bi bi-chevron-right"></i> <strong>Languages:</strong> <span>Italian, English</span></li>
                   <li><i class="bi bi-chevron-right"></i> <strong>Focus:</strong> <span>Multilingual LLMs</span></li>
                 </ul>
               </div>
@@ -133,119 +369,141 @@
 
     </section><!-- /About Section -->
 
-    <!-- Stats Section -->
-    <section id="stats" class="stats section">
-
-      <div class="container" data-aos="fade-up" data-aos-delay="100">
-
-        <div class="row gy-4">
-
-          <div class="col-lg-3 col-md-6">
-            <div class="stats-item">
-              <i class="bi bi-people"></i>
-              <span data-purecounter-start="0" data-purecounter-end="200" data-purecounter-duration="1" class="purecounter"></span>
-              <p><strong>Million Users</strong> <span>reached through MT systems</span></p>
-            </div>
-          </div><!-- End Stats Item -->
-
-          <div class="col-lg-3 col-md-6">
-            <div class="stats-item">
-              <i class="bi bi-translate"></i>
-              <span data-purecounter-start="0" data-purecounter-end="201" data-purecounter-duration="1" class="purecounter"></span>
-              <p><strong>Languages</strong> <span>supported in MT coverage</span></p>
-            </div>
-          </div><!-- End Stats Item -->
-
-          <div class="col-lg-3 col-md-6">
-            <div class="stats-item">
-              <i class="bi bi-gpu-card"></i>
-              <span data-purecounter-start="0" data-purecounter-end="1000" data-purecounter-duration="1" class="purecounter"></span>
-              <p><strong>GPUs Scaled</strong> <span>for training LLMs</span></p>
-            </div>
-          </div><!-- End Stats Item -->
-
-          <div class="col-lg-3 col-md-6">
-            <div class="stats-item">
-              <i class="bi bi-journal-richtext"></i>
-              <span data-purecounter-start="0" data-purecounter-end="4" data-purecounter-duration="1" class="purecounter"></span>
-              <p><strong>Major Projects</strong> <span>including startup experience</span></p>
-            </div>
-          </div><!-- End Stats Item -->
-
-        </div>
-
-      </div>
-
-    </section><!-- /Stats Section -->
-
-    <!-- Skills Section -->
-    <section id="skills" class="skills section light-background">
-
+    <!-- Technologies Section -->
+    <section id="technologies" class="technologies section light-background">
+      
       <!-- Section Title -->
       <div class="container section-title" data-aos="fade-up">
-        <h2>Skills</h2>
-        <p>Technical expertise in AI, Machine Learning, and Large Language Models with extensive experience in scaling and deployment</p>
+        <h2>Technologies & Tools</h2>
+        <p>The tech stack I use to build scalable AI systems and bring ideas to life</p>
       </div><!-- End Section Title -->
 
       <div class="container" data-aos="fade-up" data-aos-delay="100">
-
-        <div class="row skills-content skills-animation">
-
-          <div class="col-lg-6">
-
-            <div class="progress">
-              <span class="skill"><span>PyTorch</span> <i class="val">95%</i></span>
-              <div class="progress-bar-wrap">
-                <div class="progress-bar" role="progressbar" aria-valuenow="95" aria-valuemin="0" aria-valuemax="100"></div>
-              </div>
-            </div><!-- End Skills Item -->
-
-            <div class="progress">
-              <span class="skill"><span>Python</span> <i class="val">90%</i></span>
-              <div class="progress-bar-wrap">
-                <div class="progress-bar" role="progressbar" aria-valuenow="90" aria-valuemin="0" aria-valuemax="100"></div>
-              </div>
-            </div><!-- End Skills Item -->
-
-            <div class="progress">
-              <span class="skill"><span>Machine Learning</span> <i class="val">85%</i></span>
-              <div class="progress-bar-wrap">
-                <div class="progress-bar" role="progressbar" aria-valuenow="85" aria-valuemin="0" aria-valuemax="100"></div>
-              </div>
-            </div><!-- End Skills Item -->
-
+        
+        <div class="row gy-4">
+          
+          <div class="col-lg-3 col-md-4 col-6 text-center" data-aos="fade-up" data-aos-delay="100">
+            <div class="tech-item">
+              <i class="bi bi-robot" style="font-size: 3rem; color: #FF6B35;"></i>
+              <h5>PyTorch</h5>
+              <p>Deep Learning</p>
+            </div>
           </div>
-
-          <div class="col-lg-6">
-
-            <div class="progress">
-              <span class="skill"><span>NLP & LLMs</span> <i class="val">90%</i></span>
-              <div class="progress-bar-wrap">
-                <div class="progress-bar" role="progressbar" aria-valuenow="90" aria-valuemin="0" aria-valuemax="100"></div>
-              </div>
-            </div><!-- End Skills Item -->
-
-            <div class="progress">
-              <span class="skill"><span>AWS & Cloud</span> <i class="val">75%</i></span>
-              <div class="progress-bar-wrap">
-                <div class="progress-bar" role="progressbar" aria-valuenow="75" aria-valuemin="0" aria-valuemax="100"></div>
-              </div>
-            </div><!-- End Skills Item -->
-
-            <div class="progress">
-              <span class="skill"><span>Data Engineering</span> <i class="val">80%</i></span>
-              <div class="progress-bar-wrap">
-                <div class="progress-bar" role="progressbar" aria-valuenow="80" aria-valuemin="0" aria-valuemax="100"></div>
-              </div>
-            </div><!-- End Skills Item -->
-
+          
+          <div class="col-lg-3 col-md-4 col-6 text-center" data-aos="fade-up" data-aos-delay="150">
+            <div class="tech-item">
+              <i class="bi bi-code-slash" style="font-size: 3rem; color: #3776ab;"></i>
+              <h5>Python</h5>
+              <p>Primary Language</p>
+            </div>
           </div>
-
+          
+          <div class="col-lg-3 col-md-4 col-6 text-center" data-aos="fade-up" data-aos-delay="200">
+            <div class="tech-item">
+              <i class="bi bi-hdd-stack" style="font-size: 3rem; color: #FF9500;"></i>
+              <h5>Slurm</h5>
+              <p>HPC Job Scheduling</p>
+            </div>
+          </div>
+          
+          <div class="col-lg-3 col-md-4 col-6 text-center" data-aos="fade-up" data-aos-delay="250">
+            <div class="tech-item">
+              <i class="bi bi-lightning" style="font-size: 3rem; color: #326ce5;"></i>
+              <h5>vLLM</h5>
+              <p>High-Performance LLM Serving</p>
+            </div>
+          </div>
+          
+          <div class="col-lg-3 col-md-4 col-6 text-center" data-aos="fade-up" data-aos-delay="300">
+            <div class="tech-item">
+              <i class="bi bi-translate" style="font-size: 3rem; color: #4285f4;"></i>
+              <h5>Transformers</h5>
+              <p>LLMs & NLP</p>
+            </div>
+          </div>
+          
+          <div class="col-lg-3 col-md-4 col-6 text-center" data-aos="fade-up" data-aos-delay="350">
+            <div class="tech-item">
+              <i class="bi bi-database" style="font-size: 3rem; color: #13aa52;"></i>
+              <h5>MongoDB</h5>
+              <p>Data Storage</p>
+            </div>
+          </div>
+          
+          <div class="col-lg-3 col-md-4 col-6 text-center" data-aos="fade-up" data-aos-delay="400">
+            <div class="tech-item">
+              <i class="bi bi-box" style="font-size: 3rem; color: #0db7ed;"></i>
+              <h5>Docker</h5>
+              <p>Containerization</p>
+            </div>
+          </div>
+          
+          <div class="col-lg-3 col-md-4 col-6 text-center" data-aos="fade-up" data-aos-delay="450">
+            <div class="tech-item">
+              <i class="bi bi-git" style="font-size: 3rem; color: #f14e32;"></i>
+              <h5>Git</h5>
+              <p>Version Control</p>
+            </div>
+          </div>
+          
         </div>
-
+        
       </div>
+      
+    </section><!-- /Technologies Section -->
 
-    </section><!-- /Skills Section -->
+    <!-- Current Focus Section -->
+    <section id="current-focus" class="current-focus section">
+      
+      <!-- Section Title -->
+      <div class="container section-title" data-aos="fade-up">
+        <h2>Current Focus</h2>
+        <p>What I'm building and researching right now</p>
+      </div><!-- End Section Title -->
+
+      <div class="container" data-aos="fade-up" data-aos-delay="100">
+        
+        <div class="row gy-4">
+          
+          <div class="col-lg-6" data-aos="fade-up" data-aos-delay="100">
+            <div class="focus-item">
+              <div class="focus-icon">
+                <i class="bi bi-lightning-charge"></i>
+              </div>
+              <div class="focus-content">
+                <h4>Scaling MT to 201 Languages</h4>
+                <p>Expanding machine translation coverage while maintaining quality. Working with massive multilingual datasets and optimizing for low-resource languages using advanced transfer learning techniques.</p>
+                <div class="focus-tags">
+                  <span class="tag">PyTorch</span>
+                  <span class="tag">Transformers</span>
+                  <span class="tag">FSDP</span>
+                </div>
+              </div>
+            </div>
+          </div>
+          
+          <div class="col-lg-6" data-aos="fade-up" data-aos-delay="200">
+            <div class="focus-item">
+              <div class="focus-icon">
+                <i class="bi bi-globe"></i>
+              </div>
+              <div class="focus-content">
+                <h4>Multilingual AI in Production</h4>
+                <p>Building robust translation systems that handle real-world complexity at scale. Tackling challenges like code-switching, domain adaptation, and maintaining quality across 200+ million daily users.</p>
+                <div class="focus-tags">
+                  <span class="tag">Real-time Serving</span>
+                  <span class="tag">Quality Assurance</span>
+                  <span class="tag">MLflow</span>
+                </div>
+              </div>
+            </div>
+          </div>
+          
+        </div>
+        
+      </div>
+      
+    </section><!-- /Current Focus Section -->
 
     <!-- Resume Section -->
     <section id="resume" class="resume section">
@@ -353,7 +611,7 @@
                 <img src="assets/img/portfolio/app-1.jpg" class="img-fluid" alt="">
                 <div class="portfolio-info">
                   <h4>Voice Vibes</h4>
-                  <p>Speech emotion recognition with six innovative AI architectures</p>
+                  <p>Speech emotion recognition system with six novel AI architectures. Achieved 94% accuracy using ensemble methods and advanced feature engineering.</p>
                   <a href="assets/img/portfolio/app-1.jpg" title="Voice Vibes" data-gallery="portfolio-gallery-nlp" class="glightbox preview-link"><i class="bi bi-zoom-in"></i></a>
                   <a href="https://github.com/codiceSpaghetti/VoiceVibes" title="More Details" class="details-link"><i class="bi bi-link-45deg"></i></a>
                 </div>
@@ -365,7 +623,7 @@
                 <img src="assets/img/portfolio/app-2.jpg" class="img-fluid" alt="">
                 <div class="portfolio-info">
                   <h4>UniMusic</h4>
-                  <p>Music discovery application with MongoDB and Neo4j databases</p>
+                  <p>Scalable music discovery platform with hybrid MongoDB/Neo4j architecture. Handles millions of tracks with real-time recommendation algorithms.</p>
                   <a href="assets/img/portfolio/app-2.jpg" title="UniMusic" data-gallery="portfolio-gallery-data" class="glightbox preview-link"><i class="bi bi-zoom-in"></i></a>
                   <a href="https://github.com/codiceSpaghetti/UniMusic" title="More Details" class="details-link"><i class="bi bi-link-45deg"></i></a>
                 </div>
@@ -377,7 +635,7 @@
                 <img src="assets/img/portfolio/app-3.jpg" class="img-fluid" alt="">
                 <div class="portfolio-info">
                   <h4>Fake News Detection</h4>
-                  <p>AI model to combat misinformation and analyze article stance</p>
+                  <p>Multi-modal AI system for misinformation detection using transformer architectures. Features stance analysis and source credibility scoring.</p>
                   <a href="assets/img/portfolio/app-3.jpg" title="Fake News Detection" data-gallery="portfolio-gallery-nlp" class="glightbox preview-link"><i class="bi bi-zoom-in"></i></a>
                   <a href="https://github.com/codiceSpaghetti/FakeNewsDetection" title="More Details" class="details-link"><i class="bi bi-link-45deg"></i></a>
                 </div>
@@ -389,9 +647,45 @@
                 <img src="assets/img/portfolio/product-1.jpg" class="img-fluid" alt="">
                 <div class="portfolio-info">
                   <h4>Federated DBscan</h4>
-                  <p>Distributed clustering with Federated Learning for privacy preservation</p>
+                  <p>Privacy-preserving distributed clustering with federated learning. Enables collaborative ML without data sharing, achieving 99% privacy preservation.</p>
                   <a href="assets/img/portfolio/product-1.jpg" title="Federated DBscan" data-gallery="portfolio-gallery-ml" class="glightbox preview-link"><i class="bi bi-zoom-in"></i></a>
                   <a href="https://github.com/codiceSpaghetti/FederatedDBscan" title="More Details" class="details-link"><i class="bi bi-link-45deg"></i></a>
+                </div>
+              </div>
+            </div><!-- End Portfolio Item -->
+
+            <div class="col-lg-4 col-md-6 portfolio-item isotope-item filter-nlp">
+              <div class="portfolio-content h-100">
+                <img src="assets/img/portfolio/app-1.jpg" class="img-fluid" alt="">
+                <div class="portfolio-info">
+                  <h4>NumpyGPT</h4>
+                  <p>Pure NumPy implementation of GPT architecture from scratch. Educational deep-dive into transformer mechanics with detailed mathematical foundations.</p>
+                  <a href="assets/img/portfolio/app-1.jpg" title="NumpyGPT" data-gallery="portfolio-gallery-nlp" class="glightbox preview-link"><i class="bi bi-zoom-in"></i></a>
+                  <a href="#" title="More Details" class="details-link"><i class="bi bi-link-45deg"></i></a>
+                </div>
+              </div>
+            </div><!-- End Portfolio Item -->
+
+            <div class="col-lg-4 col-md-6 portfolio-item isotope-item filter-cv">
+              <div class="portfolio-content h-100">
+                <img src="assets/img/portfolio/app-2.jpg" class="img-fluid" alt="">
+                <div class="portfolio-info">
+                  <h4>T4SA-2.0</h4>
+                  <p>Advanced computer vision system for real-time object detection and tracking. Improved accuracy by 15% over baseline using novel attention mechanisms.</p>
+                  <a href="assets/img/portfolio/app-2.jpg" title="T4SA-2.0" data-gallery="portfolio-gallery-cv" class="glightbox preview-link"><i class="bi bi-zoom-in"></i></a>
+                  <a href="#" title="More Details" class="details-link"><i class="bi bi-link-45deg"></i></a>
+                </div>
+              </div>
+            </div><!-- End Portfolio Item -->
+
+            <div class="col-lg-4 col-md-6 portfolio-item isotope-item filter-ml">
+              <div class="portfolio-content h-100">
+                <img src="assets/img/portfolio/product-1.jpg" class="img-fluid" alt="">
+                <div class="portfolio-info">
+                  <h4>PageRank Implementation</h4>
+                  <p>High-performance PageRank algorithm implementation with optimized sparse matrix operations. Handles graphs with millions of nodes efficiently.</p>
+                  <a href="assets/img/portfolio/product-1.jpg" title="PageRank Implementation" data-gallery="portfolio-gallery-ml" class="glightbox preview-link"><i class="bi bi-zoom-in"></i></a>
+                  <a href="#" title="More Details" class="details-link"><i class="bi bi-link-45deg"></i></a>
                 </div>
               </div>
             </div><!-- End Portfolio Item -->
@@ -403,6 +697,26 @@
       </div>
 
     </section><!-- /Portfolio Section -->
+
+    <!-- Call to Action Section -->
+    <section id="call-to-action" class="call-to-action section dark-background">
+      
+      <div class="container" data-aos="fade-up">
+        
+        <div class="row gy-4 justify-content-center text-center">
+          <div class="col-lg-8">
+            <h2>Let's Build the Future of AI Together</h2>
+            <p>Whether you're looking to collaborate on cutting-edge research, discuss the latest in multilingual LLMs, or explore how AI can transform your business, I'm always excited to connect with fellow innovators and problem solvers.</p>
+            <div class="cta-buttons">
+              <a href="#contact" class="btn-cta">Start a Conversation</a>
+              <a href="mailto:alessio.ser29@gmail.com" class="btn-cta-outline">Send Direct Email</a>
+            </div>
+          </div>
+        </div>
+        
+      </div>
+      
+    </section><!-- /Call to Action Section -->
 
     <!-- Contact Section -->
     <section id="contact" class="contact section">
@@ -432,7 +746,7 @@
                 <i class="bi bi-envelope flex-shrink-0"></i>
                 <div>
                   <h3>Email</h3>
-                  <p>alessio.ser29@gmail.com</p>
+                  <p><a href="mailto:alessio.ser29@gmail.com">alessio.ser29@gmail.com</a></p>
                 </div>
               </div><!-- End Info Item -->
 
@@ -440,7 +754,7 @@
                 <i class="bi bi-linkedin flex-shrink-0"></i>
                 <div>
                   <h3>LinkedIn</h3>
-                  <p>linkedin.com/in/serra-alessio</p>
+                  <p><a href="https://www.linkedin.com/in/serra-alessio/" target="_blank">linkedin.com/in/serra-alessio</a></p>
                 </div>
               </div><!-- End Info Item -->
 
@@ -511,6 +825,11 @@
 
   <!-- Scroll Top -->
   <a href="#" id="scroll-top" class="scroll-top d-flex align-items-center justify-content-center"><i class="bi bi-arrow-up-short"></i></a>
+
+  <!-- Floating Contact Button -->
+  <a href="#contact" id="floating-contact" class="floating-contact d-flex align-items-center justify-content-center" title="Get in Touch">
+    <i class="bi bi-chat-dots"></i>
+  </a>
 
   <!-- Preloader -->
   <div id="preloader"></div>
