@@ -78,8 +78,12 @@ class Translator {
    */
   async fetchLanguageFile(langCode) {
     try {
-      console.log(`Attempting to fetch: assets/js/i18n/locales/${langCode}.json`);
-      const response = await fetch(`assets/js/i18n/locales/${langCode}.json`);
+      // Use absolute path if available, fallback to relative path
+      const basePath = window.translatorBasePath || '';
+      const localeUrl = basePath + `assets/js/i18n/locales/${langCode}.json`;
+      
+      console.log(`Attempting to fetch: ${localeUrl}`);
+      const response = await fetch(localeUrl);
       console.log(`Fetch response status: ${response.status}`);
       
       if (!response.ok) {
@@ -139,6 +143,14 @@ class Translator {
         "about-conclusion": "I've scaled training to 1,000+ GPUs and expanded machine translation coverage to 201 languages. I co-founded <a href=\"https://picarta.ai/\" target=\"_blank\" style=\"color: var(--accent-primary); text-decoration: none; font-weight: 600;\">Picarta.ai</a>, an AI startup building an image geolocalization platform. I'm a voracious learner who constantly pushes to improve how I think, train, and build. I can't imagine a life without some form of training, whether it's GPUs, gym plates, or marathon prep.",
         
         "tech-title": "Technologies & Tools",
+        "tech-pytorch": "Deep Learning",
+        "tech-python": "Primary Language",
+        "tech-slurm": "HPC Job Scheduling",
+        "tech-vllm": "High-Performance LLM Serving",
+        "tech-transformers": "LLMs & NLP",
+        "tech-mongodb": "Data Storage",
+        "tech-docker": "Containerization",
+        "tech-git": "Version Control",
         
         "focus-title": "Current Focus",
         "focus-description": "What I'm building and researching right now",
@@ -146,8 +158,9 @@ class Translator {
         "focus-scaling-desc": "Expanding machine translation coverage while maintaining quality. Working with massive multilingual datasets and optimizing for low-resource languages using advanced transfer learning techniques.",
         "focus-production-title": "Multilingual AI in Production",
         "focus-production-desc": "Building robust translation systems that handle real-world complexity at scale. Tackling challenges like code-switching, domain adaptation, noisy user generated content and maintaining quality across 200+ million daily users.",
-        "tag-realtime": "Real-time Serving",
-        "tag-quality": "Quality Assurance",
+        "tag-realtime": "Servicio en Tiempo Real",
+        "tag-quality": "Aseguramiento de Calidad",
+        "tag-data": "Datos",
         
         "resume-title": "Resume",
         "resume-description": "AI Engineer and Researcher with extensive experience in building and scaling multilingual machine translation systems. Proven track record of serving 200+ million users through innovative LLM solutions.",
@@ -234,6 +247,15 @@ class Translator {
         "about-conclusion": "He escalado entrenamiento a más de 1,000 GPUs y expandido la cobertura de traducción automática a 201 idiomas. Co-fundé <a href=\"https://picarta.ai/\" target=\"_blank\" style=\"color: var(--accent-primary); text-decoration: none; font-weight: 600;\">Picarta.ai</a>, una startup de IA que construye una plataforma de geolocalización de imágenes. Soy un aprendiz voraz que constantemente busca mejorar cómo pienso, entreno y construyo.",
         
         "tech-title": "Tecnologías y Herramientas",
+        "tech-pytorch": "Aprendizaje Profundo",
+        "tech-python": "Lenguaje Principal",
+        "tech-slurm": "Programación de Trabajos HPC",
+        "tech-vllm": "Servicio LLM de Alto Rendimiento",
+        "tech-transformers": "LLMs y PNL",
+        "tech-mongodb": "Almacenamiento de Datos",
+        "tech-docker": "Contenerización",
+        "tech-git": "Control de Versiones",
+        
         "focus-title": "Enfoque Actual",
         "focus-description": "En qué estoy trabajando e investigando ahora mismo",
         "focus-scaling-title": "Escalando traducción automática a 201 idiomas",
@@ -242,6 +264,7 @@ class Translator {
         "focus-production-desc": "Construyendo sistemas de traducción robustos que manejan la complejidad del mundo real a escala. Abordando desafíos como cambio de código, adaptación de dominio, contenido ruidoso generado por usuarios y manteniendo calidad para más de 200 millones de usuarios diarios.",
         "tag-realtime": "Servicio en Tiempo Real",
         "tag-quality": "Aseguramiento de Calidad",
+        "tag-data": "Datos",
         
         "resume-title": "Currículum",
         "resume-description": "Ingeniero e Investigador de IA con amplia experiencia en construcción y escalado de sistemas de traducción automática multilingües. Historial comprobado sirviendo a más de 200 millones de usuarios a través de soluciones LLM innovadoras.",
@@ -275,8 +298,23 @@ class Translator {
         "portfolio-description": "Una colección de mis proyectos de IA y aprendizaje automático, desde investigación académica hasta sistemas de producción sirviendo millones de usuarios en todo el mundo.",
         "t4sa-desc": "Sistema de análisis de sentimientos visuales cross-modal usando destilación de conocimiento de modelos de texto a visión. Publicado en ECAI 2023, logrando resultados estado del arte en predicción de sentimientos visuales.",
         "numpygpt-desc": "Un GPT construido desde cero con NumPy y la librería estándar de Python. Sin autograd, sin frameworks: cada capa re-implementada con su propio pase forward y backward.",
-        "resume-title": "Currículum",
-        "multilingual-typed": ["Entreno LLMs para hablar tu idioma."]
+        "fake-news-desc": "Multi-modal AI system for misinformation detection using transformer architectures. Features stance analysis and source credibility scoring.",
+        "unimusic-desc": "Scalable music discovery platform with hybrid MongoDB/Neo4j architecture. Handles millions of tracks with real-time recommendation algorithms.",
+        "voice-vibes-desc": "Speech emotion recognition system with six novel AI architectures. Achieved 94% accuracy using ensemble methods and advanced feature engineering.",
+        "federated-dbscan-desc": "Privacy-preserving distributed clustering with federated learning. Enables collaborative ML without data sharing, achieving 99% privacy preservation.",
+        "pagerank-desc": "High-performance PageRank algorithm implementation with optimized sparse matrix operations. Handles graphs with millions of nodes efficiently.",
+        
+        "contact-title": "Contact",
+        "contact-description": "Let's connect! Whether you want to discuss AI, machine learning, or potential collaborations, I'm always open to interesting conversations.",
+        "location-label": "Location",
+        "location": "Rome, Italy",
+        "form-name": "Your Name",
+        "form-email": "Your Email",
+        "form-subject": "Subject",
+        "form-message": "Message",
+        "form-loading": "Loading",
+        "form-success": "Your message has been sent. Thank you!",
+        "form-send": "Send Message"
       },
       'it': {
         "nav-home": "Home",

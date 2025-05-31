@@ -1,0 +1,4 @@
+*pyc
+localization/backups/*
+localization/important_fields/*
+localization/reviewed_fields/*

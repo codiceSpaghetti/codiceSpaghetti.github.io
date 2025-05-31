@@ -33,6 +33,14 @@
   "about-conclusion": "I've scaled training to 1,000+ GPUs and expanded machine translation coverage to 201 languages. I co-founded <a href=\"https://picarta.ai/\" target=\"_blank\" style=\"color: var(--accent-primary); text-decoration: none; font-weight: 600;\">Picarta.ai</a>, an AI startup building  a platform for image geolocalization.. I'm a voracious learner who constantly pushes to improve how I think, train, and build. I can't imagine a life without some form of training, whether it's GPUs, gym plates, or marathon prep.",
   
   "tech-title": "Technologies & Tools",
+  "tech-pytorch": "Deep Learning",
+  "tech-python": "Primary Language",
+  "tech-slurm": "HPC Job Scheduling",
+  "tech-vllm": "High-Performance LLM Serving",
+  "tech-transformers": "LLMs & NLP",
+  "tech-mongodb": "Data Storage",
+  "tech-docker": "Containerization",
+  "tech-git": "Version Control",
   
   "focus-title": "Current Focus",
   "focus-description": "What I'm building and researching right now",
@@ -42,6 +50,7 @@
   "focus-production-desc": "Building robust translation systems that handle real-world complexity at scale. Tackling challenges like code-switching, domain adaptation, noisy user generated content and maintaining quality across 200+ million daily users.",
   "tag-realtime": "Real-time Serving",
   "tag-quality": "Quality Assurance",
+  "tag-data": "Data",
   
   "resume-title": "Resume",
   "resume-description": "AI Engineer and Researcher with extensive experience in building and scaling multilingual machine translation systems. Proven track record of serving 200+ million users through innovative LLM solutions.",

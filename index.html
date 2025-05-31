@@ -1707,7 +1707,7 @@
               <div class="tech-item">
                 <i class="bi bi-robot" style="font-size: 3rem; color: #FF6B35;"></i>
                 <h5>PyTorch</h5>
-                <p>Deep Learning</p>
+                <p data-translate="tech-pytorch">Deep Learning</p>
               </div>
             </div>
             
@@ -1715,7 +1715,7 @@
               <div class="tech-item">
                 <i class="bi bi-code-slash" style="font-size: 3rem; color: #3776ab;"></i>
                 <h5>Python</h5>
-                <p>Primary Language</p>
+                <p data-translate="tech-python">Primary Language</p>
               </div>
             </div>
             
@@ -1723,7 +1723,7 @@
               <div class="tech-item">
                 <i class="bi bi-hdd-stack" style="font-size: 3rem; color: #FF9500;"></i>
                 <h5>Slurm</h5>
-                <p>HPC Job Scheduling</p>
+                <p data-translate="tech-slurm">HPC Job Scheduling</p>
               </div>
             </div>
             
@@ -1731,7 +1731,7 @@
               <div class="tech-item">
                 <i class="bi bi-lightning" style="font-size: 3rem; color: #326ce5;"></i>
                 <h5>vLLM</h5>
-                <p>High-Performance LLM Serving</p>
+                <p data-translate="tech-vllm">High-Performance LLM Serving</p>
               </div>
             </div>
             
@@ -1739,7 +1739,7 @@
               <div class="tech-item">
                 <i class="bi bi-translate" style="font-size: 3rem; color: #4285f4;"></i>
                 <h5>Transformers</h5>
-                <p>LLMs & NLP</p>
+                <p data-translate="tech-transformers">LLMs & NLP</p>
               </div>
             </div>
             
@@ -1747,7 +1747,7 @@
               <div class="tech-item">
                 <i class="bi bi-database" style="font-size: 3rem; color: #13aa52;"></i>
                 <h5>MongoDB</h5>
-                <p>Data Storage</p>
+                <p data-translate="tech-mongodb">Data Storage</p>
               </div>
             </div>
             
@@ -1755,7 +1755,7 @@
               <div class="tech-item">
                 <i class="bi bi-box" style="font-size: 3rem; color: #0db7ed;"></i>
                 <h5>Docker</h5>
-                <p>Containerization</p>
+                <p data-translate="tech-docker">Containerization</p>
               </div>
             </div>
             
@@ -1763,7 +1763,7 @@
               <div class="tech-item">
                 <i class="bi bi-git" style="font-size: 3rem; color: #f14e32;"></i>
                 <h5>Git</h5>
-                <p>Version Control</p>
+                <p data-translate="tech-git">Version Control</p>
               </div>
             </div>
             
@@ -1814,7 +1814,7 @@
                   <div class="focus-tags">
                     <span class="tag" data-translate="tag-realtime">Real-time Serving</span>
                     <span class="tag" data-translate="tag-quality">Quality Assurance</span>
-                    <span class="tag">data</span>
+                    <span class="tag" data-translate="tag-data">Data</span>
                   </div>
                 </div>
               </div>
@@ -2117,6 +2117,10 @@
   <script src="assets/vendor/swiper/swiper-bundle.min.js"></script>
 
   <!-- Translation System -->
+  <script>
+    // Set up absolute path for translator before loading
+    window.translatorBasePath = window.location.origin + window.location.pathname.substring(0, window.location.pathname.lastIndexOf('/') + 1);
+  </script>
   <script src="assets/js/i18n/translator.js"></script>
 
   <!-- Main JS File -->
@@ -2129,26 +2133,33 @@
 
     // Initialize translator when DOM is ready
     document.addEventListener('DOMContentLoaded', async () => {
-      // Initialize translator
-      translator = new Translator();
-      await translator.init();
-      
-      // Initialize multilingual typed effect
-      const multilingualElement = document.querySelector('.typed-multilingual');
-      if (multilingualElement && window.Typed) {
-        const currentTranslation = translator.translations[translator.currentLanguage];
-        if (currentTranslation && currentTranslation['multilingual-typed']) {
-          window.typedMultilingual = new Typed('.typed-multilingual', {
-            strings: currentTranslation['multilingual-typed'],
-            typeSpeed: 100,
-            backSpeed: 50,
-            backDelay: 2000,
-            loop: true
-          });
+      try {
+        // Initialize translator (should be available since script loaded synchronously)
+        if (typeof Translator !== 'undefined') {
+          translator = new Translator();
+          await translator.init();
+          console.log('Translator initialized successfully');
+          
+          // Initialize multilingual typed effect
+          const multilingualElement = document.querySelector('.typed-multilingual');
+          if (multilingualElement && window.Typed) {
+            const currentTranslation = translator.translations[translator.currentLanguage];
+            if (currentTranslation && currentTranslation['multilingual-typed']) {
+              window.typedMultilingual = new Typed('.typed-multilingual', {
+                strings: currentTranslation['multilingual-typed'],
+                typeSpeed: 100,
+                backSpeed: 50,
+                backDelay: 2000,
+                loop: true
+              });
+            }
+          }
+        } else {
+          console.error('Translator class not available - check script loading');
         }
+      } catch (error) {
+        console.error('Error initializing translator:', error);
       }
-      
-      // Remove footer reference since footer is deleted
       
       // Initialize scroll progress indicator
       initScrollProgress();
