@@ -260,6 +260,93 @@
       background-color: var(--bg-primary);
       color: var(--text-primary);
       transition: background-color 0.3s ease, color 0.3s ease;
+      scroll-behavior: smooth;
+    }
+
+    /* Scroll Progress Indicator */
+    .scroll-progress {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 0%;
+      height: 4px;
+      background: var(--accent-gradient);
+      z-index: 9999;
+      transition: width 0.1s ease;
+      box-shadow: 0 2px 10px var(--accent-shadow);
+    }
+
+    /* Stats Section */
+    .stats {
+      padding: 80px 0;
+      background: var(--accent-gradient) !important;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .stats::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><defs><pattern id="grid" width="10" height="10" patternUnits="userSpaceOnUse"><path d="M 10 0 L 0 0 0 10" fill="none" stroke="rgba(255,255,255,0.1)" stroke-width="0.5"/></pattern></defs><rect width="100" height="100" fill="url(%23grid)"/></svg>');
+      opacity: 0.3;
+    }
+
+    .stats .container {
+      position: relative;
+      z-index: 2;
+    }
+
+    .stats-item {
+      background: rgba(255, 255, 255, 0.1);
+      backdrop-filter: blur(10px);
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      border-radius: 15px;
+      padding: 40px 20px;
+      transition: all 0.3s ease;
+      min-height: 180px;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .stats-item:hover {
+      transform: translateY(-10px) scale(1.05);
+      background: rgba(255, 255, 255, 0.15);
+      box-shadow: 0 20px 40px rgba(0, 0, 0, 0.2);
+    }
+
+    .stats-item .purecounter {
+      font-size: 3.5rem;
+      font-weight: 800;
+      color: white;
+      line-height: 1;
+      margin-bottom: 10px;
+      font-family: "Raleway", sans-serif;
+      text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+    }
+
+    .stats-item .counter-suffix {
+      font-size: 3.5rem;
+      font-weight: 800;
+      color: white;
+      line-height: 1;
+      font-family: "Raleway", sans-serif;
+      text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+    }
+
+    .stats-item p {
+      font-size: 1.1rem;
+      font-weight: 600;
+      color: white;
+      margin: 0;
+      text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.3);
+      text-transform: uppercase;
+      letter-spacing: 1px;
     }
 
     /* Header and navigation theme */
@@ -574,7 +661,7 @@
       font-size: 0.9rem;
       transition: color 0.3s ease;
     }
-    
+
     /* Current Focus Section */
     .focus-item {
       background: var(--bg-card);
@@ -660,6 +747,12 @@
       margin-bottom: 20px;
       box-shadow: 0 2px 10px var(--shadow-color-strong);
       transition: all 0.3s ease;
+    }
+
+    .resume .resume-item:hover {
+      transform: translateX(10px) translateY(-5px);
+      box-shadow: 0 15px 35px var(--shadow-color-strong);
+      border-left-width: 5px;
     }
 
     .resume .resume-item h4 {
@@ -1233,6 +1326,12 @@
       transition: all 0.3s ease;
     }
 
+    .resume .resume-item:hover {
+      transform: translateX(10px) translateY(-5px);
+      box-shadow: 0 15px 35px var(--shadow-color-strong);
+      border-left-width: 5px;
+    }
+
     .resume .resume-item h4 {
       color: var(--text-primary);
       transition: color 0.3s ease;
@@ -1337,6 +1436,179 @@
       transform: translateY(-2px);
       box-shadow: 0 4px 15px var(--accent-shadow);
     }
+
+    /* Light mode overrides for buttons */
+    [data-theme="light"] .header-toggle {
+      background: var(--accent-primary);
+      box-shadow: 0 4px 15px var(--accent-shadow-light);
+    }
+
+    [data-theme="light"] .header-toggle:hover {
+      background: var(--accent-secondary);
+      box-shadow: 0 6px 20px var(--accent-shadow-strong);
+    }
+
+    [data-theme="light"] .scroll-top {
+      background: var(--accent-primary);
+    }
+
+    [data-theme="light"] .scroll-top:hover {
+      background: var(--accent-secondary);
+      box-shadow: 0 6px 20px var(--accent-shadow);
+    }
+
+    /* Footer Styles */
+    .footer {
+      background-color: var(--bg-secondary);
+      color: var(--text-secondary);
+      padding: 50px 0 20px 0;
+      border-top: 1px solid var(--border-color);
+      transition: all 0.3s ease;
+      width: 100%;
+      position: relative;
+    }
+
+    /* Ensure footer is not affected by sidebar layout */
+    @media (min-width: 1200px) {
+      .footer {
+        margin-left: 0 !important;
+        width: 100% !important;
+      }
+    }
+
+    .footer .footer-info .logo {
+      line-height: 0;
+      margin-bottom: 25px;
+    }
+
+    .footer .footer-info .logo span {
+      color: var(--text-primary);
+      font-size: 30px;
+      font-weight: 700;
+      letter-spacing: 1px;
+      font-family: "Raleway", sans-serif;
+    }
+
+    .footer .footer-info p {
+      font-size: 14px;
+      line-height: 24px;
+      margin-bottom: 0;
+      color: var(--text-secondary);
+    }
+
+    .footer .social-links a {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      border: 1px solid var(--border-color);
+      font-size: 16px;
+      color: var(--text-secondary);
+      margin-right: 10px;
+      transition: all 0.3s ease;
+      background: var(--bg-tertiary);
+    }
+
+    .footer .social-links a:hover {
+      color: white;
+      background: var(--accent-primary);
+      border-color: var(--accent-primary);
+      transform: translateY(-2px);
+      box-shadow: 0 4px 15px var(--accent-shadow);
+    }
+
+    .footer h4 {
+      font-size: 16px;
+      font-weight: 600;
+      color: var(--text-primary);
+      position: relative;
+      padding-bottom: 12px;
+      margin-bottom: 15px;
+    }
+
+    .footer h4:after {
+      content: "";
+      position: absolute;
+      display: block;
+      width: 20px;
+      height: 2px;
+      background: var(--accent-primary);
+      bottom: 0;
+      left: 0;
+    }
+
+    .footer .footer-links ul {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+    }
+
+    .footer .footer-links ul li {
+      padding: 5px 0;
+      display: flex;
+      align-items: center;
+    }
+
+    .footer .footer-links ul a {
+      color: var(--text-secondary);
+      text-decoration: none;
+      font-size: 14px;
+      line-height: 24px;
+      transition: all 0.3s ease;
+    }
+
+    .footer .footer-links ul a:hover {
+      color: var(--accent-primary);
+      transform: translateX(5px);
+    }
+
+    .footer .footer-contact p {
+      line-height: 26px;
+      color: var(--text-secondary);
+      font-size: 14px;
+    }
+
+    .footer .copyright {
+      padding-top: 25px;
+      border-top: 1px solid var(--border-color);
+      margin-top: 30px;
+    }
+
+    .footer .copyright p {
+      margin-bottom: 0;
+      color: var(--text-secondary);
+      font-size: 14px;
+    }
+
+    .footer .credits {
+      margin-top: 6px;
+      font-size: 13px;
+      color: var(--text-muted);
+      font-style: italic;
+    }
+
+    /* Responsive footer */
+    @media (max-width: 768px) {
+      .footer {
+        padding: 30px 0 15px 0;
+      }
+      
+      .footer .footer-info,
+      .footer .footer-links,
+      .footer .footer-contact {
+        margin-bottom: 30px;
+      }
+      
+      .footer .social-links {
+        justify-content: center;
+      }
+      
+      .footer .footer-contact {
+        text-align: center !important;
+      }
+    }
   </style>
 
   <!-- =======================================================
@@ -1357,6 +1629,9 @@
     <div class="loading-subtext">AI Engineer & Researcher</div>
   </div>
 
+  <!-- Scroll Progress Indicator -->
+  <div class="scroll-progress" id="scroll-progress"></div>
+
   <!-- Main Content -->
   <div class="main-content">
     <header id="header" class="header dark-background d-flex flex-column">
@@ -1373,9 +1648,9 @@
       </a>
 
       <div class="social-links text-center">
-        <a href="https://github.com/codiceSpaghetti" class="github"><i class="bi bi-github"></i></a>
-        <a href="https://www.linkedin.com/in/serra-alessio/" class="linkedin"><i class="bi bi-linkedin"></i></a>
-        <a href="https://x.com/as3erra" class="twitter"><i class="bi bi-twitter-x"></i></a>
+        <a href="https://github.com/codiceSpaghetti" class="github" target="_blank"><i class="bi bi-github"></i></a>
+        <a href="https://www.linkedin.com/in/serra-alessio/" class="linkedin" target="_blank"><i class="bi bi-linkedin"></i></a>
+        <a href="https://x.com/as3erra" class="twitter" target="_blank"><i class="bi bi-twitter-x"></i></a>
         <a href="mailto:alessio.ser29@gmail.com" class="email"><i class="bi bi-envelope"></i></a>
       </div>
 
@@ -1468,7 +1743,7 @@
                 </div>
               </div>
               <p class="py-3" data-translate="about-conclusion">
-                I've scaled training to 1,000+ GPUs and expanded MT coverage to 201 languages. Working nights and weekends, I co-founded an AI startup building an image geolocalization platform. I'm a voracious learner who constantly pushes to improve how I think, train, and build. I can't imagine a life without some form of training, whether it's GPUs, gym plates, or marathon prep.
+                I've scaled training to 1,000+ GPUs and expanded machine translation coverage to 201 languages. I co-founded <a href="https://picarta.ai/" target="_blank" style="color: var(--accent-primary); text-decoration: none; font-weight: 600;">Picarta.ai</a>, an AI startup building an image geolocalization platform. I'm a voracious learner who constantly pushes to improve how I think, train, and build. I can't imagine a life without some form of training, whether it's GPUs, gym plates, or marathon prep.
               </p>
             </div>
           </div>
@@ -1578,12 +1853,12 @@
                   <i class="bi bi-lightning-charge"></i>
                 </div>
                 <div class="focus-content">
-                  <h4 data-translate="focus-scaling-title">Scaling MT to 201 Languages</h4>
+                  <h4 data-translate="focus-scaling-title">Scaling machine translation to 201 Languages</h4>
                   <p data-translate="focus-scaling-desc">Expanding machine translation coverage while maintaining quality. Working with massive multilingual datasets and optimizing for low-resource languages using advanced transfer learning techniques.</p>
                   <div class="focus-tags">
                     <span class="tag">PyTorch</span>
-                    <span class="tag">Transformers</span>
-                    <span class="tag">FSDP</span>
+                    <span class="tag">LLM</span>
+                    <span class="tag">DeepSpeed</span>
                   </div>
                 </div>
               </div>
@@ -1596,11 +1871,11 @@
                 </div>
                 <div class="focus-content">
                   <h4 data-translate="focus-production-title">Multilingual AI in Production</h4>
-                  <p data-translate="focus-production-desc">Building robust translation systems that handle real-world complexity at scale. Tackling challenges like code-switching, domain adaptation, and maintaining quality across 200+ million daily users.</p>
+                  <p data-translate="focus-production-desc">Building robust translation systems that handle real-world complexity at scale. Tackling challenges like code-switching, domain adaptation, noisy user generated content and maintaining quality across 200+ million daily users.</p>
                   <div class="focus-tags">
                     <span class="tag" data-translate="tag-realtime">Real-time Serving</span>
                     <span class="tag" data-translate="tag-quality">Quality Assurance</span>
-                    <span class="tag">MLflow</span>
+                    <span class="tag">data</span>
                   </div>
                 </div>
               </div>
@@ -1626,17 +1901,17 @@
           <div class="row">
 
             <div class="col-lg-6" data-aos="fade-up" data-aos-delay="100">
-              <h3 class="resume-title" data-translate="experience-title">Professional Experience</h3>
+              <h3 class="resume-title" data-translate="experience-title"><i class="bi bi-briefcase"></i> Professional Experience</h3>
               <div class="resume-item">
                 <h4 data-translate="current-role">AI Engineer &amp; Researcher</h4>
-                <h5>2023 - Present</h5>
+                <h5>2022 - Present</h5>
                 <p><em data-translate="current-company">Translated, Rome, Italy</em></p>
                 <ul>
-                  <li><span data-translate="lara-desc"><strong>Lara:</strong> Worked on the full R&D pipeline of an LLM optimized for MT: from data collection and model training to alignment and inference optimization. Built from scratch within a startup-style team of four operating within the company. Now the flagship B2B product, it translates all content worldwide for Airbnb and most of Uber, Shopify, Nike, and more, reaching over 200M users globally. A B2C version has also recently launched.</span> <a href="https://laratranslate.com/translate" target="_blank" data-translate="try-here">Try it here</a>.</li>
+                  <li><span data-translate="lara-desc"><strong>Lara:</strong> Worked on the full R&D pipeline of an LLM optimized for machine translation: from data collection and model training to alignment and inference optimization. Built from scratch within a startup-style team of four operating within the company. Now the flagship B2B product, it translates all content worldwide for Airbnb and most of Uber, Shopify, Nike, and more, reaching over 200M users globally. A B2C version has also recently launched.</span> <a href="https://laratranslate.com/translate" target="_blank" data-translate="try-here">Try it here</a>.</li>
                   <li data-translate="lara-grande-desc"><strong>Lara Grande:</strong> Key role in scaling LLM to match the quality of the top 1% of professional translators. Used over 1,000 GPUs on CINECA's HPC cluster for large-scale distributed training.</li>
-                  <li data-translate="language-expansion-desc"><strong>Language Expansion:</strong> Identified and led a successful research project to expand machine translation production coverage from 56 to 201 languages, a 4× increase, making it the first commercial MT engine to support such a range. Proposed the direction, designed the implementation plan, and led it to completion within eight months.</li>
-                  <li data-translate="instruction-mt-desc"><strong>Instruction-following MT:</strong> Led research aligning LLM to follow detailed style guides using SFT and DPO.</li>
-                  <li data-translate="trust-attention-desc"><strong>Trust Attention:</strong> Proposed and validated a novel technique prioritizing high-value training data, achieving the most significant MT quality improvements in five years.</li>
+                  <li data-translate="language-expansion-desc"><strong>Language Expansion:</strong> Identified and led a successful research project to expand machine translation production coverage from 56 to 201 languages, a 4× increase, making it the first commercial machine translation engine to support such a range. Proposed the direction, designed the implementation plan, and led it to completion within eight months.</li>
+                  <li data-translate="instruction-mt-desc"><strong>Instruction-following machine translation:</strong> Led research aligning LLM to follow detailed style guides using SFT and DPO.</li>
+                  <li data-translate="trust-attention-desc"><strong>Trust Attention:</strong> Proposed and validated a novel technique prioritizing high-value training data, achieving the most significant machine translation quality improvements in five years.</li>
                   <li data-translate="polyglot-desc"><strong>Polyglot:</strong> Developed a Language Identification model supporting 201 languages.</li>
                 </ul>
               </div><!-- End Resume Item -->
@@ -1656,7 +1931,7 @@
             </div>
 
             <div class="col-lg-6" data-aos="fade-up" data-aos-delay="200">
-              <h3 class="resume-title" data-translate="education-title">Education</h3>
+              <h3 class="resume-title" data-translate="education-title"><i class="bi bi-mortarboard"></i> Education</h3>
               <div class="resume-item">
                 <h4 data-translate="masters-full">M.S. Artificial Intelligence &amp; Data Engineering</h4>
                 <h5>2020 - 2022</h5>
@@ -1704,10 +1979,10 @@
             <div class="row gy-4 isotope-container" data-aos="fade-up" data-aos-delay="200">
 
               <div class="col-lg-4 col-md-6 portfolio-item isotope-item filter-cv">
-                <a href="https://fabiocarrara.github.io/cross-modal-visual-sentiment-analysis/" class="portfolio-content h-100" style="text-decoration: none; color: inherit;">
+                <a href="https://fabiocarrara.github.io/cross-modal-visual-sentiment-analysis/" class="portfolio-content h-100" style="text-decoration: none; color: inherit;" target="_blank">
                   <img src="assets/img/T4SA-2.0.png" class="img-fluid" alt="">
                   <div class="portfolio-info">
-                    <h4>T4SA-2.0 🎯</h4>
+                    <h4>T4SA-2.0 <i class="bi bi-bullseye"></i></h4>
                     <p data-translate="t4sa-desc">Cross-modal visual sentiment analysis system using knowledge distillation from text to vision models. Published at ECAI 2023, achieving state-of-the-art results on visual sentiment prediction.</p>
                     <a href="assets/img/T4SA-2.0.png" title="T4SA-2.0" data-gallery="portfolio-gallery-cv" class="glightbox preview-link" onclick="event.stopPropagation();"><i class="bi bi-zoom-in"></i></a>
                   </div>
@@ -1715,10 +1990,10 @@
               </div><!-- End Portfolio Item -->
 
               <div class="col-lg-4 col-md-6 portfolio-item isotope-item filter-nlp">
-                <a href="https://github.com/codiceSpaghetti/numpyGPT" class="portfolio-content h-100" style="text-decoration: none; color: inherit;">
+                <a href="https://github.com/codiceSpaghetti/numpyGPT" class="portfolio-content h-100" style="text-decoration: none; color: inherit;" target="_blank">
                   <img src="assets/img/portfolio/numpyGPT.png" class="img-fluid" alt="">
                   <div class="portfolio-info">
-                    <h4>NumpyGPT 🧠</h4>
+                    <h4>NumpyGPT <i class="bi bi-robot"></i></h4>
                     <p data-translate="numpygpt-desc">A from-scratch GPT built with NumPy and Python's standard library. No autograd, no frameworks: every layer is re-implemented with its own forward and backward pass. Gradients are computed manually, updates are transparent, and every operation is spelled out.</p>
                     <a href="assets/img/portfolio/numpyGPT.png" title="NumpyGPT" data-gallery="portfolio-gallery-nlp" class="glightbox preview-link" onclick="event.stopPropagation();"><i class="bi bi-zoom-in"></i></a>
                   </div>
@@ -1726,10 +2001,10 @@
               </div><!-- End Portfolio Item -->
 
               <div class="col-lg-4 col-md-6 portfolio-item isotope-item filter-nlp">
-                <a href="https://github.com/codiceSpaghetti/FakeNewsDetection" class="portfolio-content h-100" style="text-decoration: none; color: inherit;">
+                <a href="https://github.com/codiceSpaghetti/FakeNewsDetection" class="portfolio-content h-100" style="text-decoration: none; color: inherit;" target="_blank">
                   <img src="assets/img/portfolio/FakeNewsDetection.jpg" class="img-fluid" alt="">
                   <div class="portfolio-info">
-                    <h4>Fake News Detection 🔍</h4>
+                    <h4>Fake News Detection <i class="bi bi-search"></i></h4>
                     <p data-translate="fake-news-desc">Multi-modal AI system for misinformation detection using transformer architectures. Features stance analysis and source credibility scoring.</p>
                     <a href="assets/img/portfolio/FakeNewsDetection.jpg" title="Fake News Detection" data-gallery="portfolio-gallery-nlp" class="glightbox preview-link" onclick="event.stopPropagation();"><i class="bi bi-zoom-in"></i></a>
                   </div>
@@ -1737,10 +2012,10 @@
               </div><!-- End Portfolio Item -->
 
               <div class="col-lg-4 col-md-6 portfolio-item isotope-item filter-data">
-                <a href="https://github.com/codiceSpaghetti/UniMusic" class="portfolio-content h-100" style="text-decoration: none; color: inherit;">
+                <a href="https://github.com/codiceSpaghetti/UniMusic" class="portfolio-content h-100" style="text-decoration: none; color: inherit;" target="_blank">
                   <img src="assets/img/portfolio/UniMusic.avif" class="img-fluid" alt="">
                   <div class="portfolio-info">
-                    <h4>UniMusic 🎵</h4>
+                    <h4>UniMusic <i class="bi bi-music-note-beamed"></i></h4>
                     <p data-translate="unimusic-desc">Scalable music discovery platform with hybrid MongoDB/Neo4j architecture. Handles millions of tracks with real-time recommendation algorithms.</p>
                     <a href="assets/img/portfolio/UniMusic.avif" title="UniMusic" data-gallery="portfolio-gallery-data" class="glightbox preview-link" onclick="event.stopPropagation();"><i class="bi bi-zoom-in"></i></a>
                   </div>
@@ -1748,21 +2023,21 @@
               </div><!-- End Portfolio Item -->
 
               <div class="col-lg-4 col-md-6 portfolio-item isotope-item filter-nlp">
-                <a href="https://github.com/codiceSpaghetti/VoiceVibes" class="portfolio-content h-100" style="text-decoration: none; color: inherit;">
-                  <img src="assets/img/portfolio/VoiceVibes.jpg" class="img-fluid" alt="">
+                <a href="https://github.com/codiceSpaghetti/VoiceVibes" class="portfolio-content h-100" style="text-decoration: none; color: inherit;" target="_blank">
+                  <img src="assets/img/portfolio/VoiceVibes.gif" class="img-fluid" alt="">
                   <div class="portfolio-info">
-                    <h4>Voice Vibes 🎤</h4>
+                    <h4>Voice Vibes <i class="bi bi-mic-fill"></i></h4>
                     <p data-translate="voice-vibes-desc">Speech emotion recognition system with six novel AI architectures. Achieved 94% accuracy using ensemble methods and advanced feature engineering.</p>
-                    <a href="assets/img/portfolio/VoiceVibes.jpg" title="Voice Vibes" data-gallery="portfolio-gallery-nlp" class="glightbox preview-link" onclick="event.stopPropagation();"><i class="bi bi-zoom-in"></i></a>
+                    <a href="assets/img/portfolio/VoiceVibes.gif" title="Voice Vibes" data-gallery="portfolio-gallery-nlp" class="glightbox preview-link" onclick="event.stopPropagation();"><i class="bi bi-zoom-in"></i></a>
                   </div>
                 </a>
               </div><!-- End Portfolio Item -->
 
               <div class="col-lg-4 col-md-6 portfolio-item isotope-item filter-ml">
-                <a href="https://github.com/codiceSpaghetti/FederatedDBscan" class="portfolio-content h-100" style="text-decoration: none; color: inherit;">
+                <a href="https://github.com/codiceSpaghetti/FederatedDBscan" class="portfolio-content h-100" style="text-decoration: none; color: inherit;" target="_blank">
                   <img src="assets/img/portfolio/FederatedDBscan.png" class="img-fluid" alt="">
                   <div class="portfolio-info">
-                    <h4>Federated DBscan 🔒</h4>
+                    <h4>Federated DBscan <i class="bi bi-shield-lock"></i></h4>
                     <p data-translate="federated-dbscan-desc">Privacy-preserving distributed clustering with federated learning. Enables collaborative ML without data sharing, achieving 99% privacy preservation.</p>
                     <a href="assets/img/portfolio/FederatedDBscan.png" title="Federated DBscan" data-gallery="portfolio-gallery-ml" class="glightbox preview-link" onclick="event.stopPropagation();"><i class="bi bi-zoom-in"></i></a>
                   </div>
@@ -1770,10 +2045,10 @@
               </div><!-- End Portfolio Item -->
 
               <div class="col-lg-4 col-md-6 portfolio-item isotope-item filter-ml">
-                <a href="https://github.com/codiceSpaghetti/PageRank" class="portfolio-content h-100" style="text-decoration: none; color: inherit;">
+                <a href="https://github.com/codiceSpaghetti/PageRank" class="portfolio-content h-100" style="text-decoration: none; color: inherit;" target="_blank">
                   <img src="assets/img/pageRank.jpg" class="img-fluid" alt="">
                   <div class="portfolio-info">
-                    <h4>PageRank Implementation 🔗</h4>
+                    <h4>PageRank Implementation <i class="bi bi-diagram-3"></i></h4>
                     <p data-translate="pagerank-desc">High-performance PageRank algorithm implementation with optimized sparse matrix operations. Handles graphs with millions of nodes efficiently.</p>
                     <a href="assets/img/pageRank.jpg" title="PageRank Implementation" data-gallery="portfolio-gallery-ml" class="glightbox preview-link" onclick="event.stopPropagation();"><i class="bi bi-zoom-in"></i></a>
                   </div>
@@ -1907,152 +2182,226 @@
     <!-- Preloader -->
     <div id="preloader"></div>
 
-    <!-- Vendor JS Files -->
-    <script src="assets/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
-    <script src="assets/vendor/php-email-form/validate.js"></script>
-    <script src="assets/vendor/aos/aos.js"></script>
-    <script src="assets/vendor/typed.js/typed.umd.js"></script>
-    <script src="assets/vendor/purecounter/purecounter_vanilla.js"></script>
-    <script src="assets/vendor/waypoints/noframework.waypoints.js"></script>
-    <script src="assets/vendor/glightbox/js/glightbox.min.js"></script>
-    <script src="assets/vendor/imagesloaded/imagesloaded.pkgd.min.js"></script>
-    <script src="assets/vendor/isotope-layout/isotope.pkgd.min.js"></script>
-    <script src="assets/vendor/swiper/swiper-bundle.min.js"></script>
-
-    <!-- Translation System -->
-    <script src="assets/js/i18n/translator.js"></script>
-
-    <!-- Main JS File -->
-    <script src="assets/js/main.js"></script>
-
-    <!-- Enhanced Application Script -->
-    <script>
-      // Global translator instance
-      let translator;
-
-      // Initialize translator when DOM is ready
-      document.addEventListener('DOMContentLoaded', async () => {
-        // Initialize translator
-        translator = new Translator();
-        await translator.init();
-        
-        // Initialize multilingual typed effect
-        const multilingualElement = document.querySelector('.typed-multilingual');
-        if (multilingualElement && window.Typed) {
-          const currentTranslation = translator.translations[translator.currentLanguage];
-          if (currentTranslation && currentTranslation['multilingual-typed']) {
-            window.typedMultilingual = new Typed('.typed-multilingual', {
-              strings: currentTranslation['multilingual-typed'],
-              typeSpeed: 100,
-              backSpeed: 50,
-              backDelay: 2000,
-              loop: true
-            });
-          }
-        }
-      });
-
-      // Loading screen functionality
-      window.addEventListener('load', async () => {
-        const loadingScreen = document.getElementById('loading-screen');
-        const body = document.body;
-        
-        // Hide loading screen after a minimum of 1300ms for better visual effect
-        setTimeout(() => {
-          loadingScreen.classList.add('fade-out');
-          body.classList.remove('loading');
-          
-          // Remove loading screen from DOM after animation
-          setTimeout(() => {
-            loadingScreen.remove();
-          }, 500);
-        }, 1300);
-      });
-
-      // Theme toggle functionality - Updated for sidebar switch
-      document.addEventListener('DOMContentLoaded', () => {
-        const themeSwitch = document.getElementById('mode-switch');
-        const body = document.body;
-        
-        // Function to detect system theme preference
-        function getSystemTheme() {
-          if (window.matchMedia && window.matchMedia('(prefers-color-scheme: light)').matches) {
-            return 'light';
-          }
-          return 'dark';
-        }
-        
-        // Check for saved theme preference or use system default
-        const savedTheme = localStorage.getItem('theme');
-        const currentTheme = savedTheme || getSystemTheme();
-        
-        // Apply the theme on page load
-        if (currentTheme === 'light') {
-          body.setAttribute('data-theme', 'light');
-          if (themeSwitch) themeSwitch.checked = false;
-        } else {
-          if (themeSwitch) themeSwitch.checked = true;
-        }
-        
-        // Listen for system theme changes
-        if (window.matchMedia) {
-          const mediaQuery = window.matchMedia('(prefers-color-scheme: light)');
-          mediaQuery.addListener((e) => {
-            // Only update if user hasn't manually set a preference
-            if (!localStorage.getItem('theme')) {
-              if (e.matches) {
-                body.setAttribute('data-theme', 'light');
-                if (themeSwitch) themeSwitch.checked = false;
-              } else {
-                body.removeAttribute('data-theme');
-                if (themeSwitch) themeSwitch.checked = true;
-              }
-            }
-          });
-        }
-        
-        // Sidebar theme toggle change handler
-        if (themeSwitch) {
-          themeSwitch.addEventListener('change', () => {
-            if (themeSwitch.checked) {
-              body.removeAttribute('data-theme');
-              localStorage.setItem('theme', 'dark');
-            } else {
-              body.setAttribute('data-theme', 'light');
-              localStorage.setItem('theme', 'light');
-            }
-          });
-        }
-      });
-
-      // Add blur effect to existing mobile sidebar functionality
-      document.addEventListener('DOMContentLoaded', () => {
-        const main = document.querySelector('.main');
-        const header = document.querySelector('#header');
-        
-        // Use MutationObserver to detect when sidebar opens/closes
-        if (header && main) {
-          const observer = new MutationObserver((mutations) => {
-            mutations.forEach((mutation) => {
-              if (mutation.type === 'attributes' && mutation.attributeName === 'class') {
-                if (header.classList.contains('header-show')) {
-                  main.classList.add('blur-background');
-                } else {
-                  main.classList.remove('blur-background');
-                }
-              }
-            });
-          });
-          
-          observer.observe(header, { 
-            attributes: true, 
-            attributeFilter: ['class'] 
-          });
-        }
-      });
-    </script>
-
   </div>
+
+  <!-- Vendor JS Files -->
+  <script src="assets/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+  <script src="assets/vendor/php-email-form/validate.js"></script>
+  <script src="assets/vendor/aos/aos.js"></script>
+  <script src="assets/vendor/typed.js/typed.umd.js"></script>
+  <script src="assets/vendor/purecounter/purecounter_vanilla.js"></script>
+  <script src="assets/vendor/waypoints/noframework.waypoints.js"></script>
+  <script src="assets/vendor/glightbox/js/glightbox.min.js"></script>
+  <script src="assets/vendor/imagesloaded/imagesloaded.pkgd.min.js"></script>
+  <script src="assets/vendor/isotope-layout/isotope.pkgd.min.js"></script>
+  <script src="assets/vendor/swiper/swiper-bundle.min.js"></script>
+
+  <!-- Translation System -->
+  <script src="assets/js/i18n/translator.js"></script>
+
+  <!-- Main JS File -->
+  <script src="assets/js/main.js"></script>
+
+  <!-- Enhanced Application Script -->
+  <script>
+    // Global translator instance
+    let translator;
+
+    // Initialize translator when DOM is ready
+    document.addEventListener('DOMContentLoaded', async () => {
+      // Initialize translator
+      translator = new Translator();
+      await translator.init();
+      
+      // Initialize multilingual typed effect
+      const multilingualElement = document.querySelector('.typed-multilingual');
+      if (multilingualElement && window.Typed) {
+        const currentTranslation = translator.translations[translator.currentLanguage];
+        if (currentTranslation && currentTranslation['multilingual-typed']) {
+          window.typedMultilingual = new Typed('.typed-multilingual', {
+            strings: currentTranslation['multilingual-typed'],
+            typeSpeed: 100,
+            backSpeed: 50,
+            backDelay: 2000,
+            loop: true
+          });
+        }
+      }
+      
+      // Remove footer reference since footer is deleted
+      
+      // Initialize scroll progress indicator
+      initScrollProgress();
+    });
+
+    // Scroll Progress Indicator
+    function initScrollProgress() {
+      const progressBar = document.getElementById('scroll-progress');
+      
+      if (progressBar) {
+        window.addEventListener('scroll', () => {
+          const scrolled = window.pageYOffset;
+          const maxHeight = document.documentElement.scrollHeight - window.innerHeight;
+          const progress = (scrolled / maxHeight) * 100;
+          progressBar.style.width = progress + '%';
+        });
+      }
+    }
+
+    // Enhanced Smooth Scrolling
+    function initSmoothScrolling() {
+      // Add smooth scrolling to all anchor links
+      document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+        anchor.addEventListener('click', function (e) {
+          e.preventDefault();
+          const target = document.querySelector(this.getAttribute('href'));
+          if (target) {
+            const offsetTop = target.offsetTop - 70; // Account for fixed header
+            window.scrollTo({
+              top: offsetTop,
+              behavior: 'smooth'
+            });
+          }
+        });
+      });
+    }
+
+    // Enhanced counter animation trigger
+    function initCounterAnimations() {
+      const counters = document.querySelectorAll('.purecounter');
+      const observerOptions = {
+        threshold: 0.5,
+        rootMargin: '0px 0px -100px 0px'
+      };
+
+      const counterObserver = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) {
+            // Trigger PureCounter animation
+            const counter = entry.target;
+            if (window.PureCounter) {
+              new PureCounter({
+                selector: counter,
+                start: parseInt(counter.getAttribute('data-purecounter-start')),
+                end: parseInt(counter.getAttribute('data-purecounter-end')),
+                duration: parseInt(counter.getAttribute('data-purecounter-duration'))
+              });
+            }
+            counterObserver.unobserve(counter);
+          }
+        });
+      }, observerOptions);
+
+      counters.forEach(counter => {
+        counterObserver.observe(counter);
+      });
+    }
+
+    // Initialize counter animations when page loads
+    window.addEventListener('load', () => {
+      // Small delay to ensure PureCounter library is loaded
+      setTimeout(initCounterAnimations, 500);
+    });
+
+    // Loading screen functionality
+    window.addEventListener('load', async () => {
+      const loadingScreen = document.getElementById('loading-screen');
+      const body = document.body;
+      
+      // Hide loading screen after a minimum of 1300ms for better visual effect
+      setTimeout(() => {
+        loadingScreen.classList.add('fade-out');
+        body.classList.remove('loading');
+        
+        // Remove loading screen from DOM after animation
+        setTimeout(() => {
+          loadingScreen.remove();
+        }, 500);
+      }, 1300);
+    });
+
+    // Theme toggle functionality - Updated for sidebar switch
+    document.addEventListener('DOMContentLoaded', () => {
+      const themeSwitch = document.getElementById('mode-switch');
+      const body = document.body;
+      
+      // Function to detect system theme preference
+      function getSystemTheme() {
+        if (window.matchMedia && window.matchMedia('(prefers-color-scheme: light)').matches) {
+          return 'light';
+        }
+        return 'dark';
+      }
+      
+      // Check for saved theme preference or use system default
+      const savedTheme = localStorage.getItem('theme');
+      const currentTheme = savedTheme || getSystemTheme();
+      
+      // Apply the theme on page load
+      if (currentTheme === 'light') {
+        body.setAttribute('data-theme', 'light');
+        if (themeSwitch) themeSwitch.checked = false;
+      } else {
+        if (themeSwitch) themeSwitch.checked = true;
+      }
+      
+      // Listen for system theme changes
+      if (window.matchMedia) {
+        const mediaQuery = window.matchMedia('(prefers-color-scheme: light)');
+        mediaQuery.addListener((e) => {
+          // Only update if user hasn't manually set a preference
+          if (!localStorage.getItem('theme')) {
+            if (e.matches) {
+              body.setAttribute('data-theme', 'light');
+              if (themeSwitch) themeSwitch.checked = false;
+            } else {
+              body.removeAttribute('data-theme');
+              if (themeSwitch) themeSwitch.checked = true;
+            }
+          }
+        });
+      }
+      
+      // Sidebar theme toggle change handler
+      if (themeSwitch) {
+        themeSwitch.addEventListener('change', () => {
+          if (themeSwitch.checked) {
+            body.removeAttribute('data-theme');
+            localStorage.setItem('theme', 'dark');
+          } else {
+            body.setAttribute('data-theme', 'light');
+            localStorage.setItem('theme', 'light');
+          }
+        });
+      }
+    });
+
+    // Add blur effect to existing mobile sidebar functionality
+    document.addEventListener('DOMContentLoaded', () => {
+      const main = document.querySelector('.main');
+      const header = document.querySelector('#header');
+      
+      // Use MutationObserver to detect when sidebar opens/closes
+      if (header && main) {
+        const observer = new MutationObserver((mutations) => {
+          mutations.forEach((mutation) => {
+            if (mutation.type === 'attributes' && mutation.attributeName === 'class') {
+              if (header.classList.contains('header-show')) {
+                main.classList.add('blur-background');
+              } else {
+                main.classList.remove('blur-background');
+              }
+            }
+          });
+        });
+        
+        observer.observe(header, { 
+          attributes: true, 
+          attributeFilter: ['class'] 
+        });
+      }
+    });
+  </script>
 
 </body>
 

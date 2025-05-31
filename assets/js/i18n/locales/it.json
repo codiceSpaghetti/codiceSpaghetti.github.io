@@ -11,7 +11,7 @@
   "hero-typed": ["un Ricercatore AI", "un Ingegnere", "un Creatore"],
   "multilingual-typed": ["Alleno LLM per parlare la tua lingua.", "我训练大型语言模型来讲你的语言。", "Entreno LLMs para hablar tu idioma.", "Ich trainiere LLMs, damit sie deine Sprache sprechen.", "J'entraîne des LLM pour qu'ils parlent votre langue.", "あなたの言語を話せるように、LLMを訓練しています。", "Treino LLMs para falar o seu idioma.", "أقوم بتدريب LLM لتتحدث لغتك.", "I train LLMs to speak your language.", "Я обучаю LLM говорить на вашем языке."],
   
-  "about-title": "Chi sono in O(1) ◉",
+  "about-title": "Chi sono in O(1)",
   "about-description": "Sono un ricercatore e ingegnere AI specializzato in modelli linguistici multilingue, espandendo transformer encoder-decoder per parlare la tua lingua.",
   "about-role": "Ingegnere AI e Ricercatore",
   "about-intro": "In Translated, ho contribuito a far nascere <a href=\"https://laratranslate.com/translate\" target=\"_blank\" rel=\"noopener noreferrer\">Lara</a> fin dal primo giorno, un LLM per la traduzione automatica che alimenta contenuti in tempo reale per Airbnb, Uber, Shopify e altri, raggiungendo oltre <strong>200 milioni di utenti.</strong>",
@@ -30,11 +30,11 @@
   "languages": "Italiano, Inglese",
   "focus-label": "Focus:",
   "focus": "Scalare LLM a 201 Lingue",
-  "about-conclusion": "Mi sono formato in training distribuiti su larga scala, utilizzando fino a 1.000+ GPU ed ho espanso la copertura della traduzione automatica a 201 lingue. <br>Lavorando di sera e nei weekend, ho co-fondato una startup AI che costruisce una piattaforma di geolocalizzazione di immagini. <br>Sono uno studente vorace che spinge costantemente per migliorare come penso, addestro e costruisco. <br>Non riesco a immaginare una vita senza qualche forma di allenamento, che si tratti di GPU 🖥️, pesi in palestra 🏋️, o preparazione per maratone🏃.",
+  "about-conclusion": "Mi sono formato in training distribuiti su larga scala, utilizzando fino a 1.000+ GPU ed ho espanso la copertura della traduzione automatica a 201 lingue. Ho co-fondato <a href=\"https://picarta.ai/\" target=\"_blank\" style=\"color: var(--accent-primary); text-decoration: none; font-weight: 600;\">Picarta.ai</a>, una startup AI che costruisce una piattaforma di geolocalizzazione di immagini. Sono uno studente vorace che spinge costantemente per migliorare come penso, addestro e costruisco. Non riesco a immaginare una vita senza qualche forma di allenamento, che si tratti di GPU 🖥️, pesi in palestra 🏋️, o preparazione per maratone🏃.",
   
-  "tech-title": "Tecnologie e Strumenti ⚙",
+  "tech-title": "Tecnologie e Strumenti",
   
-  "focus-title": "Focus Attuale ◎",
+  "focus-title": "Focus Attuale",
   "focus-description": "Su cosa sto lavorando e ricercando in questo momento",
   "focus-scaling-title": "Scalare la Traduzione Automatica a 201 Lingue",
   "focus-scaling-desc": "Espandere la copertura della traduzione automatica mantenendo la qualità. Lavorando con enormi dataset multilingue e ottimizzando per lingue a basse risorse usando tecniche avanzate di transfer learning.",
@@ -43,7 +43,7 @@
   "tag-realtime": "Serving Real-time",
   "tag-quality": "Controllo Qualità",
   
-  "resume-title": "Curriculum ◆",
+  "resume-title": "Curriculum",
   "resume-description": "Ingegnere AI e Ricercatore con vasta esperienza nella costruzione e scalabilità di sistemi di traduzione automatica multilingue. Comprovato track record nel servire 200+ milioni di utenti attraverso soluzioni LLM innovative.",
   "education-title": "Formazione",
   "masters-full": "Laurea Magistrale in Intelligenza Artificiale e Data Engineering",
@@ -68,7 +68,7 @@
   "startup-desc4": "Appreso lezioni cruciali su dinamiche di team, gestione dell'incertezza e iterazione rapida",
   "try-here": "Provalo qui",
   
-  "portfolio-title": "Portfolio ★",
+  "portfolio-title": "Portfolio",
   "portfolio-description": "Una raccolta dei miei progetti AI e machine learning, dalla ricerca accademica ai sistemi di produzione che servono milioni di utenti in tutto il mondo.",
   "t4sa-desc": "Sistema di analisi del sentiment visuale cross-modale che utilizza distillazione di conoscenza da modelli di testo a visione. Pubblicato a ECAI 2023, raggiungendo risultati state-of-the-art nella predizione del sentiment visuale.",
   "numpygpt-desc": "Un GPT costruito da zero con NumPy e la libreria standard di Python. Nessun autograd, nessun framework: ogni layer è re-implementato con il proprio forward e backward pass. I gradienti sono calcolati manualmente, gli aggiornamenti sono trasparenti, e ogni operazione è specificata.",
@@ -83,7 +83,7 @@
   "cta-button1": "Inizia una Conversazione",
   "cta-button2": "Invia Email Diretta",
   
-  "contact-title": "Contatti ✉",
+  "contact-title": "Contatti",
   "contact-description": "Mettiamoci in contatto! Che tu voglia discutere di AI, machine learning, o potenziali collaborazioni, sono sempre aperto a conversazioni interessanti.",
   "location-label": "Posizione",
   "location": "Roma, Italia",

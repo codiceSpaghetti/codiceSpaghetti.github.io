@@ -116,13 +116,13 @@ class Translator {
         "languages": "Italian, English",
         "focus-label": "Focus:",
         "focus": "Scaling LLMs to 201 Languages",
-        "about-conclusion": "I've scaled training to 1,000+ GPUs and expanded machine translation coverage to 201 languages. <br>Working nights and weekends, I co-founded an AI startup building an image geolocalization platform. <br>I'm a voracious learner who constantly pushes to improve how I think, train, and build. <br>I can't imagine a life without some form of training, whether it's GPUs 🖥️, gym plates 🏋️, or marathon prep🏃.",
+        "about-conclusion": "I've scaled training to 1,000+ GPUs and expanded machine translation coverage to 201 languages. I co-founded <a href=\"https://picarta.ai/\" target=\"_blank\" style=\"color: var(--accent-primary); text-decoration: none; font-weight: 600;\">Picarta.ai</a>, an AI startup building an image geolocalization platform. I'm a voracious learner who constantly pushes to improve how I think, train, and build. I can't imagine a life without some form of training, whether it's GPUs 🖥️, gym plates 🏋️, or marathon prep🏃.",
         
         "multilingual-static": "I train LLMs to speak your language.",
         
-        "tech-title": "Technologies & Tools ⚡",
+        "tech-title": "Technologies & Tools",
         
-        "focus-title": "Current Focus 🎯",
+        "focus-title": "Current Focus",
         "focus-description": "What I'm building and researching right now",
         "focus-scaling-title": "Scaling Machine Translation to 201 Languages",
         "focus-scaling-desc": "Expanding machine translation coverage while maintaining quality. Working with massive multilingual datasets and optimizing for low-resource languages using advanced transfer learning techniques.",
@@ -156,7 +156,7 @@ class Translator {
         "startup-desc4": "Learned crucial lessons about team dynamics, uncertainty management, and rapid iteration",
         "try-here": "Try it here",
         
-        "portfolio-title": "Portfolio 🚀",
+        "portfolio-title": "Portfolio",
         "portfolio-description": "A collection of my AI and machine learning projects, from academic research to production systems serving millions of users worldwide.",
         "t4sa-desc": "Cross-modal visual sentiment analysis system using knowledge distillation from text to vision models. Published at ECAI 2023, achieving state-of-the-art results on visual sentiment prediction.",
         "numpygpt-desc": "A from-scratch GPT built with NumPy and Python's standard library. No autograd, no frameworks: every layer is re-implemented with its own forward and backward pass. Gradients are computed manually, updates are transparent, and every operation is spelled out.",
@@ -215,11 +215,11 @@ class Translator {
         "languages": "Italiano, Inglese",
         "focus-label": "Focus:",
         "focus": "Scalare LLM a 201 Lingue",
-        "about-conclusion": "Mi sono formato in training distribuiti su larga scala, utilizzando fino a 1.000+ GPU ed ho espanso la copertura della traduzione automatica a 201 lingue. <br>Lavorando di sera e nei weekend, ho co-fondato una startup AI che costruisce una piattaforma di geolocalizzazione di immagini. <br>Sono uno studente vorace che spinge costantemente per migliorare come penso, addestro e costruisco. <br>Non riesco a immaginare una vita senza qualche forma di allenamento, che si tratti di GPU 🖥️, pesi in palestra 🏋️, o preparazione per maratone🏃.",
+        "about-conclusion": "Mi sono formato in training distribuiti su larga scala, utilizzando fino a 1.000+ GPU ed ho espanso la copertura della traduzione automatica a 201 lingue. I co-fondato <a href=\"https://picarta.ai/\" target=\"_blank\" style=\"color: var(--accent-primary); text-decoration: none; font-weight: 600;\">Picarta.ai</a>, una startup AI che costruisce una piattaforma di geolocalizzazione di immagini. Sono uno studente vorace che spinge costantemente per migliorare come penso, addestro e costruisco. Non riesco a immaginare una vita senza qualche forma di allenamento, che si tratti di GPU 🖥️, pesi in palestra 🏋️, o preparazione per maratone🏃.",
         
-        "tech-title": "Tecnologie e Strumenti ⚡",
+        "tech-title": "Tecnologie e Strumenti",
         
-        "focus-title": "Focus Attuale 🎯",
+        "focus-title": "Focus Attuale",
         "focus-description": "Su cosa sto lavorando e ricercando in questo momento",
         "focus-scaling-title": "Scalare MT a 201 Lingue",
         "focus-scaling-desc": "Espandere la copertura della traduzione automatica mantenendo la qualità. Lavorando con enormi dataset multilingue e ottimizzando per lingue a basse risorse usando tecniche avanzate di transfer learning.",
@@ -253,7 +253,7 @@ class Translator {
         "startup-desc4": "Appreso lezioni cruciali su dinamiche di team, gestione dell'incertezza e iterazione rapida",
         "try-here": "Provalo qui",
         
-        "portfolio-title": "Portfolio 🚀",
+        "portfolio-title": "Portfolio",
         "portfolio-description": "Una raccolta dei miei progetti AI e machine learning, dalla ricerca accademica ai sistemi di produzione che servono milioni di utenti in tutto il mondo.",
         "t4sa-desc": "Sistema di analisi del sentiment visuale cross-modale che utilizza distillazione di conoscenza da modelli di testo a visione. Pubblicato a ECAI 2023, raggiungendo risultati state-of-the-art nella predizione del sentiment visuale.",
         "numpygpt-desc": "Un GPT costruito da zero con NumPy e la libreria standard di Python. Nessun autograd, nessun framework: ogni layer è re-implementato con il proprio forward e backward pass. I gradienti sono calcolati manualmente, gli aggiornamenti sono trasparenti, e ogni operazione è specificata.",
