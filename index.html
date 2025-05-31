@@ -251,42 +251,8 @@
       color: var(--text-primary);
     }
 
-    /* Theme Toggle Button */
-    .theme-toggle {
-      position: fixed;
-      top: 20px;
-      right: 20px;
-      width: 50px;
-      height: 50px;
-      background: var(--accent-gradient);
-      border: none;
-      border-radius: 50%;
-      color: white;
-      font-size: 1.2rem;
-      cursor: pointer;
-      box-shadow: 0 4px 15px var(--shadow-color-strong);
-      transition: all 0.2s ease;
-      z-index: 1001;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-    }
-
-    .theme-toggle:hover {
+    .language-option:hover .flag {
       transform: scale(1.1);
-      box-shadow: 0 6px 20px var(--shadow-color-strong);
-    }
-
-    .theme-toggle .light-icon {
-      display: none;
-    }
-
-    [data-theme="light"] .theme-toggle .dark-icon {
-      display: none;
-    }
-
-    [data-theme="light"] .theme-toggle .light-icon {
-      display: block;
     }
 
     /* Global body styling */
@@ -328,8 +294,8 @@
         right: 15px;
         z-index: 9998;
         border: 0;
-        background: var(--accent-primary);
-        color: white;
+        background: var(--accent-primary) !important;
+        color: white !important;
         width: 40px;
         height: 40px;
         border-radius: 50%;
@@ -339,18 +305,88 @@
         align-items: center;
         justify-content: center;
         transition: all 0.3s;
-        box-shadow: 0 4px 15px var(--accent-shadow-light);
+        box-shadow: 0 4px 15px var(--accent-shadow-light) !important;
       }
       
       .header-toggle:hover {
-        background: var(--accent-secondary);
+        background: var(--accent-secondary) !important;
         transform: scale(1.1);
-        box-shadow: 0 6px 20px var(--accent-shadow-strong);
+        box-shadow: 0 6px 20px var(--accent-shadow-strong) !important;
+      }
+
+      /* Smooth icon transition for hamburger/X */
+      .header-toggle:before {
+        transition: all 0.3s ease;
+      }
+
+      /* Hamburger/X icon transition animations */
+      .header-toggle {
+        transition: all 0.3s ease;
+        position: relative;
+        overflow: hidden;
+      }
+
+      .header-toggle::before {
+        transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+      }
+
+      /* Hamburger state */
+      .header-toggle.bi-list::before {
+        transform: rotate(0deg) scale(1);
+        opacity: 1;
+      }
+
+      /* X state */
+      .header-toggle.bi-x::before {
+        transform: rotate(180deg) scale(1.1);
+        opacity: 1;
+      }
+
+      /* Smooth rotation and scaling transition */
+      .header-toggle:not(.bi-x)::before {
+        animation: hamburgerIn 0.3s ease forwards;
+      }
+
+      .header-toggle.bi-x::before {
+        animation: hamburgerToX 0.3s ease forwards;
+      }
+
+      @keyframes hamburgerIn {
+        0% {
+          transform: rotate(180deg) scale(0.8);
+          opacity: 0.7;
+        }
+        100% {
+          transform: rotate(0deg) scale(1);
+          opacity: 1;
+        }
+      }
+
+      @keyframes hamburgerToX {
+        0% {
+          transform: rotate(0deg) scale(1);
+          opacity: 1;
+        }
+        50% {
+          transform: rotate(90deg) scale(0.8);
+          opacity: 0.8;
+        }
+        100% {
+          transform: rotate(180deg) scale(1);
+          opacity: 1;
+        }
       }
       
       /* Ensure main content doesn't overlap with mobile header */
       .main {
         margin-left: 0;
+      }
+
+      /* Blur effect when sidebar is open */
+      .main.blur-background {
+        filter: blur(5px);
+        transition: filter 0.3s ease;
+        pointer-events: none;
       }
       
       /* Mobile overlay */
@@ -364,18 +400,20 @@
         background: rgba(0, 0, 0, 0.7);
         overflow: hidden;
         display: none;
+        transition: all 0.3s ease;
       }
       
       .mobile-nav-overly.mobile-nav-active {
         display: block;
       }
       
-      /* Hide floating contact button on mobile, theme toggle replaces it */
+      /* Hide floating contact button on mobile */
       .floating-contact {
         display: none;
       }
       
       /* Adjust theme toggle position for mobile */
+      /*
       .theme-toggle {
         bottom: 90px !important;
         right: 15px !important;
@@ -384,6 +422,7 @@
         height: 45px !important;
         font-size: 1rem !important;
       }
+      */
 
       .scroll-top {
         bottom: 30px !important;
@@ -928,6 +967,7 @@
       }
 
       /* Mobile button positioning */
+      /*
       .theme-toggle {
         bottom: 90px !important;
         right: 15px !important;
@@ -936,6 +976,7 @@
         height: 45px !important;
         font-size: 1rem !important;
       }
+      */
 
       .scroll-top {
         bottom: 30px !important;
@@ -1038,6 +1079,264 @@
       background: var(--accent-secondary);
       box-shadow: 0 6px 20px var(--accent-shadow);
     }
+
+    /* Section title icons */
+    .section-title h2 i {
+      color: var(--accent-primary);
+      margin-right: 10px;
+      font-size: 0.9em;
+      transition: color 0.3s ease;
+    }
+
+    .portfolio .portfolio-info h4 i {
+      color: var(--accent-primary);
+      margin-left: 8px;
+      font-size: 0.8em;
+    }
+
+    /* Theme Toggle Switch in Sidebar */
+    .theme-switch-container {
+      padding: 5px 0;
+      margin: 0;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      transition: all 0.3s ease;
+    }
+
+    .switch {
+      position: relative;
+      display: inline-block;
+      width: 60px;
+      height: 30px;
+    }
+
+    .switch input {
+      opacity: 0;
+      width: 0;
+      height: 0;
+    }
+
+    .slider {
+      position: absolute;
+      cursor: pointer;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: var(--bg-tertiary);
+      border: 2px solid var(--border-color);
+      transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+      border-radius: 30px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 8px;
+    }
+
+    .slider:hover {
+      transform: scale(1.05);
+      box-shadow: 0 4px 12px var(--shadow-color);
+    }
+
+    .slider:before {
+      position: absolute;
+      content: "";
+      height: 22px;
+      width: 22px;
+      left: 2px;
+      bottom: 2px;
+      background: var(--accent-primary);
+      transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+      border-radius: 50%;
+      box-shadow: 0 2px 8px var(--accent-shadow);
+      transform: scale(1);
+    }
+
+    input:checked + .slider:before {
+      transform: translateX(26px) scale(1.1);
+      background: var(--accent-secondary);
+      box-shadow: 0 4px 12px var(--accent-shadow-strong);
+    }
+
+    input:checked + .slider {
+      background: var(--bg-card);
+      border-color: var(--accent-secondary);
+      box-shadow: 0 0 20px var(--accent-shadow-light);
+    }
+
+    .slider i {
+      font-size: 0.9rem;
+      color: var(--text-secondary);
+      transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+      z-index: 1;
+      opacity: 0.7;
+      position: absolute;
+    }
+
+    .slider:hover i {
+      opacity: 1;
+      transform: scale(1.1);
+    }
+
+    #sun-icon {
+      left: 8px;
+    }
+
+    #moon-icon {
+      right: 8px;
+    }
+
+    /* Light theme icon states - show moon (to switch to dark) */
+    [data-theme="light"] #sun-icon {
+      display: none !important;
+    }
+
+    [data-theme="light"] #moon-icon {
+      display: block !important;
+    }
+
+    /* Dark theme icon states - show sun (to switch to light) */
+    [data-theme="dark"] #sun-icon,
+    body:not([data-theme]) #sun-icon {
+      display: block !important;
+    }
+
+    [data-theme="dark"] #moon-icon,
+    body:not([data-theme]) #moon-icon {
+      display: none !important;
+    }
+
+    [data-theme="light"] .scroll-top:hover {
+      background: var(--accent-secondary);
+      box-shadow: 0 6px 20px var(--accent-shadow);
+    }
+
+    /* Resume Section - Additional Styles */
+    .resume {
+      background-color: var(--bg-secondary);
+      transition: background-color 0.3s ease;
+    }
+
+    .resume .resume-title {
+      color: var(--text-primary);
+      transition: color 0.3s ease;
+    }
+
+    .resume .resume-item {
+      background-color: var(--bg-card);
+      border-left: 2px solid var(--accent-primary);
+      border-radius: 8px;
+      padding: 20px;
+      margin-bottom: 20px;
+      box-shadow: 0 2px 10px var(--shadow-color-strong);
+      transition: all 0.3s ease;
+    }
+
+    .resume .resume-item h4 {
+      color: var(--text-primary);
+      transition: color 0.3s ease;
+    }
+
+    .resume .resume-item h5 {
+      color: var(--accent-primary);
+    }
+
+    .resume .resume-item p, .resume .resume-item li {
+      color: var(--text-secondary);
+      transition: color 0.3s ease;
+    }
+
+    .resume .resume-item em {
+      color: var(--text-muted);
+      transition: color 0.3s ease;
+    }
+
+    .resume .resume-item a {
+      color: var(--accent-primary);
+      text-decoration: none;
+      font-weight: 600;
+    }
+
+    .resume .resume-item a:hover {
+      text-decoration: underline;
+    }
+
+    /* Portfolio Section - Additional Styles */
+    .portfolio .portfolio-content {
+      background: var(--bg-card);
+      border-radius: 10px;
+      overflow: hidden;
+      box-shadow: 0 4px 16px var(--shadow-color-strong);
+      transition: all 0.3s ease;
+      border: 1px solid var(--border-color);
+      display: block;
+      text-decoration: none !important;
+    }
+
+    .portfolio .portfolio-content:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 8px 25px var(--shadow-color-strong);
+      text-decoration: none !important;
+      color: inherit !important;
+    }
+
+    .portfolio .portfolio-info {
+      background: var(--bg-card);
+      position: relative;
+    }
+
+    .portfolio .portfolio-info h4 {
+      color: var(--text-primary);
+      transition: color 0.3s ease;
+      margin-bottom: 10px;
+      padding: 15px 15px 5px 15px;
+    }
+
+    .portfolio .portfolio-info p {
+      color: var(--text-secondary);
+      transition: color 0.3s ease;
+      margin-bottom: 15px;
+      padding: 0 15px 15px 15px;
+    }
+
+    .portfolio .portfolio-info .preview-link {
+      display: none !important;
+    }
+
+    .portfolio .portfolio-filters {
+      list-style: none;
+      padding: 0;
+      margin: 0 0 35px 0;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 10px;
+    }
+
+    .portfolio .portfolio-filters li {
+      cursor: pointer;
+      display: inline-block;
+      padding: 8px 20px;
+      font-size: 14px;
+      font-weight: 500;
+      line-height: 1;
+      color: var(--text-secondary);
+      background: var(--bg-card);
+      border: 2px solid var(--border-color);
+      border-radius: 25px;
+      transition: all 0.3s ease;
+      text-transform: capitalize;
+    }
+
+    .portfolio .portfolio-filters li:hover, .portfolio .portfolio-filters li.filter-active {
+      background: var(--accent-gradient);
+      color: white;
+      border-color: var(--accent-primary);
+      transform: translateY(-2px);
+      box-shadow: 0 4px 15px var(--accent-shadow);
+    }
   </style>
 
   <!-- =======================================================
@@ -1084,12 +1383,23 @@
         <ul>
           <li><a href="#hero" class="active"><i class="bi bi-house navicon"></i><span data-translate="nav-home">Home</span></a></li>
           <li><a href="#about"><i class="bi bi-person navicon"></i><span data-translate="nav-about">About</span></a></li>
-          <li><a href="#technologies"><i class="bi bi-gear navicon"></i><span data-translate="nav-tech">Tech Stack</span></a></li>
+          <li><a href="#technologies"><i class="bi bi-tools navicon"></i><span data-translate="nav-tech">Tech Stack</span></a></li>
           <li><a href="#resume"><i class="bi bi-file-earmark-text navicon"></i><span data-translate="nav-resume">Resume</span></a></li>
-          <li><a href="#portfolio"><i class="bi bi-images navicon"></i><span data-translate="nav-portfolio">Portfolio</span></a></li>
+          <li><a href="#portfolio"><i class="bi bi-briefcase navicon"></i><span data-translate="nav-portfolio">Portfolio</span></a></li>
           <li><a href="#contact"><i class="bi bi-envelope navicon"></i><span data-translate="nav-contact">Contact</span></a></li>
         </ul>
       </nav>
+
+      <!-- Theme Toggle Switch -->
+      <div class="theme-switch-container">
+        <div class="switch">
+          <input type="checkbox" id="mode-switch">
+          <label for="mode-switch" class="slider">
+            <i id="sun-icon" class="bi bi-sun" style="display: block;"></i>
+            <i id="moon-icon" class="bi bi-moon-stars" style="display: none;"></i>
+          </label>
+        </div>
+      </div>
 
       <!-- Language Toggle -->
       <div class="language-toggle">
@@ -1121,8 +1431,11 @@
 
         <!-- Section Title -->
         <div class="container section-title" data-aos="fade-up">
-          <h2 data-translate="about-title">About me in O(1)</h2>
-          <p data-translate="about-description">I'm an AI researcher and engineer focused on multilingual large language models, making LLMs speak your language.</p>
+          <h2 data-translate="about-title"><i class="bi bi-person"></i> About me in O(1)</h2>
+          <p data-translate="about-description">I'm an AI researcher and engineer focused on multilingual large language models.</p>
+          <p class="fst-italic" style="color: var(--accent-primary); font-weight: 600; font-size: 1.1rem; margin-top: 1rem;">
+            <span class="typed-multilingual" data-typed-items="I train LLMs to speak your language.">I train LLMs to speak your language.</span>
+          </p>
         </div><!-- End Section Title -->
 
         <div class="container" data-aos="fade-up" data-aos-delay="100">
@@ -1169,7 +1482,7 @@
         
         <!-- Section Title -->
         <div class="container section-title" data-aos="fade-up">
-          <h2 data-translate="tech-title">Technologies & Tools 🛠️</h2>
+          <h2 data-translate="tech-title"><i class="bi bi-tools"></i> Technologies & Tools</h2>
         </div><!-- End Section Title -->
 
         <div class="container" data-aos="fade-up" data-aos-delay="100">
@@ -1251,7 +1564,7 @@
         
         <!-- Section Title -->
         <div class="container section-title" data-aos="fade-up">
-          <h2 data-translate="focus-title">Current Focus 🎯</h2>
+          <h2 data-translate="focus-title"><i class="bi bi-bullseye"></i> Current Focus</h2>
           <p data-translate="focus-description">What I'm building and researching right now</p>
         </div><!-- End Section Title -->
 
@@ -1304,7 +1617,7 @@
 
         <!-- Section Title -->
         <div class="container section-title" data-aos="fade-up">
-          <h2 data-translate="resume-title">Resume</h2>
+          <h2 data-translate="resume-title"><i class="bi bi-file-earmark-text"></i> Resume</h2>
           <p data-translate="resume-description">AI Engineer and Researcher with extensive experience in building and scaling multilingual machine translation systems. Proven track record of serving 200+ million users through innovative LLM solutions.</p>
         </div><!-- End Section Title -->
 
@@ -1372,7 +1685,7 @@
 
         <!-- Section Title -->
         <div class="container section-title" data-aos="fade-up">
-          <h2 data-translate="portfolio-title">Portfolio 🚀</h2>
+          <h2 data-translate="portfolio-title"><i class="bi bi-briefcase"></i> Portfolio</h2>
           <p data-translate="portfolio-description">A collection of my AI and machine learning projects, from academic research to production systems serving millions of users worldwide.</p>
         </div><!-- End Section Title -->
 
@@ -1425,11 +1738,11 @@
 
               <div class="col-lg-4 col-md-6 portfolio-item isotope-item filter-data">
                 <a href="https://github.com/codiceSpaghetti/UniMusic" class="portfolio-content h-100" style="text-decoration: none; color: inherit;">
-                  <img src="assets/img/portfolio/UniMusic.jpg" class="img-fluid" alt="">
+                  <img src="assets/img/portfolio/UniMusic.avif" class="img-fluid" alt="">
                   <div class="portfolio-info">
                     <h4>UniMusic 🎵</h4>
                     <p data-translate="unimusic-desc">Scalable music discovery platform with hybrid MongoDB/Neo4j architecture. Handles millions of tracks with real-time recommendation algorithms.</p>
-                    <a href="assets/img/portfolio/UniMusic.jpg" title="UniMusic" data-gallery="portfolio-gallery-data" class="glightbox preview-link" onclick="event.stopPropagation();"><i class="bi bi-zoom-in"></i></a>
+                    <a href="assets/img/portfolio/UniMusic.avif" title="UniMusic" data-gallery="portfolio-gallery-data" class="glightbox preview-link" onclick="event.stopPropagation();"><i class="bi bi-zoom-in"></i></a>
                   </div>
                 </a>
               </div><!-- End Portfolio Item -->
@@ -1500,7 +1813,7 @@
 
         <!-- Section Title -->
         <div class="container section-title" data-aos="fade-up">
-          <h2 data-translate="contact-title">Contact</h2>
+          <h2 data-translate="contact-title"><i class="bi bi-envelope"></i> Contact</h2>
           <p data-translate="contact-description">Let's connect! Whether you want to discuss AI, machine learning, or potential collaborations, I'm always open to interesting conversations.</p>
         </div><!-- End Section Title -->
 
@@ -1583,12 +1896,6 @@
 
     </main>
 
-    <!-- Theme Toggle Button -->
-    <button class="theme-toggle" id="theme-toggle" aria-label="Toggle theme">
-      <i class="bi bi-moon-stars dark-icon"></i>
-      <i class="bi bi-sun light-icon"></i>
-    </button>
-
     <!-- Scroll Top -->
     <a href="#" id="scroll-top" class="scroll-top d-flex align-items-center justify-content-center"><i class="bi bi-arrow-up-short"></i></a>
 
@@ -1628,6 +1935,21 @@
         // Initialize translator
         translator = new Translator();
         await translator.init();
+        
+        // Initialize multilingual typed effect
+        const multilingualElement = document.querySelector('.typed-multilingual');
+        if (multilingualElement && window.Typed) {
+          const currentTranslation = translator.translations[translator.currentLanguage];
+          if (currentTranslation && currentTranslation['multilingual-typed']) {
+            window.typedMultilingual = new Typed('.typed-multilingual', {
+              strings: currentTranslation['multilingual-typed'],
+              typeSpeed: 100,
+              backSpeed: 50,
+              backDelay: 2000,
+              loop: true
+            });
+          }
+        }
       });
 
       // Loading screen functionality
@@ -1647,31 +1969,86 @@
         }, 1300);
       });
 
-      // Theme toggle functionality
+      // Theme toggle functionality - Updated for sidebar switch
       document.addEventListener('DOMContentLoaded', () => {
-        const themeToggle = document.getElementById('theme-toggle');
+        const themeSwitch = document.getElementById('mode-switch');
         const body = document.body;
         
-        // Check for saved theme preference or default to dark theme
-        const currentTheme = localStorage.getItem('theme') || 'dark';
+        // Function to detect system theme preference
+        function getSystemTheme() {
+          if (window.matchMedia && window.matchMedia('(prefers-color-scheme: light)').matches) {
+            return 'light';
+          }
+          return 'dark';
+        }
+        
+        // Check for saved theme preference or use system default
+        const savedTheme = localStorage.getItem('theme');
+        const currentTheme = savedTheme || getSystemTheme();
         
         // Apply the theme on page load
         if (currentTheme === 'light') {
           body.setAttribute('data-theme', 'light');
+          if (themeSwitch) themeSwitch.checked = false;
+        } else {
+          if (themeSwitch) themeSwitch.checked = true;
         }
         
-        // Theme toggle click handler
-        themeToggle.addEventListener('click', () => {
-          const currentTheme = body.getAttribute('data-theme');
+        // Listen for system theme changes
+        if (window.matchMedia) {
+          const mediaQuery = window.matchMedia('(prefers-color-scheme: light)');
+          mediaQuery.addListener((e) => {
+            // Only update if user hasn't manually set a preference
+            if (!localStorage.getItem('theme')) {
+              if (e.matches) {
+                body.setAttribute('data-theme', 'light');
+                if (themeSwitch) themeSwitch.checked = false;
+              } else {
+                body.removeAttribute('data-theme');
+                if (themeSwitch) themeSwitch.checked = true;
+              }
+            }
+          });
+        }
+        
+        // Sidebar theme toggle change handler
+        if (themeSwitch) {
+          themeSwitch.addEventListener('change', () => {
+            if (themeSwitch.checked) {
+              body.removeAttribute('data-theme');
+              localStorage.setItem('theme', 'dark');
+            } else {
+              body.setAttribute('data-theme', 'light');
+              localStorage.setItem('theme', 'light');
+            }
+          });
+        }
+      });
+
+      // Add blur effect to existing mobile sidebar functionality
+      document.addEventListener('DOMContentLoaded', () => {
+        const main = document.querySelector('.main');
+        const header = document.querySelector('#header');
+        
+        // Use MutationObserver to detect when sidebar opens/closes
+        if (header && main) {
+          const observer = new MutationObserver((mutations) => {
+            mutations.forEach((mutation) => {
+              if (mutation.type === 'attributes' && mutation.attributeName === 'class') {
+                if (header.classList.contains('header-show')) {
+                  main.classList.add('blur-background');
+                } else {
+                  main.classList.remove('blur-background');
+                }
+              }
+            });
+          });
           
-          if (currentTheme === 'light') {
-            body.removeAttribute('data-theme');
-            localStorage.setItem('theme', 'dark');
-          } else {
-            body.setAttribute('data-theme', 'light');
-            localStorage.setItem('theme', 'light');
-          }
-        });
+          observer.observe(header, { 
+            attributes: true, 
+            attributeFilter: ['class'] 
+          });
+        }
       });
     </script>
 

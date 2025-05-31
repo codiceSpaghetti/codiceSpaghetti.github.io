@@ -95,36 +95,39 @@ class Translator {
         
         "hero-subtitle": "Making AI speak your language, one model at a time",
         "hero-typed": ["an AI Researcher", "an Engineer", "a Builder"],
+        "multilingual-typed": ["I train LLMs to speak your language.", "我训练大型语言模型来讲你的语言。", "Entreno LLMs para hablar tu idioma.", "Ich trainiere LLMs, damit sie deine Sprache sprechen.", "J'entraîne des LLM pour qu'ils parlent votre langue.", "あなたの言語を話せるように、LLMを訓練しています。", "Treino LLMs para falar o seu idioma.", "أقوم بتدريب LLM لتتحدث لغتك.", "Alleno LLM per parlare la tua lingua.", "Я обучаю LLM говорить на вашем языке."],
         
         "about-title": "About me in O(1)",
-        "about-description": "I'm an AI researcher and engineer focused on multilingual large language models, making LLMs speak your language.",
+        "about-description": "I'm an AI researcher and engineer focused on multilingual large language models, expanding encoder-decoder transformers to speak your language.",
         "about-role": "AI Engineer & Researcher",
-        "about-intro": "At Translated, I helped build Lara from scratch, a machine translation LLM that powers content for Airbnb, Uber, Shopify, and others, reaching over 200 million users.",
+        "about-intro": "AZt Translated, I helped build <a href=\"https://laratranslate.com/translate\" target=\"_blank\" rel=\"noopener noreferrer\">Lara</a> from day one, a machine translation LLM that powers content in real-time for Airbnb, Uber, Shopify, and others, reaching over <strong>200 million users.</strong>",
         "birth-place-label": "Birth Place:",
-        "birth-place": "Naples, Italy",
+        "birth-place": "Naples, Italy 🍕",
         "email-label": "Email:",
         "city-label": "City:",
         "city": "Rome, Italy",
-        "masters-label": "M.S. Degree:",
+        "masters-label": "Master's Degree:",
         "masters-degree": "AI & Data Engineering",
-        "bachelors-label": "B.S. Degree:",
+        "bachelors-label": "Bachelor's Degree:",
         "bachelors-degree": "Computer Engineering",
         "university-label": "University:",
         "university": "University of Pisa",
         "languages-label": "Languages:",
         "languages": "Italian, English",
         "focus-label": "Focus:",
-        "focus": "Multilingual LLMs",
-        "about-conclusion": "I've scaled training to 1,000+ GPUs and expanded MT coverage to 201 languages. Working nights and weekends, I co-founded an AI startup building an image geolocalization platform. I'm a voracious learner who constantly pushes to improve how I think, train, and build. I can't imagine a life without some form of training, whether it's GPUs, gym plates, or marathon prep.",
+        "focus": "Scaling LLMs to 201 Languages",
+        "about-conclusion": "I've scaled training to 1,000+ GPUs and expanded machine translation coverage to 201 languages. <br>Working nights and weekends, I co-founded an AI startup building an image geolocalization platform. <br>I'm a voracious learner who constantly pushes to improve how I think, train, and build. <br>I can't imagine a life without some form of training, whether it's GPUs 🖥️, gym plates 🏋️, or marathon prep🏃.",
         
-        "tech-title": "Technologies & Tools 🛠️",
+        "multilingual-static": "I train LLMs to speak your language.",
+        
+        "tech-title": "Technologies & Tools ⚡",
         
         "focus-title": "Current Focus 🎯",
         "focus-description": "What I'm building and researching right now",
-        "focus-scaling-title": "Scaling MT to 201 Languages",
+        "focus-scaling-title": "Scaling Machine Translation to 201 Languages",
         "focus-scaling-desc": "Expanding machine translation coverage while maintaining quality. Working with massive multilingual datasets and optimizing for low-resource languages using advanced transfer learning techniques.",
         "focus-production-title": "Multilingual AI in Production",
-        "focus-production-desc": "Building robust translation systems that handle real-world complexity at scale. Tackling challenges like code-switching, domain adaptation, and maintaining quality across 200+ million daily users.",
+        "focus-production-desc": "Integrating robust translation systems that handle real-world complexity at scale. Tackling challenges like code-switching, domain adaptation, noisy user generated content, and maintaining quality across 200+ million daily users.",
         "tag-realtime": "Real-time Serving",
         "tag-quality": "Quality Assurance",
         
@@ -191,13 +194,14 @@ class Translator {
         
         "hero-subtitle": "Rendendo l'AI capace di parlare la tua lingua, un modello alla volta",
         "hero-typed": ["un Ricercatore AI", "un Ingegnere", "un Creatore"],
+        "multilingual-typed": ["Alleno LLM per parlare la tua lingua.", "我训练大型语言模型来讲你的语言。", "Entreno LLMs para hablar tu idioma.", "Ich trainiere LLMs, damit sie deine Sprache sprechen.", "J'entraîne des LLM pour qu'ils parlent votre langue.", "あなたの言語を話せるように、LLMを訓練しています。", "Treino LLMs para falar o seu idioma.", "أقوم بتدريب LLM لتتحدث لغتك.", "I train LLMs to speak your language.", "Я обучаю LLM говорить на вашем языке."],
         
         "about-title": "Chi sono in O(1)",
-        "about-description": "Sono un ricercatore e ingegnere AI specializzato in modelli linguistici multilingue, rendendo gli LLM capaci di parlare la tua lingua.",
+        "about-description": "Sono un ricercatore e ingegnere AI specializzato in modelli linguistici multilingue, espandendo transformer encoder-decoder per parlare la tua lingua.",
         "about-role": "Ingegnere AI e Ricercatore",
-        "about-intro": "In Translated, ho contribuito a far nascere Lara, un LLM per la traduzione automatica che localizza i contenuti per Airbnb, Uber, Shopify e altri, raggiungendo oltre 200 milioni di utenti.",
+        "about-intro": "In Translated, ho contribuito a far nascere <a href=\"https://laratranslate.com/translate\" target=\"_blank\" rel=\"noopener noreferrer\">Lara</a> fin dal primo giorno, un LLM per la traduzione automatica che alimenta contenuti in tempo reale per Airbnb, Uber, Shopify e altri, raggiungendo oltre <strong>200 milioni di utenti.</strong>",
         "birth-place-label": "Luogo di Nascita:",
-        "birth-place": "Napoli, Italia",
+        "birth-place": "Napoli, Italia 🍕",
         "email-label": "Email:",
         "city-label": "Città:",
         "city": "Roma, Italia",
@@ -210,10 +214,10 @@ class Translator {
         "languages-label": "Lingue:",
         "languages": "Italiano, Inglese",
         "focus-label": "Focus:",
-        "focus": "LLM Multilingue",
-        "about-conclusion": "Mi sono formato in training distribuiti su larga scala, utilizzando fino a 1.000+ GPU ed ho espanso la copertura linguistica del motore di traduzione a 201 lingue. Lavorando di sera e nei weekend, ho co-fondato una startup AI che costruisce una piattaforma di geolocalizzazione di immagini. Sono uno studente vorace che spinge costantemente per migliorare come penso, addestro e costruisco. Non riesco a immaginare una vita senza qualche forma di allenamento, che si tratti di GPU, pesi in palestra o preparazione per maratone.",
+        "focus": "Scalare LLM a 201 Lingue",
+        "about-conclusion": "Mi sono formato in training distribuiti su larga scala, utilizzando fino a 1.000+ GPU ed ho espanso la copertura della traduzione automatica a 201 lingue. <br>Lavorando di sera e nei weekend, ho co-fondato una startup AI che costruisce una piattaforma di geolocalizzazione di immagini. <br>Sono uno studente vorace che spinge costantemente per migliorare come penso, addestro e costruisco. <br>Non riesco a immaginare una vita senza qualche forma di allenamento, che si tratti di GPU 🖥️, pesi in palestra 🏋️, o preparazione per maratone🏃.",
         
-        "tech-title": "Tecnologie e Strumenti 🛠️",
+        "tech-title": "Tecnologie e Strumenti ⚡",
         
         "focus-title": "Focus Attuale 🎯",
         "focus-description": "Su cosa sto lavorando e ricercando in questo momento",
@@ -254,7 +258,7 @@ class Translator {
         "t4sa-desc": "Sistema di analisi del sentiment visuale cross-modale che utilizza distillazione di conoscenza da modelli di testo a visione. Pubblicato a ECAI 2023, raggiungendo risultati state-of-the-art nella predizione del sentiment visuale.",
         "numpygpt-desc": "Un GPT costruito da zero con NumPy e la libreria standard di Python. Nessun autograd, nessun framework: ogni layer è re-implementato con il proprio forward e backward pass. I gradienti sono calcolati manualmente, gli aggiornamenti sono trasparenti, e ogni operazione è specificata.",
         "fake-news-desc": "Sistema AI multi-modale per la rilevazione di disinformazione utilizzando architetture transformer. Include analisi di stance e scoring di credibilità delle fonti.",
-        "unimusic-desc": "Piattaforma scalabile per la scoperta musicale con architettura ibrida MongoDB/Neo4j. Gestisce milioni di tracce con algoritmi di raccomandazione in tempo reale.",
+        "unimusic-desc": "Piattaforma scalabile per la scoperta musicale con architettura ibrida MongoDB/Neo4j architecture. Gestisce milioni di tracce con algoritmi di raccomandazione in tempo reale.",
         "voice-vibes-desc": "Sistema di riconoscimento delle emozioni vocali con sei architetture AI innovative. Ha raggiunto il 94% di accuratezza utilizzando metodi ensemble e feature engineering avanzata.",
         "federated-dbscan-desc": "Clustering distribuito privacy-preserving con federated learning. Abilita ML collaborativo senza condivisione di dati, raggiungendo il 99% di preservazione della privacy.",
         "pagerank-desc": "Implementazione ad alte prestazioni dell'algoritmo PageRank con operazioni ottimizzate su matrici sparse. Gestisce grafi con milioni di nodi in modo efficiente.",
@@ -274,7 +278,10 @@ class Translator {
         "form-message": "Messaggio",
         "form-loading": "Caricamento",
         "form-success": "Il tuo messaggio è stato inviato. Grazie!",
-        "form-send": "Invia Messaggio"
+        "form-send": "Invia Messaggio",
+        
+        "multilingual-static": "Alleno LLM per parlare la tua lingua.",
+        "multilingual-typed": ["I train LLMs to speak your language.", "I train LLMs to speak your language.", "Entreno LLMs para hablar tu idioma.", "J'entraîne des LLM à parler votre langue.", "Ich trainiere LLMs, Ihre Sprache zu sprechen.", "Treino LLMs para falar sua língua.", "LLMを訓練してあなたの言語を話させます。", "أدرب نماذج اللغة الكبيرة لتتحدث بلغتك."]
       }
     };
 
@@ -367,11 +374,13 @@ class Translator {
    * Update Typed.js content
    */
   updateTypedText(translation) {
-    const typedElement = document.querySelector('.typed');
-    if (typedElement && window.typed && translation['hero-typed']) {
-      window.typed.destroy();
-      window.typed = new Typed('.typed', {
-        strings: translation['hero-typed'],
+    // Update multilingual typed text only
+    // Let main.js handle the hero animation to avoid conflicts
+    const multilingualElement = document.querySelector('.typed-multilingual');
+    if (multilingualElement && window.typedMultilingual && translation['multilingual-typed']) {
+      window.typedMultilingual.destroy();
+      window.typedMultilingual = new Typed('.typed-multilingual', {
+        strings: translation['multilingual-typed'],
         typeSpeed: 100,
         backSpeed: 50,
         backDelay: 2000,
