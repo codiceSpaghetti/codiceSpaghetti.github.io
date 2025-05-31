@@ -747,12 +747,14 @@
       margin-bottom: 20px;
       box-shadow: 0 2px 10px var(--shadow-color-strong);
       transition: all 0.3s ease;
+      box-sizing: border-box;
     }
 
     .resume .resume-item:hover {
       transform: translateY(-5px);
-      box-shadow: 0 15px 35px var(--shadow-color-strong);
-      border-left-width: 5px;
+      box-shadow: 
+        0 15px 35px var(--shadow-color-strong),
+        inset 3px 0 0 0 var(--accent-primary);
     }
 
     .resume .resume-item h4 {
@@ -784,7 +786,7 @@
       text-decoration: underline;
     }
 
-    /* Portfolio Section */
+    /* Portfolio Section - Additional Styles */
     .portfolio .portfolio-content {
       background: var(--bg-card);
       border-radius: 10px;
@@ -798,6 +800,8 @@
 
     .portfolio .portfolio-content img {
       border-radius: 10px 10px 0 0;
+      width: 100%;
+      height: auto;
     }
 
     .portfolio .portfolio-content:hover {
@@ -863,7 +867,7 @@
       transform: translateY(-2px);
       box-shadow: 0 4px 15px var(--accent-shadow);
     }
-    
+
     /* Call to Action Section */
     .call-to-action {
       background: var(--accent-gradient-blue);
@@ -1061,6 +1065,11 @@
 
       .loading-text {
         font-size: 1.2rem;
+      }
+
+      /* Mobile hero background image */
+      .hero img {
+        content: url('assets/img/hero-bg-mobile.jpg');
       }
 
       /* Mobile button positioning */
@@ -1328,12 +1337,14 @@
       margin-bottom: 20px;
       box-shadow: 0 2px 10px var(--shadow-color-strong);
       transition: all 0.3s ease;
+      box-sizing: border-box;
     }
 
     .resume .resume-item:hover {
-      transform: translateX(10px) translateY(-5px);
-      box-shadow: 0 15px 35px var(--shadow-color-strong);
-      border-left-width: 5px;
+      transform: translateY(-5px);
+      box-shadow: 
+        0 15px 35px var(--shadow-color-strong),
+        inset 3px 0 0 0 var(--accent-primary);
     }
 
     .resume .resume-item h4 {
@@ -1363,82 +1374,6 @@
 
     .resume .resume-item a:hover {
       text-decoration: underline;
-    }
-
-    /* Portfolio Section - Additional Styles */
-    .portfolio .portfolio-content {
-      background: var(--bg-card);
-      border-radius: 10px;
-      overflow: hidden;
-      box-shadow: 0 4px 16px var(--shadow-color-strong);
-      transition: all 0.3s ease;
-      border: 1px solid var(--border-color);
-      display: block;
-      text-decoration: none !important;
-    }
-
-    .portfolio .portfolio-content:hover {
-      transform: translateY(-5px);
-      box-shadow: 0 8px 25px var(--shadow-color-strong);
-      text-decoration: none !important;
-      color: inherit !important;
-    }
-
-    .portfolio .portfolio-info {
-      background: var(--bg-card);
-      position: relative;
-    }
-
-    .portfolio .portfolio-info h4 {
-      color: var(--text-primary);
-      transition: color 0.3s ease;
-      margin-bottom: 10px;
-      padding: 15px 15px 5px 15px;
-    }
-
-    .portfolio .portfolio-info p {
-      color: var(--text-secondary);
-      transition: color 0.3s ease;
-      margin-bottom: 15px;
-      padding: 0 15px 15px 15px;
-    }
-
-    .portfolio .portfolio-info .preview-link {
-      display: none !important;
-    }
-
-    .portfolio .portfolio-filters {
-      list-style: none;
-      padding: 0;
-      margin: 0 0 35px 0;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      flex-wrap: wrap;
-      gap: 10px;
-    }
-
-    .portfolio .portfolio-filters li {
-      cursor: pointer;
-      display: inline-block;
-      padding: 8px 20px;
-      font-size: 14px;
-      font-weight: 500;
-      line-height: 1;
-      color: var(--text-secondary);
-      background: var(--bg-card);
-      border: 2px solid var(--border-color);
-      border-radius: 25px;
-      transition: all 0.3s ease;
-      text-transform: capitalize;
-    }
-
-    .portfolio .portfolio-filters li:hover, .portfolio .portfolio-filters li.filter-active {
-      background: var(--accent-gradient);
-      color: white;
-      border-color: var(--accent-primary);
-      transform: translateY(-2px);
-      box-shadow: 0 4px 15px var(--accent-shadow);
     }
 
     /* Light mode overrides for buttons */

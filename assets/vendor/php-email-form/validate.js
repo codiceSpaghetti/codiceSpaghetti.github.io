@@ -1,7 +1,6 @@
 /**
-* PHP Email Form Validation - v3.10
-* URL: https://bootstrapmade.com/php-email-form/
-* Author: BootstrapMade.com
+* Contact Form Validation - Updated for JSON API
+* Compatible with modern PHP backend
 */
 (function () {
   "use strict";
@@ -13,39 +12,23 @@
       event.preventDefault();
 
       let thisForm = this;
-
       let action = thisForm.getAttribute('action');
-      let recaptcha = thisForm.getAttribute('data-recaptcha-site-key');
       
       if( ! action ) {
         displayError(thisForm, 'The form action property is not set!');
         return;
       }
+
+      // Show loading state
       thisForm.querySelector('.loading').classList.add('d-block');
       thisForm.querySelector('.error-message').classList.remove('d-block');
       thisForm.querySelector('.sent-message').classList.remove('d-block');
 
-      let formData = new FormData( thisForm );
+      // Prepare form data
+      let formData = new FormData(thisForm);
 
-      if ( recaptcha ) {
-        if(typeof grecaptcha !== "undefined" ) {
-          grecaptcha.ready(function() {
-            try {
-              grecaptcha.execute(recaptcha, {action: 'php_email_form_submit'})
-              .then(token => {
-                formData.set('recaptcha-response', token);
-                php_email_form_submit(thisForm, action, formData);
-              })
-            } catch(error) {
-              displayError(thisForm, error);
-            }
-          });
-        } else {
-          displayError(thisForm, 'The reCaptcha javascript API url is not loaded!')
-        }
-      } else {
-        php_email_form_submit(thisForm, action, formData);
-      }
+      // Submit form
+      php_email_form_submit(thisForm, action, formData);
     });
   });
 
@@ -53,33 +36,42 @@
     fetch(action, {
       method: 'POST',
       body: formData,
-      headers: {'X-Requested-With': 'XMLHttpRequest'}
+      headers: {
+        'X-Requested-With': 'XMLHttpRequest'
+      }
     })
     .then(response => {
-      if( response.ok ) {
-        return response.text();
-      } else {
-        throw new Error(`${response.status} ${response.statusText} ${response.url}`); 
+      if (!response.ok) {
+        throw new Error(`HTTP error! status: ${response.status}`);
       }
+      return response.json();
     })
     .then(data => {
       thisForm.querySelector('.loading').classList.remove('d-block');
-      if (data.trim() == 'OK') {
+      
+      if (data.success) {
         thisForm.querySelector('.sent-message').classList.add('d-block');
+        thisForm.querySelector('.sent-message').innerHTML = data.message || 'Your message has been sent successfully!';
         thisForm.reset(); 
       } else {
-        throw new Error(data ? data : 'Form submission failed and no error message returned from: ' + action); 
+        throw new Error(data.message || 'An unknown error occurred'); 
       }
     })
     .catch((error) => {
-      displayError(thisForm, error);
+      console.error('Contact form error:', error);
+      displayError(thisForm, error.message || 'Network error occurred. Please try again.');
     });
   }
 
   function displayError(thisForm, error) {
     thisForm.querySelector('.loading').classList.remove('d-block');
-    thisForm.querySelector('.error-message').innerHTML = error;
-    thisForm.querySelector('.error-message').classList.add('d-block');
+    let errorElement = thisForm.querySelector('.error-message');
+    if (errorElement) {
+      errorElement.innerHTML = error;
+      errorElement.classList.add('d-block');
+    } else {
+      alert('Error: ' + error);
+    }
   }
 
 })();
