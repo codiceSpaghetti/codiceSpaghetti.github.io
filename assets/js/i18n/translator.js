@@ -7,19 +7,37 @@ class Translator {
     this.currentLanguage = 'en';
     this.translations = {};
     this.supportedLanguages = [
+      { code: 'ar', name: 'العربية', flag: '🇸🇦' },
+      { code: 'bg', name: 'Български', flag: '🇧🇬' },
+      { code: 'ca', name: 'Català', flag: '🇪🇸' },
+      { code: 'zh', name: '中文', flag: '🇨🇳' },
+      { code: 'hr', name: 'Hrvatski', flag: '🇭🇷' },
+      { code: 'cs', name: 'Čeština', flag: '🇨🇿' },
+      { code: 'da', name: 'Dansk', flag: '🇩🇰' },
+      { code: 'nl', name: 'Nederlands', flag: '🇳🇱' },
       { code: 'en', name: 'English', flag: '🇺🇸' },
-      { code: 'es', name: 'Español', flag: '🇪🇸' },
-      { code: 'it', name: 'Italiano', flag: '🇮🇹' },
+      { code: 'fi', name: 'Suomi', flag: '🇫🇮' },
       { code: 'fr', name: 'Français', flag: '🇫🇷' },
       { code: 'de', name: 'Deutsch', flag: '🇩🇪' },
+      { code: 'el', name: 'Ελληνικά', flag: '🇬🇷' },
+      { code: 'he', name: 'עברית', flag: '🇮🇱' },
+      { code: 'hu', name: 'Magyar', flag: '🇭🇺' },
+      { code: 'id', name: 'Bahasa Indonesia', flag: '🇮🇩' },
+      { code: 'it', name: 'Italiano', flag: '🇮🇹' },
+      { code: 'ja', name: '日本語', flag: '🇯🇵' },
+      { code: 'ko', name: '한국어', flag: '🇰🇷' },
+      { code: 'ms', name: 'Bahasa Melayu', flag: '🇲🇾' },
+      { code: 'nb', name: 'Norsk Bokmål', flag: '🇳🇴' },
+      { code: 'nn', name: 'Norsk Nynorsk', flag: '🇳🇴' },
+      { code: 'pl', name: 'Polski', flag: '🇵🇱' },
       { code: 'pt', name: 'Português', flag: '🇵🇹' },
       { code: 'ru', name: 'Русский', flag: '🇷🇺' },
-      { code: 'ja', name: '日本語', flag: '🇯🇵' },
-      { code: 'zh', name: '中文', flag: '🇨🇳' },
-      { code: 'ko', name: '한국어', flag: '🇰🇷' },
-      { code: 'ar', name: 'العربية', flag: '🇸🇦' },
-      { code: 'hi', name: 'हिंदी', flag: '🇮🇳' },
-
+      { code: 'sk', name: 'Slovenčina', flag: '🇸🇰' },
+      { code: 'es', name: 'Español', flag: '🇪🇸' },
+      { code: 'sv', name: 'Svenska', flag: '🇸🇪' },
+      { code: 'th', name: 'ไทย', flag: '🇹🇭' },
+      { code: 'tr', name: 'Türkçe', flag: '🇹🇷' },
+      { code: 'uk', name: 'Українська', flag: '🇺🇦' }
     ];
     this.fallbackLanguage = 'en';
     this.loadingPromises = new Map();
